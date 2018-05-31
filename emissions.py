@@ -14,7 +14,7 @@ gal_to_L = 3.78541
 #parameters
 
 s_l = 2000
-FL = 390
+FL = 420
 M_cr = 0.79
 gamma = 1.4
 R = 287.05
