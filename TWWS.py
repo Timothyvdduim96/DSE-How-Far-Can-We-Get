@@ -7,9 +7,10 @@ xsize = 11000
 s_l = 2000
 V_land = sqrt(s_l/0.5847)
 gr = 9.80665
+g = 9.81
 n_max = 2.5 #change
 rho = 1.167
-rho_0 = 1.2255
+rho_0 = 1.225
 rho_cruise = 0.310828 #at 12 km altitude
 T = 216.650
 
