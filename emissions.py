@@ -13,7 +13,7 @@ gal_to_L = 3.78541
 
 #parameters
 
-s_l = 2000
+s_l = 20003
 FL = 420
 M_cr = 0.79
 gamma = 1.4
@@ -107,7 +107,7 @@ CO2_confuel = 73.1 #other source, 71.5
 CO2_soybean = 140. 
 
 #specific energy [MJ/kg]
-
+hello
 E_jatropha = 44.3
 E_soybean = 37.
 E_camelina = 44. 
