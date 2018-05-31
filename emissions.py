@@ -107,7 +107,6 @@ CO2_confuel = 73.1 #other source, 71.5
 CO2_soybean = 140. 
 
 #specific energy [MJ/kg]
-hello
 E_jatropha = 44.3
 E_soybean = 37.
 E_camelina = 44. 
