@@ -24,7 +24,7 @@ Nlbs    = 0.224808943      # conversion factor newtons to pounds
 ##Class II weight estimation
 ##--------------------------------------
 '''!!!!!all weights should be in pounds!!!!!'''
-'''!!!!!all lengths should be in meters!!!!!'''
+'''!!!!!all lengths should be in feet!!!!!'''
 W_tot = []   #empty list for all weight groups
 
 

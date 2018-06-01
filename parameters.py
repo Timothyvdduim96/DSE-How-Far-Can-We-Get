@@ -1,0 +1,52 @@
+from math import *
+
+#parameters
+
+R = 287.05
+g = 9.80665
+gamma = 1.4
+e = 0.8
+#ISA
+
+lapselst = [-.0065,0,.001,.0028,0,-.0028,-.002,0.]
+hlst = [0,11000,20000,32000,47000,51000,71000,84852,100000]
+T0lst = [288.15]
+p0lst = [101325]
+
+for i in range(1,8):
+    T0 = T0lst[i-1] + lapselst[i-1]*(hlst[i]-hlst[i-1])
+    T0lst.append(T0)
+    
+    if lapselst[i-1] != 0:
+        p0 = p0lst[i-1] * (T0lst[i]/T0lst[i-1])**(-g/(lapselst[i-1]*R))
+    else:
+        p0 = p0lst[i-1] * e**(-g/(R*T0lst[i])*(hlst[i]-hlst[i-1]))
+
+    p0lst.append(p0)
+
+def ISA(h):
+    for i in range(8):
+        if hlst[i] < h <= hlst[i+1]:
+            h0 = hlst[i]
+            T0 = T0lst[i]
+            p0 = p0lst[i]
+            a  = lapselst[i]
+            
+            if a != 0:
+                T = T0 + a*(h-h0)
+                p = p0 * (T/T0)**(-g/(a*R))
+            else:
+                T = T0
+                p = p0 * e**(-g/(R*T0)*(h - h0))
+
+            rho = p / (R*T)
+
+    return T,p,rho
+
+#speed
+def speed_of_sound(T):
+
+    a = sqrt(gamma*R*T)
+
+    return a
+
