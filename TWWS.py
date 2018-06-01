@@ -1,18 +1,14 @@
 from math import *
 import numpy as np
 import matplotlib.pyplot as plt
+from parameters import *
 
 #-----------------------------------------------parameters--------------------------------------------------
 xsize = 11000
-s_l = 20000
-V_land = sqrt(s_l/0.5847)
-gr = 9.80665
-g = 9.81
-n_max = 2.5 #change
-rho = 1.167
-rho_0 = 1.225
-rho_cruise = 0.310828 #at 12 km altitude
-T = 216.650
+T = ISA(FL*FL_to_m)[0]
+rho = ISA(0)[2]
+rho_cr = ISA(FL*FL_to_m)[2]
+SwetSref = 5.5   #GET FROM PATRIK?
 
 #------------------------------------design specific parameters---------------------------------------------
 
@@ -31,20 +27,13 @@ C_L_clean_3 = eval(designdata[6][ch])
 C_L_TO_1 = eval(designdata[7][ch]) 
 C_L_TO_2 = eval(designdata[8][ch])
 C_L_TO_3 = eval(designdata[9][ch])
-C_D_0 = eval(designdata[19][ch]) 
-V_max = eval(designdata[10][ch]) 
-f = 0.9745 
-V_s = eval(designdata[11][ch]) 
-cV = 0.024
-A = eval(designdata[12][ch]) 
+C_D_0 = C_f_e*SwetSref#eval(designdata[19][ch]) 
 #A_2 = eval(designdata[13][ch]) 
 #A_3 = eval(designdata[14][ch]) 
 e = 0.85 
-c = 17 #change
 TOP = eval(designdata[15][ch])
 V = V_s
 MTOW = eval(designdata[16][ch])
-eff = eval(designdata[17][ch])
 
 #land limit
 
@@ -56,13 +45,13 @@ def land_limit(rho,C_L_max_1,C_L_max_2,C_L_max_3,V_land,f):
 
     return WS_1,WS_2,WS_3
 
-#cruise flight limit
+#cr flight limit
 
-def cruise_limit(rho_cruise,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s):
+def cr_limit(rho_cr,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s):
 
-    WS_1 = 0.5*rho_cruise*C_L_clean_1*V_s**2
-    WS_2 = 0.5*rho_cruise*C_L_clean_2*V_s**2
-    WS_3 = 0.5*rho_cruise*C_L_clean_3*V_s**2
+    WS_1 = 0.5*rho_cr*C_L_clean_1*V_s**2
+    WS_2 = 0.5*rho_cr*C_L_clean_2*V_s**2
+    WS_3 = 0.5*rho_cr*C_L_clean_3*V_s**2
 
     return WS_1,WS_2,WS_3
 
@@ -125,7 +114,7 @@ def take_off(TOP,C_L_TO_1,C_L_TO_2,C_L_TO_3,rho,rho_0):
 
 #max speed limit
 
-def speed_limit(C_D_0,rho_cruise,V_max,A,e):
+def speed_limit(C_D_0,rho_cr,V_max,A,e):
 
     TW_1 = []
     #TW_2 = []
@@ -135,13 +124,13 @@ def speed_limit(C_D_0,rho_cruise,V_max,A,e):
     
     for i in range(len(WS)):
     
-        TW_1.append(0.8/0.9*(1.225/rho_cruise)**0.75*((C_D_0*rho_cruise*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A*e*0.5*rho_cruise*V_max**2)))
-        #TW_2.append(0.8/0.9*(1.225/rho_cruise)**0.75*((C_D_0*rho_cruise*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A_2*e*0.5*rho_cruise*V_max**2)))
-        #TW_3.append(0.8/0.9*(1.225/rho_cruise)**0.75*((C_D_0*rho_cruise*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A_3*e*0.5*rho_cruise*V_max**2)))
+        TW_1.append(0.8/0.9*(1.225/rho_cr)**0.75*((C_D_0*rho_cr*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A*e*0.5*rho_cr*V_max**2)))
+        #TW_2.append(0.8/0.9*(1.225/rho_cr)**0.75*((C_D_0*rho_cr*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A_2*e*0.5*rho_cr*V_max**2)))
+        #TW_3.append(0.8/0.9*(1.225/rho_cr)**0.75*((C_D_0*rho_cr*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A_3*e*0.5*rho_cr*V_max**2)))
 
     return TW_1
 
-def loadfactor_limit(C_D_0,rho_cruise,V,n_max,A):
+def loadfactor_limit(C_D_0,rho_cr,V,n_max,A):
 
     n_max = n_max + 0.1 #safety factor
     TW_1 = []
@@ -152,9 +141,9 @@ def loadfactor_limit(C_D_0,rho_cruise,V,n_max,A):
     
     for i in range(len(WS)):
     
-        TW_1.append(C_D_0*0.5*rho_cruise*V**2/WS[i]+WS[i]*n_max**2/(pi*A*e*0.5*rho_cruise*V**2))
-        #TW_2.append(C_D_0*0.5*rho_cruise*V**2/WS[i]+WS[i]*n_max**2/(pi*A_2*e*0.5*rho_cruise*V**2))
-        #TW_3.append(C_D_0*0.5*rho_cruise*V**2/WS[i]+WS[i]*n_max**2/(pi*A_3*e*0.5*rho_cruise*V**2))
+        TW_1.append(C_D_0*0.5*rho_cr*V**2/WS[i]+WS[i]*n_max**2/(pi*A*e*0.5*rho_cr*V**2))
+        #TW_2.append(C_D_0*0.5*rho_cr*V**2/WS[i]+WS[i]*n_max**2/(pi*A_2*e*0.5*rho_cr*V**2))
+        #TW_3.append(C_D_0*0.5*rho_cr*V**2/WS[i]+WS[i]*n_max**2/(pi*A_3*e*0.5*rho_cr*V**2))
 
     return TW_1
 
@@ -208,12 +197,12 @@ plt.axvline(landlimit_1, linestyle="dashed", color="Red",label="Landing with CL=
 plt.axvline(landlimit_2, linestyle="dotted", color="Red",label="Landing with CL=2.2")
 plt.axvline(landlimit_3, linestyle="solid", color="Red",label="Landing with CL=3.0")
 
-cruiselimit_1 = cruise_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[0]
-cruiselimit_2 = cruise_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[1]
-cruiselimit_3 = cruise_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[2]
-plt.axvline(cruiselimit_1, linestyle="dashed", color="Blue",label="Cruising with CL=1.0")
-plt.axvline(cruiselimit_2, linestyle="dotted", color="Blue",label="Cruising with CL=1.2")
-plt.axvline(cruiselimit_3, linestyle="solid", color="Blue",label="Cruising with CL=1.4")
+crlimit_1 = cr_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[0]
+crlimit_2 = cr_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[1]
+crlimit_3 = cr_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[2]
+plt.axvline(crlimit_1, linestyle="dashed", color="Blue",label="Cruising with CL=1.0")
+plt.axvline(crlimit_2, linestyle="dotted", color="Blue",label="Cruising with CL=1.2")
+plt.axvline(crlimit_3, linestyle="solid", color="Blue",label="Cruising with CL=1.4")
 
 climbgradientlimit_1 = climb_gradient(cV,C_D_0,A,e)
 #climbgradientlimit_2 = climb_gradient(cV,C_D_0,A,A_2,A_3,e)[1]
@@ -237,9 +226,9 @@ plt.plot(xaxis, takeofflimit_1, linestyle="dashed", color="Cyan",label="Taking o
 #plt.plot(xaxis, takeofflimit_2, linestyle="dotted", color="Cyan",label="Taking off with CL=2.5")
 plt.plot(xaxis, takeofflimit_3, linestyle="solid", color="Cyan",label="Taking off with CL=3.0")
 
-maxspeedlimit_1 = speed_limit(C_D_0,rho_cruise,V_max,A,e)
-#maxspeedlimit_2 = speed_limit(C_D_0,rho_cruise,V_max,A,A_2,A_3,e)[1]
-#maxspeedlimit_3 = speed_limit(C_D_0,rho_cruise,V_max,A,A_2,A_3,e)[2]
+maxspeedlimit_1 = speed_limit(C_D_0,rho_cr,V_max,A,e)
+#maxspeedlimit_2 = speed_limit(C_D_0,rho_cr,V_max,A,A_2,A_3,e)[1]
+#maxspeedlimit_3 = speed_limit(C_D_0,rho_cr,V_max,A,A_2,A_3,e)[2]
 plt.plot(xaxis, maxspeedlimit_1, linestyle="solid", color="Violet",label="Max speed with A=10.5")
 #plt.plot(xaxis, maxspeedlimit_2, linestyle="dotted", color="Violet",label="Max speed with A=12")
 #plt.plot(xaxis, maxspeedlimit_3, linestyle="solid", color="Violet",label="Max speed with A=13")
@@ -299,28 +288,28 @@ DP = []
 DP.append(DPx)
 DP.append(DPy)
 S = round(MTOW*gr/eval(DPx),2)
-T = round(MTOW*gr*eval(DPy)/1000)
+thrust = round(MTOW*gr*eval(DPy)/1000)
 print "Wing area = ", S, "m^2"
-print "Thrust = ", T, "kN"
+print "Thrust = ", thrust, "kN"
 
 DPx = eval(DPx)
 DPy = eval(DPy)
 A = eval(A)
 
-def findclcruise(DPx,cruiselimit_1,cruiselimit_2,cruiselimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3):
+def findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3):
 
-    if DPx < cruiselimit_1:
-        C_Lcr = round((DPx/cruiselimit_1*C_L_clean_1),2)
-    elif DPx >= cruiselimit_1 and DPx <= cruiselimit_2:
-        C_Lcr = round(((DPx-cruiselimit_1)/(cruiselimit_2-cruiselimit_1)*(C_L_clean_2-C_L_clean_1)+C_L_clean_1),2)
-    elif DPx > cruiselimit_2 and DPx <= cruiselimit_3:
-        C_Lcr = round(((DPx-cruiselimit_2)/(cruiselimit_3-cruiselimit_2)*(C_L_clean_3-C_L_clean_2)+C_L_clean_2),2)
+    if DPx < crlimit_1:
+        C_Lcr = round((DPx/crlimit_1*C_L_clean_1),2)
+    elif DPx >= crlimit_1 and DPx <= crlimit_2:
+        C_Lcr = round(((DPx-crlimit_1)/(crlimit_2-crlimit_1)*(C_L_clean_2-C_L_clean_1)+C_L_clean_1),2)
+    elif DPx > crlimit_2 and DPx <= crlimit_3:
+        C_Lcr = round(((DPx-crlimit_2)/(crlimit_3-crlimit_2)*(C_L_clean_3-C_L_clean_2)+C_L_clean_2),2)
     else:
-        C_Lcr = "Cruise requirement not satisfied"
+        C_Lcr = "cr requirement not satisfied"
 
     return C_Lcr
 
-C_Lcr = findclcruise(DPx,cruiselimit_1,cruiselimit_2,cruiselimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
+C_Lcr = findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
 
 to1 = takeofflimit_1[int(DPx)]
 to2 = takeofflimit_2[int(DPx)]
@@ -354,7 +343,7 @@ def findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_ma
 
 C_Lland = findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
 
-print 'C_L_max_cruise = ', findclcruise(DPx,cruiselimit_1,cruiselimit_2,cruiselimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
+print 'C_L_max_cr = ', findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
 print "C_L_max_land = ", findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
 print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 

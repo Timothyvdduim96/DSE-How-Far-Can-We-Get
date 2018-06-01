@@ -1,44 +1,17 @@
 from math import *
 import numpy as np
 import matplotlib.pyplot as plt
-
-#conversions
-
-lbf_to_N = 4.4482216
-hr_to_s = 3600.
-lbm_to_kg = 0.45359237
-ft_to_km = 0.3048/1000
-ft_to_m = 0.3048
-gal_to_L = 3.78541
+from parameters import *
+from TWWS import S,thrust
+from liftdrag import C_D_cr
 
 #parameters
 
-s_l = 20003
-FL = 420
-M_cr = 0.79
-gamma = 1.4
-R = 287.05
-ag = 0.0065
-h = FL*100
-T0 = 288.15
-rho0 = [1.225,0.3639]
-g = 9.81
-if h > 11000/ft_to_m:
-    T = T0
-    rho = rho0[1]*e**(-g/(R*T)*(h-11000/ft_to_m))
-else:
-    T = T0-ag*h*ft_to_m
-    rho = rho0[0]*(T/T0[0])**(-g/(-ag*R)-1)
-a = sqrt(gamma*R*T)
-V_cruise = M_cr*a
-V_s = 100
-V_rot = 1.1*V_s
-V_land = sqrt(s_l/0.5847)
 #V_taxi = 10.
-C_D = [0.0282,0.0323,0.0253,0.0245,0.0253,0.0227]
-S = [130.6,119.6,128.,127.5,126.5,152.5]
-thrust_max = [181.,181.,177.,220.,175.,187.]
-thrust_cruise = [0.5*rho*V_cruise**2*C_D[0]*S[0]/1000,0.5*rho*V_cruise**2*C_D[1]*S[1]/1000,0.5*rho*V_cruise**2*C_D[2]*S[2]/1000,0.5*rho*V_cruise**2*C_D[3]*S[3]/1000,0.5*rho*V_cruise**2*C_D[4]*S[4]/1000,0.5*rho*V_cruise**2*C_D[5]*S[5]/1000]
+#C_D_cr = [0.0282,0.0323,0.0253,0.0245,0.0253,0.0227]
+#S = [130.6,119.6,128.,127.5,126.5,152.5]
+thrust_max = thrust#[181.,181.,177.,220.,175.,187.]
+T_cr = cruise_thrust(h,T,M_cr,C_D_cr,S)#[0.5*rho*V_cruise**2*C_D_cr[0]*S[0]/1000,0.5*rho*V_cruise**2*C_D_cr[1]*S[1]/1000,0.5*rho*V_cruise**2*C_D_cr[2]*S[2]/1000,0.5*rho*V_cruise**2*C_D_cr[3]*S[3]/1000,0.5*rho*V_cruise**2*C_D_cr[4]*S[4]/1000,0.5*rho*V_cruise**2*C_D_cr[5]*S[5]/1000]
 
 #thrust specific fuel consumption ([lbm/hr/lbf])
 
@@ -51,24 +24,24 @@ TSFC_UHBP_TO = 0.5*TSFC_UHBP_CR
 
 #fuel flow [kg/s]
 
-TSFC_1_geared_TO = TSFC_geared_TO*thrust_max[0]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_1_geared_CR = TSFC_geared_CR*thrust_cruise[0]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_1_geared_DES = TSFC_geared_TO*0.5*thrust_cruise[0]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_2_UHBP_TO = TSFC_UHBP_TO*thrust_max[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_2_UHBP_CR = TSFC_UHBP_CR*thrust_cruise[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_2_UHBP_DES = TSFC_UHBP_TO*0.5*thrust_cruise[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_3_geared_TO = TSFC_geared_TO*thrust_max[2]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_3_geared_CR = TSFC_geared_CR*thrust_cruise[2]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_3_geared_DES = TSFC_geared_TO*0.5*thrust_cruise[2]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_4_UHBP_TO = TSFC_UHBP_TO*thrust_max[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_4_UHBP_CR = TSFC_UHBP_CR*thrust_cruise[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_4_UHBP_DES = TSFC_UHBP_TO*0.5*thrust_cruise[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_5_propfan_TO = TSFC_propfan_TO*thrust_max[4]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_5_propfan_CR = TSFC_propfan_CR*thrust_cruise[4]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_5_propfan_DES = TSFC_propfan_TO*0.5*thrust_cruise[4]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_6_geared_TO = TSFC_geared_TO*thrust_max[5]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_6_geared_CR = TSFC_geared_CR*thrust_cruise[5]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_6_geared_DES = TSFC_geared_TO*0.5*thrust_cruise[5]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_1_geared_TO = TSFC_geared_TO*thrust_max[0]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_1_geared_CR = TSFC_geared_CR*T_cr[0]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_1_geared_DES = TSFC_geared_TO*0.5*T_cr[0]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_2_UHBP_TO = TSFC_UHBP_TO*thrust_max[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_2_UHBP_CR = TSFC_UHBP_CR*T_cr[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_2_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+TSFC_3_UHBP_TO = TSFC_geared_TO*thrust_max*1000/lbf_to_N/hr_to_s*lbm_to_kg
+TSFC_3_UHBP_CR = TSFC_geared_CR*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
+TSFC_3_UHBP_DES = TSFC_geared_TO*0.5*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_4_UHBP_TO = TSFC_UHBP_TO*thrust_max[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_4_UHBP_CR = TSFC_UHBP_CR*T_cr[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_4_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_5_propfan_TO = TSFC_propfan_TO*thrust_max[4]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_5_propfan_CR = TSFC_propfan_CR*T_cr[4]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_5_propfan_DES = TSFC_propfan_TO*0.5*T_cr[4]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_6_geared_TO = TSFC_geared_TO*thrust_max[5]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_6_geared_CR = TSFC_geared_CR*T_cr[5]*1000/lbf_to_N/hr_to_s*lbm_to_kg
+##TSFC_6_geared_DES = TSFC_geared_TO*0.5*T_cr[5]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 
 #distance time [km][s]
 
@@ -80,22 +53,22 @@ end_descdis = 6006.
 desc_dis = sqrt((end_descdis-begin_descdis)**2+(FL*100*ft_to_km)**2)
 cruise_dis = begin_descdis - end_climbdis
 #taxi_time = taxi_dis/(V_taxi/1000)
-cruise_time = cruise_dis/(V_cruise/1000)
-climb_time = climb_dis/((V_cruise + V_rot)/1000/2)
-desc_time = desc_dis/((V_cruise + V_land)/1000/2)
+cruise_time = cruise_dis/(V_cr/1000)
+climb_time = climb_dis/((V_cr + V_rot)/1000/2)
+desc_time = desc_dis/((V_cr + V_land)/1000/2)
 total_time = cruise_time + climb_time + desc_time
 nocruise_time = total_time - cruise_time
 
 #avg specific fuel consumption [kg/s]
 
-cj_1_geared = (TSFC_1_geared_TO*climb_time + TSFC_1_geared_CR*cruise_time + TSFC_1_geared_DES*desc_time)/total_time
-cj_2_UHBP = (TSFC_2_UHBP_TO*climb_time + TSFC_2_UHBP_CR*cruise_time + TSFC_2_UHBP_DES*desc_time)/total_time
-cj_3_geared = (TSFC_3_geared_TO*climb_time + TSFC_3_geared_CR*cruise_time + TSFC_3_geared_DES*desc_time)/total_time
-cj_4_UHBP = (TSFC_4_UHBP_TO*climb_time + TSFC_4_UHBP_CR*cruise_time + TSFC_4_UHBP_DES*desc_time)/total_time
-cj_5_propfan = (TSFC_5_propfan_TO*climb_time + TSFC_5_propfan_CR*cruise_time + TSFC_5_propfan_DES*desc_time)/total_time
-cj_6_geared = (TSFC_6_geared_TO*climb_time + TSFC_6_geared_CR*cruise_time + TSFC_6_geared_DES*desc_time)/total_time
+##cj_1_geared = (TSFC_1_geared_TO*climb_time + TSFC_1_geared_CR*cruise_time + TSFC_1_geared_DES*desc_time)/total_time
+##cj_2_UHBP = (TSFC_2_UHBP_TO*climb_time + TSFC_2_UHBP_CR*cruise_time + TSFC_2_UHBP_DES*desc_time)/total_time
+cj_3_UHBP = (TSFC_3_UHBP_TO*climb_time + TSFC_3_UHBP_CR*cruise_time + TSFC_3_UHBP_DES*desc_time)/total_time
+##cj_4_UHBP = (TSFC_4_UHBP_TO*climb_time + TSFC_4_UHBP_CR*cruise_time + TSFC_4_UHBP_DES*desc_time)/total_time
+##cj_5_propfan = (TSFC_5_propfan_TO*climb_time + TSFC_5_propfan_CR*cruise_time + TSFC_5_propfan_DES*desc_time)/total_time
+##cj_6_geared = (TSFC_6_geared_TO*climb_time + TSFC_6_geared_CR*cruise_time + TSFC_6_geared_DES*desc_time)/total_time
 
-cj = [cj_1_geared,cj_2_UHBP,cj_3_geared,cj_4_UHBP,cj_5_propfan,cj_6_geared]
+##cj = [cj_1_geared,cj_2_UHBP,cj_3_geared,cj_4_UHBP,cj_5_propfan,cj_6_geared]
 
 #CO2 [gCO2_eq/MJ]
 
@@ -142,7 +115,7 @@ A_algae = 24. #FIND
 
 #-----------------------------------------MAIN CODE-----------------------------------------------
 
-design = raw_input("choose a design (1 till 6): ",)
+##design = raw_input("choose a design (1 till 6): ",)
 
 confuel = [CO2_confuel,E_confuel,rho_confuel,C_confuel,A_confuel]
 camelina = [CO2_camelina,E_camelina,rho_camelina,C_camelina,A_camelina]
@@ -160,206 +133,206 @@ xlst = []
 #blend = '1'#raw_input("Number of fuels blended: ",)
 
 #if blend == '1':
-for i in range(len(fuelnames)):
-    xlst.append(i)
-    fuel = fuelnames[i]#raw_input("Fuel type (confuel,camelina,jatropha,algae or soybean): ",)
-    #mix1 = raw_input("Percentage: ",)
-    aromatics = fuels[fuelnames.index(fuel)][4]
-    #print "The aromatic compound is",aromatics,"%."
-    #if aromatics < 8.:
-        #print "Aromatic compound too low (below 8)."
-    #elif aromatics > 25.:
-        #print "Aromatic compound too high (above 25)."
-    #else:
-    c_j = cj[eval(design)-1]
-    E = fuels[fuelnames.index(fuel)][1] #specific energy
-    sigma = E*c_j #energy flow [MJ/s]
-    emissions_per_E = fuels[fuelnames.index(fuel)][0]
-    emissions_per_s = sigma*emissions_per_E
-    emissionslst.append(emissions_per_s)
-    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
-    density = fuels[fuelnames.index(fuel)][2]
-    #print "Over this distance we will need",round(cj*total_time/density,2),"m^3 of fuel."
-    cost = fuels[fuelnames.index(fuel)][3]
-    costlst.append(c_j*cost)
-    #print "The fuel cost per s is",round(cj*cost,2),"USD. The total fuel cost will be",round(cj*total_time*cost,2), "USD."
-    
-#elif blend == '2':
-
-costlst1 = []
-emissionslst1 = []
-
-for i in range(4):
-    fuel1 = 'confuel'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
-    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
-    #mix1 = eval(mix1)
-    fuel2 = 'camelina'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
-    mix2 = 100 - mix1
-    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
-    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
-    #print "The aromatic compound is",aromatics,"%."
-    #if aromatics < 8.:
-        #print "Aromatic compound too low (below 8)."
-    #elif aromatics > 25.:
-        #print "Aromatic compound too high (above 25)."
-    #else:
-    c_j = cj[eval(design)-1]
-    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
-    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
-    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
-    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
-    sigma1 = E1*c_j*mix1/100
-    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
-    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
-    emissionslst1.append(emissions_per_s)
-    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
-    density1 = fuels[fuelnames.index(fuel1)][2]
-    density2 = fuels[fuelnames.index(fuel2)][2]
-    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
-    cost1 = fuels[fuelnames.index(fuel1)][3]
-    cost2 = fuels[fuelnames.index(fuel2)][3]
-    costlst1.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
-    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
-
-costlst2 = []
-emissionslst2 = []
-
-for i in range(4):
-    fuel1 = 'confuel'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
-    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
-    #mix1 = eval(mix1)
-    fuel2 = 'jatropha'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
-    mix2 = 100 - mix1
-    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
-    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
-    #print "The aromatic compound is",aromatics,"%."
-    #if aromatics < 8.:
-        #print "Aromatic compound too low (below 8)."
-    #elif aromatics > 25.:
-        #print "Aromatic compound too high (above 25)."
-    #else:
-    c_j = cj[eval(design)-1]
-    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
-    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
-    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
-    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
-    sigma1 = E1*c_j*mix1/100
-    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
-    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
-    emissionslst2.append(emissions_per_s)
-    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
-    density1 = fuels[fuelnames.index(fuel1)][2]
-    density2 = fuels[fuelnames.index(fuel2)][2]
-    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
-    cost1 = fuels[fuelnames.index(fuel1)][3]
-    cost2 = fuels[fuelnames.index(fuel2)][3]
-    costlst2.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
-    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
-
-costlst3 = []
-emissionslst3 = []
-
-for i in range(4):
-    fuel1 = 'confuel'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
-    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
-    #mix1 = eval(mix1)
-    fuel2 = 'algae'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
-    mix2 = 100 - mix1
-    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
-    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
-    #print "The aromatic compound is",aromatics,"%."
-    #if aromatics < 8.:
-        #print "Aromatic compound too low (below 8)."
-    #elif aromatics > 25.:
-        #print "Aromatic compound too high (above 25)."
-    #else:
-    c_j = cj[eval(design)-1]
-    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
-    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
-    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
-    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
-    sigma1 = E1*c_j*mix1/100
-    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
-    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
-    emissionslst3.append(emissions_per_s)
-    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
-    density1 = fuels[fuelnames.index(fuel1)][2]
-    density2 = fuels[fuelnames.index(fuel2)][2]
-    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
-    cost1 = fuels[fuelnames.index(fuel1)][3]
-    cost2 = fuels[fuelnames.index(fuel2)][3]
-    costlst3.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
-    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
-
-costlst4 = []
-emissionslst4 = []
-
-for i in range(4):
-    fuel1 = 'confuel'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
-    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
-    #mix1 = eval(mix1)
-    fuel2 = 'soybean'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
-    mix2 = 100 - mix1
-    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
-    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
-    #print "The aromatic compound is",aromatics,"%."
-    #if aromatics < 8.:
-        #print "Aromatic compound too low (below 8)."
-    #elif aromatics > 25.:
-        #print "Aromatic compound too high (above 25)."
-    #else:
-    c_j = cj[eval(design)-1]
-    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
-    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
-    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
-    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
-    sigma1 = E1*c_j*mix1/100
-    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
-    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
-    emissionslst4.append(emissions_per_s)
-    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
-    density1 = fuels[fuelnames.index(fuel1)][2]
-    density2 = fuels[fuelnames.index(fuel2)][2]
-    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
-    cost1 = fuels[fuelnames.index(fuel1)][3]
-    cost2 = fuels[fuelnames.index(fuel2)][3]
-    costlst4.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
-    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
-
-costlst5 = []
-emissionslst5 = []
-
-for i in range(4):
-    fuel1 = 'camelina'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
-    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
-    #mix1 = eval(mix1)
-    fuel2 = 'jatropha'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
-    mix2 = 100 - mix1
-    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
-    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
-    #print "The aromatic compound is",aromatics,"%."
-    #if aromatics < 8.:
-        #print "Aromatic compound too low (below 8)."
-    #elif aromatics > 25.:
-        #print "Aromatic compound too high (above 25)."
-    #else:
-    c_j = cj[eval(design)-1]
-    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
-    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
-    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
-    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
-    sigma1 = E1*c_j*mix1/100
-    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
-    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
-    emissionslst5.append(emissions_per_s)
-    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
-    density1 = fuels[fuelnames.index(fuel1)][2]
-    density2 = fuels[fuelnames.index(fuel2)][2]
-    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
-    cost1 = fuels[fuelnames.index(fuel1)][3]
-    cost2 = fuels[fuelnames.index(fuel2)][3]
-    costlst5.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
-    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
+##for i in range(len(fuelnames)):
+##    xlst.append(i)
+##    fuel = fuelnames[i]#raw_input("Fuel type (confuel,camelina,jatropha,algae or soybean): ",)
+##    #mix1 = raw_input("Percentage: ",)
+##    aromatics = fuels[fuelnames.index(fuel)][4]
+##    #print "The aromatic compound is",aromatics,"%."
+##    #if aromatics < 8.:
+##        #print "Aromatic compound too low (below 8)."
+##    #elif aromatics > 25.:
+##        #print "Aromatic compound too high (above 25)."
+##    #else:
+##    c_j = cj[eval(design)-1]
+##    E = fuels[fuelnames.index(fuel)][1] #specific energy
+##    sigma = E*c_j #energy flow [MJ/s]
+##    emissions_per_E = fuels[fuelnames.index(fuel)][0]
+##    emissions_per_s = sigma*emissions_per_E
+##    emissionslst.append(emissions_per_s)
+##    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
+##    density = fuels[fuelnames.index(fuel)][2]
+##    #print "Over this distance we will need",round(cj*total_time/density,2),"m^3 of fuel."
+##    cost = fuels[fuelnames.index(fuel)][3]
+##    costlst.append(c_j*cost)
+##    #print "The fuel cost per s is",round(cj*cost,2),"USD. The total fuel cost will be",round(cj*total_time*cost,2), "USD."
+##    
+###elif blend == '2':
+##
+##costlst1 = []
+##emissionslst1 = []
+##
+##for i in range(4):
+##    fuel1 = 'confuel'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
+##    #mix1 = eval(mix1)
+##    fuel2 = 'camelina'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix2 = 100 - mix1
+##    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
+##    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
+##    #print "The aromatic compound is",aromatics,"%."
+##    #if aromatics < 8.:
+##        #print "Aromatic compound too low (below 8)."
+##    #elif aromatics > 25.:
+##        #print "Aromatic compound too high (above 25)."
+##    #else:
+##    c_j = cj[eval(design)-1]
+##    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
+##    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
+##    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
+##    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
+##    sigma1 = E1*c_j*mix1/100
+##    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
+##    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
+##    emissionslst1.append(emissions_per_s)
+##    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
+##    density1 = fuels[fuelnames.index(fuel1)][2]
+##    density2 = fuels[fuelnames.index(fuel2)][2]
+##    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
+##    cost1 = fuels[fuelnames.index(fuel1)][3]
+##    cost2 = fuels[fuelnames.index(fuel2)][3]
+##    costlst1.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
+##    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
+##
+##costlst2 = []
+##emissionslst2 = []
+##
+##for i in range(4):
+##    fuel1 = 'confuel'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
+##    #mix1 = eval(mix1)
+##    fuel2 = 'jatropha'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix2 = 100 - mix1
+##    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
+##    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
+##    #print "The aromatic compound is",aromatics,"%."
+##    #if aromatics < 8.:
+##        #print "Aromatic compound too low (below 8)."
+##    #elif aromatics > 25.:
+##        #print "Aromatic compound too high (above 25)."
+##    #else:
+##    c_j = cj[eval(design)-1]
+##    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
+##    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
+##    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
+##    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
+##    sigma1 = E1*c_j*mix1/100
+##    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
+##    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
+##    emissionslst2.append(emissions_per_s)
+##    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
+##    density1 = fuels[fuelnames.index(fuel1)][2]
+##    density2 = fuels[fuelnames.index(fuel2)][2]
+##    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
+##    cost1 = fuels[fuelnames.index(fuel1)][3]
+##    cost2 = fuels[fuelnames.index(fuel2)][3]
+##    costlst2.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
+##    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
+##
+##costlst3 = []
+##emissionslst3 = []
+##
+##for i in range(4):
+##    fuel1 = 'confuel'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
+##    #mix1 = eval(mix1)
+##    fuel2 = 'algae'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix2 = 100 - mix1
+##    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
+##    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
+##    #print "The aromatic compound is",aromatics,"%."
+##    #if aromatics < 8.:
+##        #print "Aromatic compound too low (below 8)."
+##    #elif aromatics > 25.:
+##        #print "Aromatic compound too high (above 25)."
+##    #else:
+##    c_j = cj[eval(design)-1]
+##    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
+##    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
+##    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
+##    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
+##    sigma1 = E1*c_j*mix1/100
+##    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
+##    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
+##    emissionslst3.append(emissions_per_s)
+##    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
+##    density1 = fuels[fuelnames.index(fuel1)][2]
+##    density2 = fuels[fuelnames.index(fuel2)][2]
+##    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
+##    cost1 = fuels[fuelnames.index(fuel1)][3]
+##    cost2 = fuels[fuelnames.index(fuel2)][3]
+##    costlst3.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
+##    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
+##
+##costlst4 = []
+##emissionslst4 = []
+##
+##for i in range(4):
+##    fuel1 = 'confuel'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
+##    #mix1 = eval(mix1)
+##    fuel2 = 'soybean'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix2 = 100 - mix1
+##    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
+##    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
+##    #print "The aromatic compound is",aromatics,"%."
+##    #if aromatics < 8.:
+##        #print "Aromatic compound too low (below 8)."
+##    #elif aromatics > 25.:
+##        #print "Aromatic compound too high (above 25)."
+##    #else:
+##    c_j = cj[eval(design)-1]
+##    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
+##    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
+##    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
+##    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
+##    sigma1 = E1*c_j*mix1/100
+##    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
+##    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
+##    emissionslst4.append(emissions_per_s)
+##    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
+##    density1 = fuels[fuelnames.index(fuel1)][2]
+##    density2 = fuels[fuelnames.index(fuel2)][2]
+##    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
+##    cost1 = fuels[fuelnames.index(fuel1)][3]
+##    cost2 = fuels[fuelnames.index(fuel2)][3]
+##    costlst4.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
+##    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
+##
+##costlst5 = []
+##emissionslst5 = []
+##
+##for i in range(4):
+##    fuel1 = 'camelina'#raw_input("Fuel type one (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix1 = (i+1)*20#raw_input("Mixture (%): ",)
+##    #mix1 = eval(mix1)
+##    fuel2 = 'jatropha'#raw_input("Fuel type two (confuel,camelina,jatropha,algae or soybean): ",)
+##    mix2 = 100 - mix1
+##    #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
+##    aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
+##    #print "The aromatic compound is",aromatics,"%."
+##    #if aromatics < 8.:
+##        #print "Aromatic compound too low (below 8)."
+##    #elif aromatics > 25.:
+##        #print "Aromatic compound too high (above 25)."
+##    #else:
+##    c_j = cj[eval(design)-1]
+##    E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
+##    E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
+##    emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
+##    emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
+##    sigma1 = E1*c_j*mix1/100
+##    sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
+##    emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
+##    emissionslst5.append(emissions_per_s)
+##    #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
+##    density1 = fuels[fuelnames.index(fuel1)][2]
+##    density2 = fuels[fuelnames.index(fuel2)][2]
+##    #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
+##    cost1 = fuels[fuelnames.index(fuel1)][3]
+##    cost2 = fuels[fuelnames.index(fuel2)][3]
+##    costlst5.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
+##    #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
 
 
 
@@ -379,52 +352,52 @@ for i in range(4):
 ##fig.tight_layout()
 ##plt.show()
 
-colors = ['r','g','b','c']
-markers = ['>','d','D','^','<']
-labelss = ['kerosine','camelina', 'jatropha','algae','soybean']
-cam = ['20%kerosine-80%camelina','40%kerosine-60%camelina','60%kerosine-40%camelina','80%kerosine-20%camelina']
-
-for i in range(len(markers)):
-    plt.scatter(costlst[i],emissionslst[i],label=labelss[i],s=70,color='k',marker=markers[i])
-
-for i in range(len(colors)):
-#plt.subplot(2, 1, 1)
-#plt.scatter(costlst[i],emissionslst[i],label='no blends',marker='v')
-    if i == 3:
-        plt.scatter(costlst1[i],emissionslst1[i],color=colors[i],s=70,marker='v',label='blend kerosine & camelina')
-        plt.scatter(costlst2[i],emissionslst2[i],color=colors[i],s=70,marker='o',label='blend kerosine & jatropha')
-        plt.scatter(costlst3[i],emissionslst3[i],color=colors[i],s=70,marker='s',label='blend kerosine & algae')
-        plt.scatter(costlst4[i],emissionslst4[i],color=colors[i],s=70,marker='*',label='blend kerosine & soybean')
-        plt.scatter(costlst5[i],emissionslst5[i],color=colors[i],s=70,marker='x',label='blend camelina & jatropha')
-    else:
-        plt.scatter(costlst1[i],emissionslst1[i],color=colors[i],s=70,marker='v')
-        plt.scatter(costlst2[i],emissionslst2[i],color=colors[i],s=70,marker='o')
-        plt.scatter(costlst3[i],emissionslst3[i],color=colors[i],s=70,marker='s')
-        plt.scatter(costlst4[i],emissionslst4[i],color=colors[i],s=70,marker='*')
-        plt.scatter(costlst5[i],emissionslst5[i],color=colors[i],s=70,marker='x')
-plt.xlabel("USD/s")
-plt.ylabel("gCO2ev/s")
-##locs, labels = plt.xticks()
-##plt.xticks(np.arange(0, 5, step=1))
-##plt.xticks(np.arange(5), ('Confuel', 'Camelina', 'Jatropha', 'Algae', 'Soybean'),rotation=20)
-ax = plt.subplot(111)
-box = ax.get_position()
-ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-ax.legend(bbox_to_anchor=(1, 1))
-plt.grid()
+##colors = ['r','g','b','c']
+##markers = ['>','d','D','^','<']
+##labelss = ['kerosine','camelina', 'jatropha','algae','soybean']
+##cam = ['20%kerosine-80%camelina','40%kerosine-60%camelina','60%kerosine-40%camelina','80%kerosine-20%camelina']
 ##
-##plt.subplot(2, 1, 2)
-##plt.bar(xlst,emissionslst,align='center',width=0.2)
-##plt.ylabel("gCO2eq/MJ")
-##locs, labels = plt.xticks()
-##plt.xticks(np.arange(0, 5, step=1))
-##plt.xticks(np.arange(5), ('Confuel', 'Camelina', 'Jatropha', 'Algae', 'Soybean'),rotation=20)
-####ax = plt.subplot(111)
-####box = ax.get_position()
-####ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-####ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+##for i in range(len(markers)):
+##    plt.scatter(costlst[i],emissionslst[i],label=labelss[i],s=70,color='k',marker=markers[i])
+##
+##for i in range(len(colors)):
+###plt.subplot(2, 1, 1)
+###plt.scatter(costlst[i],emissionslst[i],label='no blends',marker='v')
+##    if i == 3:
+##        plt.scatter(costlst1[i],emissionslst1[i],color=colors[i],s=70,marker='v',label='blend kerosine & camelina')
+##        plt.scatter(costlst2[i],emissionslst2[i],color=colors[i],s=70,marker='o',label='blend kerosine & jatropha')
+##        plt.scatter(costlst3[i],emissionslst3[i],color=colors[i],s=70,marker='s',label='blend kerosine & algae')
+##        plt.scatter(costlst4[i],emissionslst4[i],color=colors[i],s=70,marker='*',label='blend kerosine & soybean')
+##        plt.scatter(costlst5[i],emissionslst5[i],color=colors[i],s=70,marker='x',label='blend camelina & jatropha')
+##    else:
+##        plt.scatter(costlst1[i],emissionslst1[i],color=colors[i],s=70,marker='v')
+##        plt.scatter(costlst2[i],emissionslst2[i],color=colors[i],s=70,marker='o')
+##        plt.scatter(costlst3[i],emissionslst3[i],color=colors[i],s=70,marker='s')
+##        plt.scatter(costlst4[i],emissionslst4[i],color=colors[i],s=70,marker='*')
+##        plt.scatter(costlst5[i],emissionslst5[i],color=colors[i],s=70,marker='x')
+##plt.xlabel("USD/s")
+##plt.ylabel("gCO2ev/s")
+####locs, labels = plt.xticks()
+####plt.xticks(np.arange(0, 5, step=1))
+####plt.xticks(np.arange(5), ('Confuel', 'Camelina', 'Jatropha', 'Algae', 'Soybean'),rotation=20)
+##ax = plt.subplot(111)
+##box = ax.get_position()
+##ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+##ax.legend(bbox_to_anchor=(1, 1))
 ##plt.grid()
-##
-plt.show()
+####
+####plt.subplot(2, 1, 2)
+####plt.bar(xlst,emissionslst,align='center',width=0.2)
+####plt.ylabel("gCO2eq/MJ")
+####locs, labels = plt.xticks()
+####plt.xticks(np.arange(0, 5, step=1))
+####plt.xticks(np.arange(5), ('Confuel', 'Camelina', 'Jatropha', 'Algae', 'Soybean'),rotation=20)
+######ax = plt.subplot(111)
+######box = ax.get_position()
+######ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+######ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+####plt.grid()
+####
+##plt.show()
 
 
