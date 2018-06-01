@@ -16,7 +16,7 @@ from isatool import atmos
 
 Vh =  1
 Vv = 0.100
-Xcg_aft = 0
+Xcg_aft = 1
 S = 
 b =
 MAC =
