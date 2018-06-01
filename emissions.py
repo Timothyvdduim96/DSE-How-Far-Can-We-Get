@@ -11,7 +11,7 @@ from liftdrag import C_D_cr
 #C_D_cr = [0.0282,0.0323,0.0253,0.0245,0.0253,0.0227]
 #S = [130.6,119.6,128.,127.5,126.5,152.5]
 thrust_max = thrust#[181.,181.,177.,220.,175.,187.]
-T_cr = cruise_thrust(h,T,M_cr,C_D_cr,S)#[0.5*rho*V_cruise**2*C_D_cr[0]*S[0]/1000,0.5*rho*V_cruise**2*C_D_cr[1]*S[1]/1000,0.5*rho*V_cruise**2*C_D_cr[2]*S[2]/1000,0.5*rho*V_cruise**2*C_D_cr[3]*S[3]/1000,0.5*rho*V_cruise**2*C_D_cr[4]*S[4]/1000,0.5*rho*V_cruise**2*C_D_cr[5]*S[5]/1000]
+T_cr = cruise_thrust(h_cr,C_D_cr,S)#[0.5*rho*V_cruise**2*C_D_cr[0]*S[0]/1000,0.5*rho*V_cruise**2*C_D_cr[1]*S[1]/1000,0.5*rho*V_cruise**2*C_D_cr[2]*S[2]/1000,0.5*rho*V_cruise**2*C_D_cr[3]*S[3]/1000,0.5*rho*V_cruise**2*C_D_cr[4]*S[4]/1000,0.5*rho*V_cruise**2*C_D_cr[5]*S[5]/1000]
 
 #thrust specific fuel consumption ([lbm/hr/lbf])
 
@@ -30,9 +30,9 @@ TSFC_UHBP_TO = 0.5*TSFC_UHBP_CR
 ##TSFC_2_UHBP_TO = TSFC_UHBP_TO*thrust_max[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_2_UHBP_CR = TSFC_UHBP_CR*T_cr[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_2_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_3_UHBP_TO = TSFC_geared_TO*thrust_max*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_3_UHBP_CR = TSFC_geared_CR*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
-TSFC_3_UHBP_DES = TSFC_geared_TO*0.5*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
+TSFC_3_UHBP_TO = TSFC_UHBP_TO*thrust_max*1000/lbf_to_N/hr_to_s*lbm_to_kg
+TSFC_3_UHBP_CR = TSFC_UHBP_CR*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
+TSFC_3_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_4_UHBP_TO = TSFC_UHBP_TO*thrust_max[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_4_UHBP_CR = TSFC_UHBP_CR*T_cr[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_4_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
@@ -45,11 +45,11 @@ TSFC_3_UHBP_DES = TSFC_geared_TO*0.5*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
 
 #distance time [km][s]
 
-taxi_dis = 4.
-end_climbdis = 156.
-climb_dis = sqrt((39000*ft_to_km)**2+(end_climbdis-taxi_dis)**2)
-begin_descdis = 5756.
-end_descdis = 6006.
+taxi_dis = 4. #GET FROM PAYLOAD-RANGE DIAGRAM
+end_climbdis = 156. #GET FROM PAYLOAD-RANGE DIAGRAM
+climb_dis = sqrt((39000*ft_to_km)**2+(end_climbdis-taxi_dis)**2) 
+begin_descdis = 5756. #GET FROM PAYLOAD-RANGE DIAGRAM
+end_descdis = 6006. #GET FROM PAYLOAD-RANGE DIAGRAM
 desc_dis = sqrt((end_descdis-begin_descdis)**2+(FL*100*ft_to_km)**2)
 cruise_dis = begin_descdis - end_climbdis
 #taxi_time = taxi_dis/(V_taxi/1000)
@@ -129,6 +129,37 @@ fuelnames = ['confuel','camelina','jatropha','algae','soybean']
 costlst = []
 emissionslst = []
 xlst = []
+
+fuel1 = 'confuel'
+fuel2 = 'jatropha'
+mix1 = 20
+mix2 = 100 - mix1
+#print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
+aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
+#print "The aromatic compound is",aromatics,"%."
+#if aromatics < 8.:
+    #print "Aromatic compound too low (below 8)."
+#elif aromatics > 25.:
+    #print "Aromatic compound too high (above 25)."
+#else:
+c_j = cj[eval(design)-1]
+E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
+E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
+emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
+emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
+sigma1 = E1*c_j*mix1/100
+sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
+emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
+emissionslst1.append(emissions_per_s)
+#print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
+density1 = fuels[fuelnames.index(fuel1)][2]
+density2 = fuels[fuelnames.index(fuel2)][2]
+volume_needed = cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2
+#print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
+cost1 = fuels[fuelnames.index(fuel1)][3]
+cost2 = fuels[fuelnames.index(fuel2)][3]
+costlst1.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
+#print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
 
 #blend = '1'#raw_input("Number of fuels blended: ",)
 

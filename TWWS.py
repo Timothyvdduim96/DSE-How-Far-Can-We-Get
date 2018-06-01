@@ -5,9 +5,9 @@ from parameters import *
 
 #-----------------------------------------------parameters--------------------------------------------------
 xsize = 11000
-T = ISA(FL*FL_to_m)[0]
 rho = ISA(0)[2]
 rho_cr = ISA(FL*FL_to_m)[2]
+T = ISA(FL*FL_to_m)[0]
 SwetSref = 5.5   #GET FROM PATRIK?
 
 #------------------------------------design specific parameters---------------------------------------------
@@ -33,6 +33,7 @@ C_D_0 = C_f_e*SwetSref#eval(designdata[19][ch])
 e = 0.85 
 TOP = eval(designdata[15][ch])
 V = V_s
+V_max = max_speed(FL*FL_to_m)
 MTOW = eval(designdata[16][ch])
 
 #land limit
@@ -252,8 +253,8 @@ e=[[5888.8,0.3084]]
 plt.plot(*zip(*e), marker='o', markersize=8, color='fuchsia')#, label="A320-200") #A320-200
 f=[[6703.2,0.291]]
 plt.plot(*zip(*f), marker='o', markersize=8, color='fuchsia')#, label="B737-900") #B737-900
-g=[[6251.5,0.358]]
-plt.plot(*zip(*g), marker='o', markersize=8, color='fuchsia')#, label="A320neo") #A320neo
+o=[[6251.5,0.358]]
+plt.plot(*zip(*o), marker='o', markersize=8, color='fuchsia')#, label="A320neo") #A320neo
 h=[[6819.4,0.326]]
 plt.plot(*zip(*h), marker='o', markersize=8, color='fuchsia')#, label="B737-MAX9") #B737-MAX9
 i=[[6219,0.2789]]
@@ -287,8 +288,8 @@ A = raw_input("Fill in your chosen aspect ratio: ")
 DP = []
 DP.append(DPx)
 DP.append(DPy)
-S = round(MTOW*gr/eval(DPx),2)
-thrust = round(MTOW*gr*eval(DPy)/1000)
+S = round(MTOW*g/eval(DPx),2)
+thrust = round(MTOW*g*eval(DPy)/1000)
 print "Wing area = ", S, "m^2"
 print "Thrust = ", thrust, "kN"
 
