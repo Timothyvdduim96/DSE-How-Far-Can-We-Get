@@ -1,6 +1,6 @@
 from math import *
 
-#conversions
+#------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
 hr_to_s = 3600.
@@ -13,11 +13,14 @@ rad_to_deg = 180/pi
 
 #------------------------------------------------PARAMETERS-----------------------------------------------------
 
+M_tf = 0.935                        #technology factor for supercritical airfoils
 FL = 390                            #flight level
+h_cr = FL*FL_to_m                   #cruise altitude
 R = 287.05
 g = 9.80665                         #gravitational acc.
 gamma = 1.4
 M_cr = 0.79                         #cruise mach number (req)
+M_max = 0.82                        #maximum cruise mach number
 rho_0 = 1.225                       #sea-level density
 T_0 = 288.15                        #sea-level temperature 
 s_l = 2000.                         #landing distance
@@ -53,7 +56,7 @@ for i in range(1,8):
     
 def ISA(h):
     for i in range(8):
-        if hlst[i] < h <= hlst[i+1]:
+        if hlst[i] <= h <= hlst[i+1]:
             h0 = hlst[i]
             T0 = T0lst[i]
             p0 = p0lst[i]
@@ -72,15 +75,21 @@ def ISA(h):
 
 #--------------speed------------------
 
-def a(T): #speed of sound
+def a(h): #speed of sound
 
-    a = sqrt(gamma*R*T)
+    a = sqrt(gamma*R*ISA(h)[0])
 
     return a
 
-def cruise_speed(T,M_cr):
+def max_speed(h):
 
-    V_cr = M_cr*a(T)
+    V = M_max*a(h)
+
+    return V
+    
+def cruise_speed(h_cr):
+
+    V_cr = M_cr*a(h_cr)
 
     return V_cr
 
@@ -92,16 +101,17 @@ def q(V,h): #for cruise q, q = q(cruise_speed(a(ISA(h)[0]),M_cr),ISA(h)[2]), def
 
     return q
 
-def cruise_q(h,M_cr):
+def cruise_q(h_cr):
     
-    q_cr = 0.5*ISA(h)[2]*cruise_speed(a(ISA(h)[0]),M_cr)**2
+    q_cr = 0.5*ISA(h_cr)[2]*cruise_speed(h_cr)**2
 
     return q_cr
 
 #-------------thrust------------------
 
-def cruise_thrust(h,T,M_cr,C_D_cr,S):
+def cruise_thrust(h,C_D_cr,S):
     
-    T_cr = 0.5*ISA(h)[2]*cruise_speed(a(T),M_cr)**2*C_D_cr*S
+    T_cr = 0.5*ISA(h)[2]*cruise_speed(h)**2*C_D_cr*S
 
     return T_cr
+
