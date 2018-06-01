@@ -1,16 +1,18 @@
 ##Wing Layout
 from math import *
-from TWWS import S
+from TWWS import S,MTOW
 from parameters import *
-from liftdrag import C_L_cr
 
 #----------inputs--------
-MTOW = eval(designdata[16][ch])
 #CLmax_clean
 #CLmax_takoff
 #CLmax_land
 
-M_dd = M_cruise + 0.03
+q = q(cruise_speed(h_cr),h_cr)
+
+C_L_cr = MTOW*g/(q*S)
+
+M_dd = M_cr + 0.03
 
 #--------alt calc--------
 #p = p0 * (1-(lambda_alt*h)/T0)**(g0/(R*lambda_alt))
