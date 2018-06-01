@@ -10,7 +10,7 @@ MTOW = eval(designdata[16][ch])
 #CLmax_takoff
 #CLmax_land
 
-M_dd = M_cruise + 0.03
+M_dd = M_cr + 0.03
 
 #--------alt calc--------
 #p = p0 * (1-(lambda_alt*h)/T0)**(g0/(R*lambda_alt))
@@ -20,7 +20,7 @@ q = cruise_q(h_cr)
 #CL_cruise = MTOW/(q*S)
 
 
-cos_lambdac_4 =  0.75 * (0.935/M_dd)
+cos_lambdac_4 =  0.75 * (M_tf/M_dd)
 
 if M_cr < 0.7:
     cos_lambdac_4 = 1
