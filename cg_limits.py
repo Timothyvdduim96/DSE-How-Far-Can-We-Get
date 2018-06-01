@@ -52,5 +52,5 @@ Xcgf =    #[m]
 
 XcgOEWm = (Wemp*Xemp+Wfus*Xfus+Wnac*Xnac+Wprop*Xprop+Wfix*Xfix+Wwing*Xwing)/(Wemp+Wfus+Wnac+Wprop+Wfix+Wwing)
 XcgOEW_pl =  (Wemp*Xemp+Wfus*Xfus+Wnac*Xnac+Wprop*Xprop+Wfix*Xfix+Wwing*Xwing + Wpl*Xcgpl)/(Wemp+Wfus+Wnac+Wprop+Wfix+Wwing+Wpl)
-XcgOEW_f = XcgOEW_pl =  (Wemp*Xemp+Wfus*Xfus+Wnac*Xnac+Wprop*Xprop+Wfix*Xfix+Wwing*Xwing + Wf*Xcgf)/(Wemp+Wfus+Wnac+Wprop+Wfix+Wwing+Wf)
+XcgOEW_f =  (Wemp*Xemp+Wfus*Xfus+Wnac*Xnac+Wprop*Xprop+Wfix*Xfix+Wwing*Xwing + Wf*Xcgf)/(Wemp+Wfus+Wnac+Wprop+Wfix+Wwing+Wf)
 XcgOEW_pl_f =  (Wemp*Xemp+Wfus*Xfus+Wnac*Xnac+Wprop*Xprop+Wfix*Xfix+Wwing*Xwing + Wpl*Xcgpl+Wf*Xcgf)/(Wemp+Wfus+Wnac+Wprop+Wfix+Wwing+Wpl+Wf)
