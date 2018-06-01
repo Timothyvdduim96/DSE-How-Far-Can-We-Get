@@ -6,7 +6,7 @@ from TWWS import S,thrust
 from liftdrag import C_D_cr
 
 #parameters
-
+V_cr = cruise_speed(h_cr)
 #V_taxi = 10.
 #C_D_cr = [0.0282,0.0323,0.0253,0.0245,0.0253,0.0227]
 #S = [130.6,119.6,128.,127.5,126.5,152.5]
@@ -142,7 +142,7 @@ aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4]
 #elif aromatics > 25.:
     #print "Aromatic compound too high (above 25)."
 #else:
-c_j = cj[eval(design)-1]
+c_j = cj_3_UHBP#cj[eval(design)-1]
 E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
 E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
 emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
@@ -150,15 +150,15 @@ emissions_per_E_2 = fuels[fuelnames.index(fuel2)][0]
 sigma1 = E1*c_j*mix1/100
 sigma2 = E2*c_j*mix2/100 #energy flow [MJ/s]
 emissions_per_s = sigma1*emissions_per_E_1 + sigma2*emissions_per_E_2
-emissionslst1.append(emissions_per_s)
+emissionslst.append(emissions_per_s)
 #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
 density1 = fuels[fuelnames.index(fuel1)][2]
 density2 = fuels[fuelnames.index(fuel2)][2]
-volume_needed = cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2
+volume_needed = c_j*mix1/100*total_time/density1 + c_j*mix2/100*total_time/density2
 #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
 cost1 = fuels[fuelnames.index(fuel1)][3]
 cost2 = fuels[fuelnames.index(fuel2)][3]
-costlst1.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
+costlst.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
 #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
 
 #blend = '1'#raw_input("Number of fuels blended: ",)

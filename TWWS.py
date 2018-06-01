@@ -282,20 +282,20 @@ ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.grid()
 plt.show()
 
-DPx = raw_input("Fill in a x-coordinate of a design point: ")
-DPy = raw_input("Fill in a y-coordinate of a design point: ")
-A = raw_input("Fill in your chosen aspect ratio: ")
+DPx = 5302.#raw_input("Fill in a x-coordinate of a design point: ")
+DPy = 0.249#raw_input("Fill in a y-coordinate of a design point: ")
+#A = raw_input("Fill in your chosen aspect ratio: ")
 DP = []
 DP.append(DPx)
 DP.append(DPy)
-S = round(MTOW*g/eval(DPx),2)
-thrust = round(MTOW*g*eval(DPy)/1000)
+S = round(MTOW*g/DPx,2)
+thrust = round(MTOW*g*DPy/1000)
 print "Wing area = ", S, "m^2"
 print "Thrust = ", thrust, "kN"
 
-DPx = eval(DPx)
-DPy = eval(DPy)
-A = eval(A)
+#DPx = eval(DPx)
+#DPy = eval(DPy)
+#A = eval(A)
 
 def findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3):
 

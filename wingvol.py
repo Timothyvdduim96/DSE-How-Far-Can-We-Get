@@ -5,7 +5,6 @@ import sympy
 from scipy.integrate import quad
 from TWWS import S
 from emissions import volume_needed
-from Wing Layout import c_r,c_t,taper,b
 
 #------------------------------------------------upper coordinates-----------------------------------------------------------
 
