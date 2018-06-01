@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sympy
 from scipy.integrate import quad
-from TWWS import A, S
+from TWWS import S
+from emissions import volume_needed
 
 #------------------------------------------------upper coordinates-----------------------------------------------------------
 
@@ -86,16 +87,14 @@ def fint(xstart,xend):
     return quad(fdiff,eval(xstart),eval(xend),args=())[0]
 
 #input 
-b = sqrt(S*A)  #span
-taper = 0.4 #assume, AANPASSEN --> FORMULA
-c_r = 2*b/(A*(1+taper)) #root chord
-c_t = c_r*taper #tip chord
-print c_r,c_t
-b_frac = 1  #wing span used for fuel (from the inside)
-d_fus = 2.   #width fuselage
+#b = span(S,A)                       #span
+#taper = 0.4 #IMPORT FROM WINGPLANFORM
+#c_r = 2*b/(A*(1+taper))             #root chord
+#c_t = c_r*taper                     #tip chord
+b_frac = 1                          #wing span used for fuel (from the inside)
+d_fus = 2.                          #IMPORT FROM PATRIK
 b_eff = (b - d_fus)*b_frac - 2
-volneeded = 17.
-cfac = 0.9  #correction factor for loss of space in fuel tank
+cfac = 0.9                          #correction factor for loss of space in fuel tank
 
 a = fint(xstart,xend)
 b_cur = np.arange(0,(b-d_fus)/2+0.001,0.001)
@@ -113,7 +112,7 @@ for i in range(len(b_cur)):
         c_avg = sqrt((c_r_f**3 - c_t_f**3)/(3*(c_r_f - c_t_f)))
         volume = cfac*2*b_cur[i]*a*c_avg**2
         vol.append(volume)
-        if volume >= volneeded:
+        if volume >= volume_needed:
             ilst.append(i)
 
 if len(ilst) > 0:
