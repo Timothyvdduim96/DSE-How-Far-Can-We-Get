@@ -284,7 +284,7 @@ plt.grid()
 #plt.show()
 '''
 DPx = 5302.#raw_input("Fill in a x-coordinate of a design point: ")
-DPy = 0.249#raw_input("Fill in a y-coordinate of a design point: ")
+DPy = 0.325#raw_input("Fill in a y-coordinate of a design point: ")
 #A = raw_input("Fill in your chosen aspect ratio: ")
 DP = []
 DP.append(DPx)

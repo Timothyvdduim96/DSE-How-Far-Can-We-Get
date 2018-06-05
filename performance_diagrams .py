@@ -22,7 +22,12 @@ rho = 1.225
 W_newton = W_kg * 9.80665
 V_stall = sqrt((W_newton/S)*(2/rho)*(1/C_L_maxto))
 
+v = np.arange(V_stall,70,1)
 
 
+Pa_list = []
+for i in v:
+    Pa = thrust * v
+    Pa_list.append(Pa)
 
-Pa = []
+print v
