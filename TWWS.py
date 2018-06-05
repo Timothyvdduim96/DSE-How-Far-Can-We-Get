@@ -291,8 +291,8 @@ DP.append(DPx)
 DP.append(DPy)
 S = round(MTOW*g/DPx,2)
 thrust = round(MTOW*g*DPy/1000)
-print "Wing area = ", S, "m^2"
-print "Thrust = ", thrust, "kN"
+#print "Wing area = ", S, "m^2"
+#print "Thrust = ", thrust, "kN"
 
 #DPx = eval(DPx)
 #DPy = eval(DPy)
@@ -347,8 +347,8 @@ def findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_ma
 
 C_Lland = findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
 
-print 'C_L_max_cr = ', findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
-print "C_L_max_land = ", findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
-print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
+#print 'C_L_max_cr = ', findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
+#print "C_L_max_land = ", findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
+#print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 
 C_L_maxto = findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
