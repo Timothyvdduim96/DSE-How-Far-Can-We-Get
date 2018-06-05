@@ -29,18 +29,18 @@ if Nmw <= 12:
 else:
     Nst = 4
     
-LCN = 1
+LCN = 50
 p = 430*np.log(LCN)-680
 
 Pmw = 0.92*MTOW/Nmw
 Pnw = 0.08*MTOW/Nnw
 
-#ln = 
-#lm =
-#psi = 
-#z = 
-#zt =
-#ye =  
+ln = 
+lm =
+psi = 55. * (pi/180)
+z = 
+zt =
+ye =  
 phi = 5. * (pi/180.)
 
 #ymlg1 = (ln+lm)/(np.sqrt((ln*ln+np.tan(psi)*np.tan(psi))/(z*z)-1)) #lateral tip over criterion

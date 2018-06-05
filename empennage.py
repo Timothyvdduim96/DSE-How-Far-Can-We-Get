@@ -11,16 +11,16 @@ from scipy import optimize as opt
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
-from isatool import atmos
+
 
 
 Vh =  1         #horizontal tail volume
 Vv = 0.100      #vertical tail volume
 
-S =             #wing surface area
-b =             #wing span
-MAC =           #mean aerodynamic chord
-L_fus =         #fuselage length
+S = 128            #wing surface area
+b = 42.33202098             #wing span
+MAC =  3.778287263         #mean aerodynamic chord
+L_fus = 46.55        #fuselage length
 
 Sh = Vh*S*MAC/(0.49*L_fus)   #horizontal tail surface area
 Sv = Vv*S*b/(0.45*L_fus)     #vertical tail surface area
@@ -32,12 +32,12 @@ Av = 1.8
 lambda_h = 0.5  #taper
 lambda_v = 0.5
 
-b_h = np.sqrt(A_h/S_h)  #horizontal tail span
-b_v = np.sqrt(A_v/S_v) #actual b_v = b_v/2
+b_h = np.sqrt(Ah*Sh)  #horizontal tail span
+b_v = np.sqrt(Av*Sv) #actual b_v = b_v/2
 
-cr_h = 2*S_h/(b_h*(1+lambda_h))
+cr_h = 2*Sh/(b_h*(1+lambda_h))
 ct_h = cr_h*lambda_h
-cr_v = 2*S_v/(b_v*(1+lambda_v))
+cr_v = 2*Sv/(b_v*(1+lambda_v))
 ct_v = cr_v*lambda_v
 
 MAC_h = (2/3.)*(cr_h)*((1+lambda_h+lambda_h*lambda_h)/(1+lambda_h))
@@ -46,3 +46,8 @@ MAC_v = (2/3.)*(cr_v)*((1+lambda_v+lambda_v*lambda_v)/(1+lambda_v))
 YMAC_h = (b_h/6.)*(1+2*lambda_h)/(1+lambda_h) 
 YMAC_v = (b_v/6.)*(1+2*lambda_v)/(1+lambda_v)
 
+print (cr_h)
+print (ct_h)
+print (cr_v)
+print (ct_v)
+print (MAC_h,MAC_v)
