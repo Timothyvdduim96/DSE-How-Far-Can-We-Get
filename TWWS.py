@@ -329,6 +329,8 @@ def findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2):
         C_Lto = "Take off requirement not satisfied"
 
     return C_Lto
+    
+
 
 def findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3):
 
@@ -349,4 +351,4 @@ print 'C_L_max_cr = ', findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_
 print "C_L_max_land = ", findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
 print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 
-    
+C_L_maxto = findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)

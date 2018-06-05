@@ -11,12 +11,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import *
 from liftdrag import C_D_cr
-from TWWS import thrust
+from TWWS import thrust, C_L_maxto
 
 #----------------------------------------------
+W_kg = 72564                       #max to weight
+S = 127.95                      #wing surface
+rho = 1.225
+#---------------------------------------------
+
+W_newton = W_kg * 9.80665
+V_stall = sqrt((W_newton/S)*(2/rho)*(1/C_L_maxto))
 
 
-V = np.arange()
 
 
 Pa = []
