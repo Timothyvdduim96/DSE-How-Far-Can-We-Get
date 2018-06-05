@@ -53,7 +53,7 @@ for i in range(1,8):
     
 def ISA(h):
     for i in range(8):
-        if hlst[i] < h <= hlst[i+1]:
+        if hlst[i] <= h <= hlst[i+1]:
             h0 = hlst[i]
             T0 = T0lst[i]
             p0 = p0lst[i]
