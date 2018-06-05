@@ -74,13 +74,14 @@ F=l_fus/(2*r_ext_fus) #Fineness Ratio
 theta=2*m.asin(w_floor/(2*r_int_fus))
 area_cargo=1./2.*r_int_fus**2*(theta-m.sin(theta)) #[m^2] Area available for Cargo excluding support
 area_int_fus=m.pi*r_int_fus**2 #[m^2] Entire Internal Frontal Area
-area_cabin=area_int_fus-area_cargo #[m^2] Area in cabin 
+area_cabin=area_int_fus-area_cargo #[m^2] Area in cabin
+volume_cabin=area_cabin*l_cabin
+volume_cargo=area_cargo*l_cabin 
 
 print "Length of the fuselage is",round(l_fus,2)," m"
 print "Diameter of the fuselage is",round(d_int_fus,2)," m"
 print "Width of the floor is",round(w_floor,2)," m"
 print "Height of the floor is",h_floor,"m"
-print 
 
 
 
