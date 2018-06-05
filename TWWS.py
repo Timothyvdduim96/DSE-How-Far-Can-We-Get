@@ -16,25 +16,25 @@ designdatalst = 'dop.csv'
 
 designdata = np.genfromtxt(designdatalst, dtype='string', delimiter=';')
 
-ch = raw_input("choose your design nr (1 to 6): ")
+#ch = raw_input("choose your design nr (1 to 6): ")
 
-C_L_max_1 = eval(designdata[1][ch]) 
-C_L_max_2 = eval(designdata[2][ch]) 
-C_L_max_3 = eval(designdata[3][ch]) 
-C_L_clean_1 = eval(designdata[4][ch]) 
-C_L_clean_2 = eval(designdata[5][ch]) 
-C_L_clean_3 = eval(designdata[6][ch])
-C_L_TO_1 = eval(designdata[7][ch]) 
-C_L_TO_2 = eval(designdata[8][ch])
-C_L_TO_3 = eval(designdata[9][ch])
+C_L_max_1 = eval(designdata[1][3]) 
+C_L_max_2 = eval(designdata[2][3]) 
+C_L_max_3 = eval(designdata[3][3]) 
+C_L_clean_1 = eval(designdata[4][3]) 
+C_L_clean_2 = eval(designdata[5][3]) 
+C_L_clean_3 = eval(designdata[6][3])
+C_L_TO_1 = eval(designdata[7][3]) 
+C_L_TO_2 = eval(designdata[8][3])
+C_L_TO_3 = eval(designdata[9][3])
 C_D_0 = C_f_e*SwetSref#eval(designdata[19][ch]) 
 #A_2 = eval(designdata[13][ch]) 
 #A_3 = eval(designdata[14][ch]) 
 e = 0.85 
-TOP = eval(designdata[15][ch])
+TOP = eval(designdata[15][3])
 V = V_s
 V_max = max_speed(FL*FL_to_m)
-MTOW = eval(designdata[16][ch])
+MTOW = eval(designdata[16][3])
 
 #land limit
 
@@ -190,25 +190,26 @@ for i in range(len(WS)):
 ##
 ##plt.rc('font', **font)
 
+
 #plotting
 landlimit_1 = land_limit(rho,C_L_max_1,C_L_max_2,C_L_max_3,V_land,f)[0]
 landlimit_2 = land_limit(rho,C_L_max_1,C_L_max_2,C_L_max_3,V_land,f)[1]
 landlimit_3 = land_limit(rho,C_L_max_1,C_L_max_2,C_L_max_3,V_land,f)[2]
-plt.axvline(landlimit_1, linestyle="dashed", color="Red",label="Landing with CL=2.0")
-plt.axvline(landlimit_2, linestyle="dotted", color="Red",label="Landing with CL=2.2")
-plt.axvline(landlimit_3, linestyle="solid", color="Red",label="Landing with CL=3.0")
+#plt.axvline(landlimit_1, linestyle="dashed", color="Red",label="Landing with CL=2.0")
+#plt.axvline(landlimit_2, linestyle="dotted", color="Red",label="Landing with CL=2.2")
+#plt.axvline(landlimit_3, linestyle="solid", color="Red",label="Landing with CL=3.0")
 
 crlimit_1 = cr_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[0]
 crlimit_2 = cr_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[1]
 crlimit_3 = cr_limit(rho,C_L_clean_1,C_L_clean_2,C_L_clean_3,V_s)[2]
-plt.axvline(crlimit_1, linestyle="dashed", color="Blue",label="Cruising with CL=1.0")
-plt.axvline(crlimit_2, linestyle="dotted", color="Blue",label="Cruising with CL=1.2")
-plt.axvline(crlimit_3, linestyle="solid", color="Blue",label="Cruising with CL=1.4")
+#plt.axvline(crlimit_1, linestyle="dashed", color="Blue",label="Cruising with CL=1.0")
+#plt.axvline(crlimit_2, linestyle="dotted", color="Blue",label="Cruising with CL=1.2")
+#plt.axvline(crlimit_3, linestyle="solid", color="Blue",label="Cruising with CL=1.4")
 
 climbgradientlimit_1 = climb_gradient(cV,C_D_0,A,e)
 #climbgradientlimit_2 = climb_gradient(cV,C_D_0,A,A_2,A_3,e)[1]
 #climbgradientlimit_3 = climb_gradient(cV,C_D_0,A,A_2,A_3,e)[2]
-plt.axhline(climbgradientlimit_1, linestyle="solid", color="Green",label="Climb gradient with A=10.5")
+#plt.axhline(climbgradientlimit_1, linestyle="solid", color="Green",label="Climb gradient with A=10.5")
 #plt.axhline(climbgradientlimit_2, linestyle="dotted", color="Green",label="Climb gradient with A=12")
 #plt.axhline(climbgradientlimit_3, linestyle="solid", color="Green",label="Climb gradient with A=13")
 
@@ -216,31 +217,31 @@ xaxis = climb_rate(c,rho,C_D_0,A,e,xsize)[0]
 climbratelimit_1 = climb_rate(c,rho,C_D_0,A,e,xsize)[1]
 #climbratelimit_2 = climb_rate(c,rho,C_D_0,A,A_2,A_3,e,xsize)[2]
 #climbratelimit_3 = climb_rate(c,rho,C_D_0,A,A_2,A_3,e,xsize)[3]
-plt.plot(xaxis, climbratelimit_1, linestyle="solid", color="Black",label="Climb rate with A=10.5")
+#plt.plot(xaxis, climbratelimit_1, linestyle="solid", color="Black",label="Climb rate with A=10.5")
 #plt.plot(xaxis, climbratelimit_2, linestyle="dotted", color="Black",label="Climb rate with A=12")
 #plt.plot(xaxis, climbratelimit_3, linestyle="solid", color="Black",label="Climb rate with A=13")
 
 takeofflimit_1 = take_off(TOP,C_L_TO_1,C_L_TO_2,C_L_TO_3,rho,rho_0)[0]
 takeofflimit_2 = take_off(TOP,C_L_TO_1,C_L_TO_2,C_L_TO_3,rho,rho_0)[1]
 takeofflimit_3 = take_off(TOP,C_L_TO_1,C_L_TO_2,C_L_TO_3,rho,rho_0)[2]
-plt.plot(xaxis, takeofflimit_1, linestyle="dashed", color="Cyan",label="Taking off with CL=2.0")
+#plt.plot(xaxis, takeofflimit_1, linestyle="dashed", color="Cyan",label="Taking off with CL=2.0")
 #plt.plot(xaxis, takeofflimit_2, linestyle="dotted", color="Cyan",label="Taking off with CL=2.5")
-plt.plot(xaxis, takeofflimit_3, linestyle="solid", color="Cyan",label="Taking off with CL=3.0")
+#plt.plot(xaxis, takeofflimit_3, linestyle="solid", color="Cyan",label="Taking off with CL=3.0")
 
 maxspeedlimit_1 = speed_limit(C_D_0,rho_cr,V_max,A,e)
 #maxspeedlimit_2 = speed_limit(C_D_0,rho_cr,V_max,A,A_2,A_3,e)[1]
 #maxspeedlimit_3 = speed_limit(C_D_0,rho_cr,V_max,A,A_2,A_3,e)[2]
-plt.plot(xaxis, maxspeedlimit_1, linestyle="solid", color="Violet",label="Max speed with A=10.5")
+#plt.plot(xaxis, maxspeedlimit_1, linestyle="solid", color="Violet",label="Max speed with A=10.5")
 #plt.plot(xaxis, maxspeedlimit_2, linestyle="dotted", color="Violet",label="Max speed with A=12")
 #plt.plot(xaxis, maxspeedlimit_3, linestyle="solid", color="Violet",label="Max speed with A=13")
 
 loadfactorlimit_1 = loadfactor_limit(C_D_0,rho,V,n_max,A)
 #loadfactorlimit_2 = loadfactor_limit(C_D_0,rho,V,n_max,A,A_2,A_3)[1]
 #loadfactorlimit_3 = loadfactor_limit(C_D_0,rho,V,n_max,A,A_2,A_3)[2]
-plt.plot(xaxis, loadfactorlimit_1, linestyle="solid", color="Maroon",label="Load factor with A=10.5")
+#plt.plot(xaxis, loadfactorlimit_1, linestyle="solid", color="Maroon",label="Load factor with A=10.5")
 #plt.plot(xaxis, loadfactorlimit_2, linestyle="dotted", color="Maroon",label="Load factor with A=12")
 #plt.plot(xaxis, loadfactorlimit_3, linestyle="solid", color="Maroon",label="Load factor with A=13")
-
+'''
 a=[[7457,0.32]]
 plt.plot(*zip(*a), marker='o', markersize=8, color='fuchsia', label="reference aircraft") #A321neo
 ##b=[[6239,0.35]]
@@ -280,8 +281,8 @@ box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.grid()
-plt.show()
-
+#plt.show()
+'''
 DPx = 5302.#raw_input("Fill in a x-coordinate of a design point: ")
 DPy = 0.249#raw_input("Fill in a y-coordinate of a design point: ")
 #A = raw_input("Fill in your chosen aspect ratio: ")
