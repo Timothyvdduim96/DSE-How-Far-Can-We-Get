@@ -9,6 +9,18 @@ Afactor = 1.2    #factor increasing aspect ratio for winglets
 WS = 0.98*DPx    #correct wing loading for fuel burn during cruise
 sweep_LE = 0.68  #GET FROM WINGPLANFORM
 
+#--------------------------
+#This is for the performance diagrams
+
+q3 = q(cruise_speed(h_cr),914.1)
+q6 = q(cruise_speed(h_cr),1828.8)
+q9 = q(cruise_speed(h_cr),2743.2)
+q12 = q(cruise_speed(h_cr),3657.6)
+q15 = q(cruise_speed(h_cr),4572)
+q18 = q(cruise_speed(h_cr),5486.4)
+
+
+#-------------------------
 #formulas
 
 q = q(cruise_speed(h_cr),h_cr)

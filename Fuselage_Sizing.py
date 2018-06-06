@@ -1,23 +1,9 @@
 #Fuselage Sizing Program -------------- Development by Patrik Kovacik Copyright :D
-import math as m
+from math import *
+from parameters import *
 
 #B: Boeing 737-700 value Single Class highest density
 #A: Airbus A320neo,A321neo value Single Class highest density
-
-
-#General
-pi=3.141592653589793
-inch_to_cm=2.54
-cm_to_inch=1/2.54
-mm_to_m=1./1000.
-m_to_mm=1000.
-cm_to_m=1./100.
-rad_to_deg=180.0/pi
-deg_to_rad=pi/180.0
-inch_to_m=inch_to_cm*cm_to_m
-
-print inch_to_m
-
 
 #Input Parameters
 
@@ -37,14 +23,16 @@ h_luggage=h_aisle-h_headspace #[inch] Maximal size of luggage from top of fusela
 h_extra=40 #[mm] Place for fit other things 
 
     #Length
-seat_pitch=29 # [inch] B:30 A:28/29 Adsee 32
+seat_pitch=28 # [inch] B:30 A:28/29 Adsee 32
 N_seat_row=6 # [seat/row]  B:6 A:6
 ratio_nosecone=1.5 #[length/diameter fus] 1.0-2.0
 ratio_tailcone=2.5 #[length/diameter fus] 2.0-3.0
-l_cabin_corr=1.08 #Adsee single-aisle
+#l_cabin_corr=1.08 #Adsee single-aisle
     #Other
 N_passengers=240 #[-] B:184 A:180,220      WARNING!!! MUST BE MULTIPLE OF SIX!!!!
 ext_int_corr=1.088
+N_rows_A321neo = 41
+l_cabin_A321neo = 34.44
 
 
 #Output
@@ -62,12 +50,12 @@ d_ext_fus=d_int_fus*ext_int_corr
 r_int_fus=d_int_fus*0.5 #Radius 
 r_ext_fus=r_int_fus*ext_int_corr #[m] External Radius
 
-l_cabin=l_cabin_corr*seat_pitch*N_rows
-l_cabin*=inch_to_m
+def restvandespace():
+    restvandespace = l_cabin_A321neo - N_rows_A321neo*seat_pitch*inch_to_m
 
-print N_rows
-print seat_pitch
-print l_cabin_corr
+    return restvandespace
+
+l_cabin = N_rows*seat_pitch*inch_to_m + restvandespace()
 
 l_nosecone=2*r_int_fus*ratio_nosecone #[m] Length of nosecone
 l_tailcone=2*r_int_fus*ratio_tailcone #[m] Length of tailcone
@@ -75,16 +63,15 @@ l_tailcone=2*r_int_fus*ratio_tailcone #[m] Length of tailcone
 l_fus=l_nosecone+l_tailcone+l_cabin #[m] Fineness Ratio
 F=l_fus/(2*r_ext_fus) #Fineness Ratio
 
-theta=2*m.asin(w_floor/(2*r_int_fus))
-area_cargo=1./2.*r_int_fus**2*(theta-m.sin(theta)) #[m^2] Area available for Cargo excluding support
-area_int_fus=m.pi*r_int_fus**2 #[m^2] Entire Internal Frontal Area
+theta=2*asin(w_floor/(2*r_int_fus))
+area_cargo=1./2.*r_int_fus**2*(theta-sin(theta)) #[m^2] Area available for Cargo excluding support
+area_int_fus=pi*r_int_fus**2 #[m^2] Entire Internal Frontal Area
 area_cabin=area_int_fus-area_cargo #[m^2] Area in cabin 
 
 print "Length of the fuselage is",round(l_fus,2)," m"
 print "Diameter of the fuselage is",round(d_int_fus,2)," m"
 print "Width of the floor is",round(w_floor,2)," m"
 print "Height of the floor is",h_floor,"m"
-print 
 
 
 

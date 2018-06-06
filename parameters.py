@@ -10,6 +10,12 @@ ft_to_m = 0.3048
 gal_to_L = 3.78541
 FL_to_m = ft_to_m*100
 rad_to_deg = 180/pi
+inch_to_cm=2.54
+cm_to_inch=1/2.54
+mm_to_m=1./1000.
+m_to_mm=1000.
+cm_to_m=1/100.
+inch_to_m=inch_to_cm*cm_to_m
 
 #------------------------------------------------PARAMETERS-----------------------------------------------------
 

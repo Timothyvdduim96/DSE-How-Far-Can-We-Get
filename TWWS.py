@@ -16,11 +16,7 @@ designdatalst = 'dop.csv'
 
 designdata = np.genfromtxt(designdatalst, dtype='string', delimiter=';')
 
-<<<<<<< HEAD
-ch = raw_input("choose your design nr (1 to 6): ")
-=======
 #ch = raw_input("choose your design nr (1 to 6): ")
->>>>>>> 7738184f841569acd795283153f83d15940e2b87
 
 C_L_max_1 = eval(designdata[1][3]) 
 C_L_max_2 = eval(designdata[2][3]) 
@@ -29,13 +25,8 @@ C_L_clean_1 = eval(designdata[4][3])
 C_L_clean_2 = eval(designdata[5][3]) 
 C_L_clean_3 = eval(designdata[6][3])
 C_L_TO_1 = eval(designdata[7][3]) 
-<<<<<<< HEAD
-C_L_TO_2 = eval(designdata[8][ch])
-C_L_TO_3 = eval(designdata[9][ch])
-=======
 C_L_TO_2 = eval(designdata[8][3])
 C_L_TO_3 = eval(designdata[9][3])
->>>>>>> 7738184f841569acd795283153f83d15940e2b87
 C_D_0 = C_f_e*SwetSref#eval(designdata[19][ch]) 
 #A_2 = eval(designdata[13][ch]) 
 #A_3 = eval(designdata[14][ch]) 
@@ -300,8 +291,8 @@ DP.append(DPx)
 DP.append(DPy)
 S = round(MTOW*g/DPx,2)
 thrust = round(MTOW*g*DPy/1000)
-print "Wing area = ", S, "m^2"
-print "Thrust = ", thrust, "kN"
+#print "Wing area = ", S, "m^2"
+#print "Thrust = ", thrust, "kN"
 
 #DPx = eval(DPx)
 #DPy = eval(DPy)
@@ -356,8 +347,8 @@ def findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_ma
 
 C_Lland = findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
 
-print 'C_L_max_cr = ', findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
-print "C_L_max_land = ", findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
-print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
+#print 'C_L_max_cr = ', findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
+#print "C_L_max_land = ", findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
+#print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 
 C_L_maxto = findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
