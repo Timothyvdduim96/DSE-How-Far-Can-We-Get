@@ -16,7 +16,7 @@ rad_to_deg=180.0/pi
 deg_to_rad=pi/180.0
 inch_to_m=inch_to_cm*cm_to_m
 
-
+print inch_to_m
 
 
 #Input Parameters
@@ -64,6 +64,10 @@ r_ext_fus=r_int_fus*ext_int_corr #[m] External Radius
 
 l_cabin=l_cabin_corr*seat_pitch*N_rows
 l_cabin*=inch_to_m
+
+print N_rows
+print seat_pitch
+print l_cabin_corr
 
 l_nosecone=2*r_int_fus*ratio_nosecone #[m] Length of nosecone
 l_tailcone=2*r_int_fus*ratio_tailcone #[m] Length of tailcone
