@@ -10,7 +10,7 @@ import numpy as np
 from math import *
 import matplotlib.pyplot as plt
 from parameters import rho_0,g,A
-from TWWS import C_L_maxto, thrust, C_D_0,C_Lcr
+from TWWS import C_L_maxto, thrust, C_D_0,C_Lcr,C_Lland
 #from liftdrag import C_L_cr
 
 print "-------------Take-off performance-----------------"
@@ -48,5 +48,20 @@ print
 print "The lift of speed is:", V_LOF, "m/s"
 print "The ground run distance is:", s, "m"
 print "The airborne distance is:", x_total_airborne, "m"
+print "The total take-off distance is:", x_total, "m"
+
+
+#-------------Landing performance
+V_ap = 1.3*V_min
+x_land_airborne= 1.3**2 * ((W/S)*(2/rho_0)*(1/C_Lland)/(0.10*g*g))
+x_tr=2.6*V_min
+Trev = 
+x_brake=((W**2)/(2*g*S))*(2/rho_0)*(1.3**2/C_Lland)*(1/(Trev+D+(0.02*(W-L))))
+x_total_land = x_land_airborne+x_tr+x_brake
+
+print
+print "The approach speed is:", V_ap, "m/s"
+print "The airborne distance during landing is", x_land_airborne , "m"
+print "The braking distance is:", x_brake, "m"
 print "The total take-off distance is:", x_total, "m"
 
