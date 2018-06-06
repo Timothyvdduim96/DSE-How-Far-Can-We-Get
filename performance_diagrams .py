@@ -45,5 +45,5 @@ for j in range(len(rho)):
     #plt.plot(v,Pr_list)
     #plt.show()
     
-    plt.plot(v,PaPrlist)
-    plt.show()
+#    plt.plot(v,PaPrlist)
+#    plt.show()
