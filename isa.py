@@ -48,4 +48,3 @@ def ISA_rho(rho):
         h = ((rho/1.225)**((-g/(a*R)-1)**-1)-1)*T0/a
     return h
 
-print ISA_rho(1.225)

@@ -121,10 +121,10 @@ for k in v2:
 #     PaPrlist.append(Pnew)
     
 
-plt.plot(v,Pa_list) #CHANGE V TO VNORM FOR THRUST TO START AT 0
-plt.plot(v,Pr_list)
-plt.plot(v2,Pr1_list)
-plt.show()
+# plt.plot(v,Pa_list) #CHANGE V TO VNORM FOR THRUST TO START AT 0
+# plt.plot(v,Pr_list)
+# plt.plot(v2,Pr1_list)
+# plt.show()
 
 # plt.plot(v,PaPrlist[:239])
 # plt.plot(v,PaPrlist[239:478])
@@ -132,9 +132,9 @@ plt.show()
 # plt.plot(v,PaPrlist[717:956])
 # plt.show()
 
-plt.plot(v,PaPrlist)
+#plt.plot(v,PaPrlist)
 #plt.plot(v,PaPrlist1)
-plt.show()
+#plt.show()
 
 # print thrust
 # print C_L_cr
@@ -144,3 +144,5 @@ plt.show()
 # print len(Pr_list)
 
 #print Pa_list[238]
+
+print V_stall1
