@@ -77,7 +77,7 @@ V_stall1 = sqrt((W_newton/S)*(2/rho[0])*(1/C_L_cr))
 V_stall2 = sqrt((W_newton/S)*(2/rho[5])*(1/C_L_cr))
 
 v = np.arange(V_stall1,360.,1.)
-v2 = np.arange(V_stall2,360.,1.)
+v2 = np.arange(V_stall2,450.,1.)
 #vnorm = np.arange(0,360,1)
 
 Pa_list = []
