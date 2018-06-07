@@ -82,14 +82,14 @@ M_ff = ff_enginestart*ff_taxi*ff_takeoff*ff_climb1*ff_cruise1*ff_descend1*ff_cli
 W_f_fraction = 1-M_ff                                                                                                             # fuel weight fraction [-]
 #take-off weight
 W_to_N = (PL_N+W_crew_N+b)/(1-(a+W_f_fraction+fuel_unused))   # take-off weight [N]
-MTOW = W_to_N/g                                           # take-off weight [kg]
+MTOW1 = W_to_N/g                                           # take-off weight [kg]
 #aircraft weights
 W_fuel = W_f_fraction*W_to    # fuel weight [kg]
 W_fuel_N = W_fuel*g           # fuel weight [N]
 W_empty_N = a*W_to_N+b        # empty weight [N]
-W_empty = W_empty_N/g         # empty weight [kg]  
+W_empty1 = W_empty_N/g         # empty weight [kg]  
 W_oew_N = W_empty_N+W_crew_N  # operational empty weight [N]
-OEW = W_oew_N/g             # operational empty weight [kg]
+OEW1 = W_oew_N/g             # operational empty weight [kg]
 ##
 ##----- Output -----
 ##
@@ -103,4 +103,4 @@ OEW = W_oew_N/g             # operational empty weight [kg]
 #print
 #raw_input('press enter to close')
 
-string_testpar = ["MTOW","OEW","W_empty","W_crew","W_fuel","payload","N_pax_act"]
+string_testpar = ["MTOW1","OEW1","W_empty1","W_crew","W_fuel","payload","N_pax_act"]
