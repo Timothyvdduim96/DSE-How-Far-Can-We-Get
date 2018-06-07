@@ -8,19 +8,11 @@ from parameters import *
 #CLmax_takoff
 #CLmax_land
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
 q = q(cruise_speed(h_cr),h_cr)
 
 C_L_cr = MTOW*g/(q*S)
 
-<<<<<<< HEAD
->>>>>>> ea395c35dc7b2e8e271abc3cbabb458ff85c7378
-=======
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
+
 M_dd = M_cr + 0.03
 
 #--------alt calc--------
