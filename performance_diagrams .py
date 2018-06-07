@@ -95,22 +95,22 @@ PaPrlist1 = []
 #     Pa_list.append(Pa)    
 
 #for j in range(len(rho)):
-for i in range(len(v)):
-    Pa = thrust * v[i] * 1000
+for i in v:
+    Pa = thrust * i * 1000
     Pa_list.append(Pa)
-    D = C_D_cr * 0.5 * rho[0] * v[i]**2 * S
+    D = C_D_cr * 0.5 * rho[0] * i**2 * S
     #D = (C_D_0 * 0.5 * rho[5] *v[i]**2 * S) + ((4*W_newton**2)/(pi*14*0.8*rho[5]*v[i]**2 *S))
-    Pr = D * v[i]
+    Pr = D * i
     Pr_list.append(Pr)
     Pnew = (Pa - Pr)/W_newton
     PaPrlist.append(Pnew)
 
-for k in range(len(v2)):
-    Pa1 = thrust * v2[k] * 1000
+for k in v2:
+    Pa1 = thrust * k * 1000
     Pa1_list.append(Pa1)
-    D1 = C_D_cr * 0.5 * rho[5] * v2[k]**2 * S
+    D1 = C_D_cr * 0.5 * rho[5] * k**2 * S
     #D = (C_D_0 * 0.5 * rho *v[i]**2 * S) + ((4*W_newton**2)/(pi*14*0.8*rho*v[i]**2 *S))
-    Pr1 = D1 * v2[k]
+    Pr1 = D1 * k
     Pr1_list.append(Pr1)
     Pnew1 = (Pa1 - Pr1)/W_newton
     PaPrlist1.append(Pnew1)
@@ -121,10 +121,10 @@ for k in range(len(v2)):
 #     PaPrlist.append(Pnew)
     
 
-plt.plot(v,Pa_list) #CHANGE V TO VNORM FOR THRUST TO START AT 0
-plt.plot(v,Pr_list)
-plt.plot(v2,Pr1_list)
-plt.show()
+# plt.plot(v,Pa_list) #CHANGE V TO VNORM FOR THRUST TO START AT 0
+# plt.plot(v,Pr_list)
+# plt.plot(v2,Pr1_list)
+# plt.show()
 
 # plt.plot(v,PaPrlist[:239])
 # plt.plot(v,PaPrlist[239:478])
@@ -144,3 +144,5 @@ plt.show()
 # print len(Pr_list)
 
 #print Pa_list[238]
+
+#print V_stall1
