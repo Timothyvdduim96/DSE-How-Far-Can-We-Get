@@ -8,7 +8,7 @@ xsize = 11000
 T = ISA(FL*FL_to_m)[0]
 rho = ISA(0)[2]
 rho_cr = ISA(FL*FL_to_m)[2]
-SwetSref = 5.5   #GET FROM PATRIK?
+SwetSref = 5.5   #GET FROM PATRIK??
 
 #------------------------------------design specific parameters---------------------------------------------
 
