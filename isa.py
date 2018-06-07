@@ -40,3 +40,11 @@ def ISA(h):
             rho = p / (R*T)
 
     return T,p,rho
+
+def ISA_rho(rho):
+    T0 = T0lst[0]
+    a  = lapselst[0]
+    if rho > ISA(11000)[2]:
+        h = ((rho/1.225)**((-g/(a*R)-1)**-1)-1)*T0/a
+    return h
+
