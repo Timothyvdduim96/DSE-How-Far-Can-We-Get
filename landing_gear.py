@@ -14,7 +14,7 @@ from math import *
 
 g = 9.80665
 MTOW = g*69000
-Wland = g*69000-9500
+Wland = g*(69000-9500)
 
 f = Wland/MTOW 
 
