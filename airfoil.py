@@ -34,11 +34,18 @@ lambdac_2 = 0.63 #half chord sweep
 
 q_cr = cruise_q(h_cr)
 V_cr = cruise_speed(h_cr)
+a = a(h_cr)
+M_low = 0.2
+V_low = M_low*a
+
 MAC = 3.77828726
 nu =  8.73*10**(-6)            #kinematic viscosity at T = 216.6499 K
 mu = 14.21*10**(-6) 
+mu_to = 18.03E-6
 rho_cr = ISA(h_cr)[2]
+rho0 = 1.225
 Re = (V_cr*cos(lambdac_0)*rho_cr*MAC)/mu                 #Reynolds number
+Re_low = (V_low*cos(lambdac_0)*rho_cr*MAC)/mu
 
 
 A = 14.
@@ -57,4 +64,19 @@ print (CL_des)
 print (Cl_des)
 print (Re)
 print (Cl_des_M0)
-print (216.65-273.15)
+print (lambdac_0*180/pi)
+#
+CLmaxclmax = 0.52
+dCL_max = -0.19
+alpha_0L = -4.9     #alpha at L=0, follows from airfoil
+Cl_max = 1.66      #follows from airfoil
+alpha_trim =  CL_des/CL_alpha + alpha_0L #alpha at CL_des
+#CL_max = CLmaxclmax*Cl_max + dCL_max
+CL_max = 0.9*Cl_max*cos(lambdac_4)
+
+print (CL_alpha)
+
+
+
+
+
