@@ -36,7 +36,7 @@ print "Welcome to the engine sizing tool."
 print "This tool outputs a first order estimate of the engine sizes."
 print "Method 1: ADSEE method"
 print "Method 2: Raymer"
-choice = raw_input("Which method do you want to use? [Enter the number]")
+choice = "1"#raw_input("Which method do you want to use? [Enter the number]")
 
 if choice=="1":
         
