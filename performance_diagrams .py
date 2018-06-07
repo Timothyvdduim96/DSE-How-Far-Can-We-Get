@@ -145,4 +145,4 @@ for k in v2:
 
 #print Pa_list[238]
 
-print V_stall1
+#print V_stall1
