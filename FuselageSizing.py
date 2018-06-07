@@ -17,8 +17,6 @@ deg_to_rad=pi/180.0
 inch_to_m=inch_to_cm*cm_to_m
 
 
-
-
 #Input Parameters
 
     #Width
@@ -37,10 +35,10 @@ h_luggage=h_aisle-h_headspace #[inch] Maximal size of luggage from top of fusela
 h_extra=40 #[mm] Place for fit other things 
 
     #Length
+l_cockpit=4 #[meter] Cockpit Length
 seat_pitch=29 # [inch] B:30 A:28/29 Adsee 32
 N_seat_row=6 # [seat/row]  B:6 A:6
-ratio_nosecone=1.5 #[length/diameter fus] 1.0-2.0
-ratio_tailcone=2.5 #[length/diameter fus] 2.0-3.0
+ratio_tail=1.6 #[length/diameter fus]
 l_cabin_corr=1.08 #Adsee single-aisle
     #Other
 N_passengers=240 #[-] B:184 A:180,220      WARNING!!! MUST BE MULTIPLE OF SIX!!!!
@@ -65,10 +63,9 @@ r_ext_fus=r_int_fus*ext_int_corr #[m] External Radius
 l_cabin=l_cabin_corr*seat_pitch*N_rows
 l_cabin*=inch_to_m
 
-l_nosecone=2*r_int_fus*ratio_nosecone #[m] Length of nosecone
-l_tailcone=2*r_int_fus*ratio_tailcone #[m] Length of tailcone
+l_tail=ratio_tail*d_ext_fus
 
-l_fus=l_nosecone+l_tailcone+l_cabin #[m] Fineness Ratio
+l_fus=l_cockpit+l_cabin+l_tail
 F=l_fus/(2*r_ext_fus) #Fineness Ratio
 
 theta=2*m.asin(w_floor/(2*r_int_fus))
@@ -79,6 +76,7 @@ volume_cabin=area_cabin*l_cabin
 volume_cargo=area_cargo*l_cabin 
 
 print "Length of the fuselage is",round(l_fus,2)," m"
+print "Length of the cabin is",round(l_cabin,2)," m"
 print "Diameter of the fuselage is",round(d_int_fus,2)," m"
 print "Width of the floor is",round(w_floor,2)," m"
 print "Height of the floor is",h_floor,"m"

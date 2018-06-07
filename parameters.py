@@ -2,6 +2,9 @@ from math import *
 
 #------------------------------------------------CONVERSION--------------------------------------------------
 
+rad_to_deg = 180./pi
+deg_to_rad = pi/180.
+
 lbf_to_N = 4.4482216
 hr_to_s = 3600.
 lbm_to_kg = 0.45359237
@@ -114,4 +117,8 @@ def cruise_thrust(h,C_D_cr,S):
     T_cr = 0.5*ISA(h)[2]*cruise_speed(h)**2*C_D_cr*S
 
     return T_cr
+    
+    
+    
+
 
