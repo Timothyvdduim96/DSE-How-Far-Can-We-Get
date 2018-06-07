@@ -48,8 +48,10 @@ t_c = min(0.18, (cos(lambdac_2)**3*(M_tf-M_dd*cos(lambdac_2))-0.115*C_L_cr**1.5)
 
 dihedral = 1 - degrees(lambdac_4)/10
 
-MAC = 0.75*c_r*(1+taper+taper**2)/(1+taper)
+MAC = (2/3)*c_r*(1+taper+taper**2)/(1+taper)
 
+
+string_wing_layout('lambdac_4 ','lambdac_2','lambdac_0','taper','b','c_r','c_t','t_c','dihedral','MAC','M_dd')
 
 
 
