@@ -25,9 +25,9 @@ h_extra=40 #[mm] Place for fit other things
     #Length
 seat_pitch=28 # [inch] B:30 A:28/29 Adsee 32
 N_seat_row=6 # [seat/row]  B:6 A:6
-ratio_nosecone=1.5 #[length/diameter fus] 1.0-2.0
-ratio_tailcone=2.5 #[length/diameter fus] 2.0-3.0
-#l_cabin_corr=1.08 #Adsee single-aisle
+l_cockpit=4 #[meters]
+ratio_tail=1.6  #[length/diameter fus] 1.0-2.0
+
     #Other
 N_passengers=240 #[-] B:184 A:180,220      WARNING!!! MUST BE MULTIPLE OF SIX!!!!
 ext_int_corr=1.088
@@ -50,30 +50,33 @@ d_ext_fus=d_int_fus*ext_int_corr
 r_int_fus=d_int_fus*0.5 #Radius 
 r_ext_fus=r_int_fus*ext_int_corr #[m] External Radius
 
-def restvandespace():
-    restvandespace = l_cabin_A321neo - N_rows_A321neo*seat_pitch*inch_to_m
+l_seats=N_rows_A321neo*seat_pitch*inch_to_m # [meters] Length of seating area
 
-    return restvandespace
+restcabinspace = l_cabin_A321neo -l_seats
 
-l_cabin = N_rows*seat_pitch*inch_to_m + restvandespace()
+l_cabin = l_seats+restcabinspace 
 
-l_nosecone=2*r_int_fus*ratio_nosecone #[m] Length of nosecone
-l_tailcone=2*r_int_fus*ratio_tailcone #[m] Length of tailcone
 
-l_fus=l_nosecone+l_tailcone+l_cabin #[m] Fineness Ratio
+ratio_nosecone=1.5 #1.0-2.0 Conventional Aircraft Design (drive)
+ratio_tailcone=3.0 #2.0-3.0 
+l_nosecone=d_ext_fus*ratio_nosecone #[m] Length of nosecone
+l_tailcone=d_ext_fus*ratio_tailcone #[m] Length of tailcone
+
+l_fus = l_cockpit+l_cabin+l_tail 
 F=l_fus/(2*r_ext_fus) #Fineness Ratio
 
 theta=2*asin(w_floor/(2*r_int_fus))
 area_cargo=1./2.*r_int_fus**2*(theta-sin(theta)) #[m^2] Area available for Cargo excluding support
-area_int_fus=pi*r_int_fus**2 #[m^2] Entire Internal Frontal Area
+area_ext_fus=pi*r_int_fus**2 #[m^2] Entire Internal Frontal Area
 area_cabin=area_int_fus-area_cargo #[m^2] Area in cabin 
 
 print "Length of the fuselage is",round(l_fus,2)," m"
+print "Length of the cabin is",round(l_cabin,2)," m"
 print "Diameter of the fuselage is",round(d_int_fus,2)," m"
 print "Width of the floor is",round(w_floor,2)," m"
 print "Height of the floor is",h_floor,"m"
 
-
+string_Fuselage_Sizing=["N_aisle","w_seat","w_aisle","sidewall_clearance","seat_corr","h_floor","t_floor","h_headspace","h_aisle","h_luggage","h_extra","seat_pitch","N_seat_row","l_cockpit","ratio_tail","N_passengers","ext_int_corr","N_rows","w_floor","d_int_fus","d_ext_fus","r_int_fus","r_ext_fus","l_seats","l_cabin","ratio_nosecone","ratio_tailcone","l_nosecone","l_tailcone","l_fus","F","area_cargo","area_cabin","area_ext_fus"]
 
 
 
