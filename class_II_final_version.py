@@ -277,8 +277,8 @@ W_empennage = (W_tottor[3] + W_totros[3])/2
 W_propulsion = (W_tottor[4] + W_totros[4])/2
 W_nacelle = (W_tottor[5] + W_totros[5])/2
 W_equipment = (W_tottor[6] + W_tottor[7] + W_tottor[8] + W_tottor[9] + W_tottor[10] + W_tottor[11] + W_tottor[12] + W_totros[6])/2
-W_OEW = (sum(W_totros)+sum(W_tottor))/2
-W_MTOW = W_OEW + payload + fuel
+OEW = (sum(W_totros)+sum(W_tottor))/2
+MTOW = OEW + payload + fuel
 print
 print
 print 'Component weights for the average of the two methods:'
@@ -290,7 +290,7 @@ print 'The propulsion weight =', W_propulsion, '[kg]'
 print 'The nacelle weight =', W_nacelle, '[kg]'
 print 'The equipment and furnishing weight =', W_equipment, '[kg]'
 print
-print 'The operational empty weight =', W_OEW, '[kg]'
-print 'The take-off weight =', W_MTOW, '[kg]'
+print 'The operational empty weight =', OEW, '[kg]'
+print 'The take-off weight =', MTOW, '[kg]'
 
-
+string_class_II_final_version = ["W_wing","W_fuselage","W_landinggear","W_empennage","W_propulsion","W_nacelle","W_equipment","OEW","MTOW"]
