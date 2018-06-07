@@ -31,8 +31,13 @@ TSFC_UHBP_TO = 0.5*TSFC_UHBP_CR
 ##TSFC_2_UHBP_CR = TSFC_UHBP_CR*T_cr[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_2_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 TSFC_3_UHBP_TO = TSFC_UHBP_TO*thrust_max*1000/lbf_to_N/hr_to_s*lbm_to_kg
+<<<<<<< HEAD
+TSFC_3_UHBP_CR = TSFC_UHBP_CR*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
+TSFC_3_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
+=======
 TSFC_3_UHBP_CR = TSFC_UHBP_CR*T_cr/lbf_to_N/hr_to_s*lbm_to_kg
 TSFC_3_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr/lbf_to_N/hr_to_s*lbm_to_kg
+>>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
 ##TSFC_4_UHBP_TO = TSFC_UHBP_TO*thrust_max[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_4_UHBP_CR = TSFC_UHBP_CR*T_cr[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_4_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg

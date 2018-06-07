@@ -9,6 +9,8 @@ Afactor = 1.2    #factor increasing aspect ratio for winglets
 WS = 0.98*DPx    #correct wing loading for fuel burn during cruise
 sweep_LE = 0.68  #GET FROM WINGPLANFORM
 
+<<<<<<< HEAD
+=======
 #--------------------------
 #This is for the performance diagrams
 
@@ -21,6 +23,7 @@ q18 = q(cruise_speed(h_cr),5486.4)
 
 
 #-------------------------
+>>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
 #formulas
 
 q = q(cruise_speed(h_cr),h_cr)
@@ -39,4 +42,9 @@ for i in range(len(CLlst)):
 ##plt.ylabel("C_L")
 ##plt.plot(CDlst,CLlst)
 ##plt.grid()
+<<<<<<< HEAD
 ##plt.show()
+=======
+##plt.show()
+#print C_L_cr
+>>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59

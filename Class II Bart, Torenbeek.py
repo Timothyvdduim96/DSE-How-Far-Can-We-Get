@@ -4,6 +4,10 @@ Created on Thu May 31 10:46:12 2018
 
 @author: Bart Jacobson
 """
+
+#from parameters import *
+#from TWWS import S
+
 import numpy as np
 import scipy as sp
 import math
@@ -19,16 +23,16 @@ newlbs = 0.224808943 # newton to lbs thrust
 
 ''' inputs are 14 weight groups''' 
 
-Wtot = []
+Wtot = []  # list for summation of section weights into total weight
 
 ''' input 1 --- Wing group --- '''
 
 #   Variables wing geometry, length in feet weight in pounds!
-kwg = 0.0021    
+kwg = 0.0017    
 Wzf = 59646.8746*kglbs # aircraft zero fuel weight
 nult= 1.5*2.5   # ultimate load factor = 1.5 times limit load
 trmax = 0.65*mft # wing root maximum thickness
-b = 42.3*mft         # wingspan
+b = 42.3 *mft         # wingspan
 S = 128*(mft**2)      # Wing surface area
 Lambda_half = 0.6297150096 # wing sweep half chord in radians
 
@@ -56,8 +60,9 @@ Sg = sp.pi*dfus*lfus*(1-(Fnc/(3*F))-(Ftc/(2*F)))    #Surface area of fuselage, g
 
 # weight fuselage calculation
 
-kfus = 0.032
+kfus = 0.0227
 Vd = 355.6503 *mskts #Dive speed in knots equivalent airspeed
+#lh = 25. *mft # wing root quarter chord to tail root quarter chord
 #bfus = 3.*mft # maximum width
 #hfus = 3.*mft # maximum height
 
@@ -71,7 +76,7 @@ Wtot.append(Wfus)
 ''' input 3 --- Landing gear group ---'''
 
 #input parameters landing gear
-Wg = 69176.552 *kglbs #gross weight (MTOW)
+Wg = 43611.43 *kglbs #gross weight (MTOW)
 
 # Weight main gear
 Wmg = 40. + 0.16*Wg**(3./4.)+ 0.019*Wg + 1.5*10**(-5.)*Wg**(3./2.) 
@@ -118,7 +123,7 @@ Wtot.append(Wt)
 #input parameters engine group
 # 177 kN - 220 kN
 
-Fto = (181000./2.)*newlbs   #Takeoff static thrust per engine
+Fto = (220000./2.)*newlbs   #Takeoff static thrust per engine
 ne = 2.           #number of engines
 
 We = 2.7 * Fto**0.75    #Engine weight of one engine
