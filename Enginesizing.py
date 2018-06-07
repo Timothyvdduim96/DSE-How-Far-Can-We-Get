@@ -83,7 +83,7 @@ if choice=="1":
     print "fan cowl length (lf) = ",lf, "m"
     print
     print "position of max diameter = ",Betalf, "m"
-    
+  
 else:
     W_eng = 14.7*(T/1000)**1.1*exp(-0.045*lamda)   #Engine weight in kg
     L_eng = 0.49*(T/1000)**0.4*M**0.2              #length in m
@@ -105,6 +105,7 @@ else:
     print
     print "Specific fuel consumption in cruise",SFC_cruise, "mg/Ns"
 
+string_enginesizing = ["W_eng","mdot","Di","Dh","Dn","Def","Dg","Deg","ln","lf","Betalf"] 
 #-------------------------------------------------------------------------------
 #Position of engine on wing
 
