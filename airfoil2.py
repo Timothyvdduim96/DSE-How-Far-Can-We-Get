@@ -11,11 +11,14 @@ from scipy import optimize as opt
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
-from parameters impor
+#from parameters import
+
+#aircraft parameters
 
 g = 9.80665
 S = 128.
 M_cr = 0.79
+A = 14.
 
 MTOW = 68731.*g
 Mff_start = 0.99*0.99*0.995*0.98
@@ -35,29 +38,24 @@ lambdac_2 = 0.63 #half chord sweep
 q_cr = cruise_q(h_cr)
 V_cr = cruise_speed(h_cr)
 a = a(h_cr)
-M_low = 0.2
-V_low = M_low*a
+
 
 MAC = 3.77828726
 nu =  8.73*10**(-6)            #kinematic viscosity at T = 216.6499 K
-mu = 14.21*10**(-6) 
-mu_to = 18.03E-6
+mu = 14.21*10**(-6)
 rho_cr = ISA(h_cr)[2]
 rho0 = 1.225
-Re = (V_cr*cos(lambdac_0)*rho_cr*MAC)/mu                 #Reynolds number
-Re_low = (V_low*cos(lambdac_0)*rho_cr*MAC)/mu
-
-
-A = 14.
-beta_cruise = np.sqrt(1-M_cr*M_cr)
-eta = 0.95  #airfoil eff factor
 
 #Clean cruise conditions with cruise Reynold's number
+beta_cruise = np.sqrt(1-M_cr*M_cr)
+rho_cr = ISA(h_cr)[2]
+Re = (V_cr*cos(lambdac_0)*rho_cr*MAC)/mu                 #Reynolds number
 
 CL_des_cruise_clean = 1.1*(1/q_cr)*(0.5*(WS_start+WS_end))    #design lift coeffcient of the wing
 Cl_des_cruise_clean = CL_des_cruise_clean/(cos(lambdac_0)*cos(lambdac_0))  #design lift coefficient of airfoil
 Cl_des_M0 = Cl_des_cruise_clean*np.sqrt(1-M_cr*M_cr)
 #Airfoil parameters
+eta = 0.95  #airfoil eff factor
 Cl_max_cruise_clean =
 Cd_min_cruise_clean =
 Cm_des_cruise_clean =
@@ -76,22 +74,37 @@ CL_max_cruise_clean = 0.9*Cl_max_cruise_clean*cos(lambdac_4)
 
 alpha_stall_cruise_clean = (CL_max_cruise_clean / CL_alpha_cruise_clean) + alpha_0L_cruise_clean + (4 * pi /180) #rad
 
+#take-off/land clean conditions
+M_low = 0.2
+V_low = M_low*a
+mu_low =
+beta_low = np.sqrt(1-M_cr*M_cr)
+rho_low = rho0
+Re_low = (V_low*cos(lambdac_0)*rho_low*MAC)/mu_low                 #Reynolds number
+
+Cl_max_low_clean =
+Cd_min_low_clean =
+Cm_des_low_clean =
+alpha_des_low_clean =                     #rad
+M_crit_low_clean =
+alpha_0L_low_clean =                      #rad
+
+CL_alpha_low_clean = (2*pi*A)/(2+np.sqrt(4+(A*beta_low/eta)**2*(1+tan(lambdac_2)*tan(lambdac_2)/(beta_low*beta_low))))
+alpha_trim_low_clean =  CL_des_low_clean/CL_alpha_low_clean + alpha_0L_low_clean   #alpha at CL_des in rad
+
+CL_max_low_clean = 0.9*Cl_max_low_clean*cos(lambdac_4)
+
+alpha_stall_low_clean = (CL_max_low_clean / CL_alpha_low_clean) + alpha_0L_low_clean + (4 * pi /180) #rad
+
+#HLD requirements
+CL_TO =
+CL_land =
 
 
+dCL_HLD_TO = CL_TO - CL_max_low_clean
+dCL_HLD_land = CL_land - CL_max_low_clean
+
+#Take-off conditions
 
 
-#
-CLmaxclmax = 0.52
-dCL_max = -0.19
-alpha_0L = -4.9     #alpha at L=0, follows from airfoil
-Cl_max = 1.66      #follows from airfoil
-
-#CL_max = CLmaxclmax*Cl_max + dCL_max
-
-
-print (CL_alpha)
-
-
-
-
-
+#Landing conditions
