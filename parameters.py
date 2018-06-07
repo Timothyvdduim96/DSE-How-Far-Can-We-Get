@@ -1,4 +1,5 @@
 from math import *
+import numpy as np
 
 #------------------------------------------------CONVERSION--------------------------------------------------
 
@@ -13,38 +14,41 @@ ft_to_m = 0.3048
 gal_to_L = 3.78541
 FL_to_m = ft_to_m*100
 rad_to_deg = 180/pi
-
-#------------------------------------------------PARAMETERS-----------------------------------------------------
-
-M_tf = 0.935                        #technology factor for supercritical airfoils
-FL = 390                            #flight level
-h_cr = FL*FL_to_m                   #cruise altitude
-R = 287.05
-g = 9.80665                         #gravitational acc.
-gamma = 1.4
-M_cr = 0.79                         #cruise mach number (req)
-M_max = 0.82                        #maximum cruise mach number
-rho_0 = 1.225                       #sea-level density
-T_0 = 288.15                        #sea-level temperature 
-s_l = 2000.                         #landing distance
-V_land = sqrt(s_l/0.5847)           #landing velocity based on landing distance
-cV = 0.024                          #climb gradient requirement from CS25
-A = 14.                             #Aspect ratio
-c = 17.                             #climb rate as from ref. aircraft
-C_f_e = 0.003                       #friction coefficient
-V_s = 100.                          #stall speed based on reference aircraft
-V_rot = 1.1                         #rotation speed
-n_max = 2.5                         #max load factor (CS25)
-f = 0.9745                          #fuel fraction during cruise
+inch_to_cm=2.54
+cm_to_inch=1/2.54
+mm_to_m=1./1000.
+m_to_mm=1000.
+cm_to_m=1/100.
+inch_to_m=inch_to_cm*cm_to_m
 
 #------------------------------------------------FUNCTIONS-----------------------------------------------------
 
+#---------PARAMETERS----------
+
+def value(symbol):
+    file = 'parameters.txt'
+    file = np.genfromtxt(file, dtype=str, delimiter=';')
+    lst = []
+    found = False
+
+    for i in range(len(file)):
+        lst.append(file[i].split())
+
+    for i in range(len(lst)):
+        if lst[i][0] == symbol:
+            found == True
+            return eval(lst[i][1])
+    if found == False:
+        return "parameter has not been found"
+    
 #------------ISA--------------
 
 lapselst = [-.0065,0,.001,.0028,0,-.0028,-.002,0.]
 hlst = [0,11000,20000,32000,47000,51000,71000,84852,100000]
 T0lst = [288.15]
 p0lst = [101325]
+g = 9.80665
+R = 287.05
 
 for i in range(1,8):
     T0 = T0lst[i-1] + lapselst[i-1]*(hlst[i]-hlst[i-1])
@@ -76,6 +80,11 @@ def ISA(h):
 
     return T,p,rho
 
+def ISA(rho):
+    T0 = T0lst[i]
+    a  = lapselst[i]
+    if rho > ISA(11000)[2]:
+        h = (rho/1.225**((-g/(a*R)-1)**-1)-1)*T0/a
 #--------------speed------------------
 
 def a(h): #speed of sound
@@ -98,7 +107,7 @@ def cruise_speed(h_cr):
 
 #---------dynamic pressure------------
 
-def q(V,h): #for cruise q, q = q(cruise_speed(a(ISA(h)[0]),M_cr),ISA(h)[2]), define h in your code
+def q(V,h): 
 
     q = 0.5*ISA(h)[2]*V**2
 
