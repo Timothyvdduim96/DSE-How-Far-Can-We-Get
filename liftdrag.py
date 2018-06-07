@@ -40,3 +40,4 @@ for i in range(len(CLlst)):
 ##plt.plot(CDlst,CLlst)
 ##plt.grid()
 ##plt.show()
+#print C_L_cr
