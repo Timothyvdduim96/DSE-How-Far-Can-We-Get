@@ -10,13 +10,14 @@ from scipy import optimize as opt
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
+from parameters import *
 
 
 g = 9.80665
-MTOW = g*69000
-Wland = g*(69000-9500)
+MTOW = g*value("MTOW")
+Wland = g*(value("MTOW")-9500)
 
-f = Wland/MTOW 
+f = Wland/value("MTOW")
 
 Nmw0 = f*MTOW/210000. #number of main gear wheels
 

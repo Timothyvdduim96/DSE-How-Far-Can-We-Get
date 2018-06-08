@@ -1,6 +1,6 @@
 ##Wing Layout
 from math import *
-from TWWS import S,MTOW
+#from TWWS import S,MTOW
 from parameters import *
 
 #----------inputs--------
@@ -8,16 +8,23 @@ from parameters import *
 #CLmax_takoff
 #CLmax_land
 
-q = q(cruise_speed(value("h_cr")),value("h_cr"))
+#q = q(cruise_speed(value("h_cr")),value("h_cr"))
 
-C_L_cr = MTOW*g/(q*S)
+S = value('S')
 
+A = value('A')
+
+M_cr = value('M_cr')
+
+C_L_cr = value('C_L_cr')
+
+M_tf = 0.935
 
 M_dd = M_cr + 0.03
 
 #--------alt calc--------
 #p = p0 * (1-(lambda_alt*h)/T0)**(g0/(R*lambda_alt))
-q = cruise_q(value("h_cr"))
+#q = cruise_q(value("h_cr"))
 
 #-------------outputs-----------
 #CL_cruise = MTOW/(q*S)
@@ -28,7 +35,7 @@ cos_lambdac_4 =  0.75 * (M_tf/M_dd)
 if M_cr < 0.7:
     cos_lambdac_4 = 1
 
-lambdac_4 = cos(cos_lambdac_4) #rad
+lambdac_4 = acos(cos_lambdac_4) #rad
 
 taper = 0.2*(2-lambdac_4)
 
@@ -49,7 +56,9 @@ dihedral = 1 - degrees(lambdac_4)/10
 MAC = (2/3)*c_r*(1+taper+taper**2)/(1+taper)
 
 
-string_wing_layout = ['lambdac_4 ','lambdac_2','lambdac_0','taper','b','c_r','c_t','t_c','dihedral','MAC','M_dd']
+string_wing_layout = ['lambdac_4 ','lambdac_2','lambdac_0','taper','b','c_r','c_t','t_c','dihedral','MAC','M_dd','M_tf']
+
+
 
 
 
