@@ -11,7 +11,7 @@ from scipy import optimize as opt
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
-from parameters impor
+from parameters import *
 
 
 
