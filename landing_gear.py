@@ -13,7 +13,7 @@ from math import *
 from parameters import *
 
 
-g = 9.80665
+g = value("g")
 MTOW = g*value("MTOW")
 Wland = g*(value("MTOW")-9500)
 

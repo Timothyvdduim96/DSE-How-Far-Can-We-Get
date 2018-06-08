@@ -27,11 +27,10 @@ C_L_clean_3 = eval(designdata[6][3])
 C_L_TO_1 = eval(designdata[7][3]) 
 C_L_TO_2 = eval(designdata[8][3])
 C_L_TO_3 = eval(designdata[9][3])
-V_s = eval(designdata[9][3])
+V_s = eval(designdata[11][3])
 C_f_e = value("C_f_e")#value("C_f_e")
 C_D_0 = C_f_e*SwetSref#eval(designdata[19][ch]) 
 e = value("e")
-C_D_0 = value("C_f_e")*SwetSref#eval(designdata[19][ch])
 A = value("A")
 cV = value("cV")
 c = value("c")
@@ -72,9 +71,9 @@ def climb_gradient(cV,C_D_0,A,e):
     e = e + 0.05
 
     factor = 2 #one engine inoperative (CS25)
-    DPy_1 = factor*(cV + 2*sqrt(C_D_0/(pi*A*e)))
+    TW_1 = factor*(cV + 2*sqrt(C_D_0/(pi*A*e)))
 
-    return DPy_1
+    return TW_1
 
 #climb rate limit
 
@@ -83,17 +82,17 @@ def climb_rate(c,rho,C_D_0,A,e,xsize):
     C_D = 4*C_D_0
     C_L_1 = sqrt(3*C_D_0*pi*A*e)
 
-    DPy_1 = []
-    DPy_2 = []
-    DPy_3 = []
+    TW_1 = []
+    TW_2 = []
+    TW_3 = []
 
     WS = np.arange(1,xsize)
     
     for i in range(len(WS)):
     
-        DPy_1.append(c/(sqrt(2*WS[i]/(rho*C_L_1))) + C_D/C_L_1)
+        TW_1.append(c/(sqrt(2*WS[i]/(rho*C_L_1))) + C_D/C_L_1)
 
-    return WS,DPy_1
+    return WS,TW_1
 
 #take-off limit
 
@@ -101,46 +100,46 @@ def take_off(TOP,C_L_TO_1,C_L_TO_2,C_L_TO_3,rho,rho_0):
 
     sigma = 1#rho/rho_0
 
-    DPy_1 = []
-    DPy_2 = []
-    DPy_3 = []
+    TW_1 = []
+    TW_2 = []
+    TW_3 = []
 
     WS = np.arange(1,xsize)
     
     for i in range(len(WS)):
     
-        DPy_1.append(WS[i]/(TOP*C_L_TO_1*sigma))
-        DPy_2.append(WS[i]/(TOP*C_L_TO_2*sigma))
-        DPy_3.append(WS[i]/(TOP*C_L_TO_3*sigma))
+        TW_1.append(WS[i]/(TOP*C_L_TO_1*sigma))
+        TW_2.append(WS[i]/(TOP*C_L_TO_2*sigma))
+        TW_3.append(WS[i]/(TOP*C_L_TO_3*sigma))
 
-    return DPy_1,DPy_2,DPy_3
+    return TW_1,TW_2,TW_3
 
 #max speed limit
 
 def speed_limit(C_D_0,rho_cr,V_max,A,e):
 
-    DPy_1 = []
+    TW_1 = []
 
     WS = np.arange(1,xsize)
     
     for i in range(len(WS)):
     
-        DPy_1.append(0.8/0.9*(1.225/rho_cr)**0.75*((C_D_0*rho_cr*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A*e*0.5*rho_cr*V_max**2)))
+        TW_1.append(0.8/0.9*(1.225/rho_cr)**0.75*((C_D_0*rho_cr*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A*e*0.5*rho_cr*V_max**2)))
 
-    return DPy_1
+    return TW_1
 
 def loadfactor_limit(C_D_0,rho_cr,V,n_max,A):
 
     n_max = n_max + 0.1 #safety factor
-    DPy_1 = []
+    TW_1 = []
 
     WS = np.arange(1,xsize)
     
     for i in range(len(WS)):
     
-        DPy_1.append(C_D_0*0.5*rho_cr*V**2/WS[i]+WS[i]*n_max**2/(pi*A*e*0.5*rho_cr*V**2))
+        TW_1.append(C_D_0*0.5*rho_cr*V**2/WS[i]+WS[i]*n_max**2/(pi*A*e*0.5*rho_cr*V**2))
 
-    return DPy_1
+    return TW_1
 
 WS = np.arange(1,xsize)
 
@@ -240,12 +239,12 @@ plt.grid()
 #plt.show()
 '''
 WS = 5302.#raw_input("Fill in a x-coordinate of a design point: ")
-DPy = 0.325#raw_input("Fill in a y-coordinate of a design point: ")
+TW = 0.325#raw_input("Fill in a y-coordinate of a design point: ")
 DP = []
 DP.append(WS)
-DP.append(DPy)
+DP.append(TW)
 S = round(MTOW*g/WS,2)
-thrust = round(MTOW*g*DPy/1000)
+thrust = round(MTOW*g*TW/1000)
 print "Wing area = ", S, "m^2"
 print "Thrust = ", thrust, "kN"
 
@@ -262,20 +261,20 @@ def findclcr(WS,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_
 
     return C_Lcr
 
-C_Lcr = findclcr(WS,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
+C_L_max_clean = findclcr(WS,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
 
 to1 = takeofflimit_1[int(WS)]
 to2 = takeofflimit_2[int(WS)]
 to3 = takeofflimit_3[int(WS)]
 
-def findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2):
+def findclto(TW,to1,to2,to3,C_L_TO_1,C_L_TO_2):
     
-    if DPy >= to1:
+    if TW >= to1:
         C_Lto = C_L_TO_1
-    elif DPy < to1 and DPy >= to2:
-        C_Lto = round((to1-DPy)/(to1-to2)*(C_L_TO_2 - C_L_TO_1)+C_L_TO_1,2)
-    elif DPy < to2 and DPy >= to3:
-        C_Lto = round((to2-DPy)/(to2-to3)*(C_L_TO_3 - C_L_TO_2)+C_L_TO_2,2)
+    elif TW < to1 and TW >= to2:
+        C_Lto = round((to1-TW)/(to1-to2)*(C_L_TO_2 - C_L_TO_1)+C_L_TO_1,2)
+    elif TW < to2 and TW >= to3:
+        C_Lto = round((to2-TW)/(to2-to3)*(C_L_TO_3 - C_L_TO_2)+C_L_TO_2,2)
     else:
         C_Lto = "Take off requirement not satisfied"
 
@@ -295,13 +294,14 @@ def findcland(WS,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max
     return C_Lland
 
 C_L_max_land = findcland(WS,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
+C_L_max_to = findclto(TW,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 
 print 'C_L_max_clean = ', findclcr(WS,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
 print "C_L_max_land = ", findcland(WS,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
-print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
+print "C_L_max_takeoff = ", findclto(TW,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 
 print 'C_L_max_cr = ', findclcr(WS,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
 print "C_L_max_land = ", findcland(WS,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
-print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
+print "C_L_max_takeoff = ", findclto(TW,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 
-string_DPyWS = ["C_L_max_clean","C_L_max_land","C_L_max_to","WS","DPy","S","thrust","C_D_0"]
+string_TWWS = ["C_L_max_clean","C_L_max_land","C_L_max_to","WS","TW","S","thrust","C_D_0"]

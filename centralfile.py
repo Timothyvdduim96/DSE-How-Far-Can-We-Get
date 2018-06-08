@@ -1,17 +1,17 @@
 from math import *
 import numpy as np
 
-from TWWS import *
-from class_II_final_version import *
-from Class_I import *
-from Enginesizing import *
-from Fuselage_Sizing import *
-from wing_layout import *
-from wingvol import *
-from emissions import *
-from liftdrag import *
-from empennage import *
-from landing_gear import *
+from TWWS import * #CHECK
+from class_II_final_version import * #CHECK
+from Class_I import * #CHECK
+from Enginesizing import * #CHECK
+from Fuselage_Sizing import * #CHECK
+from wing_layout import * #CHECK
+from wingvol import * #CHECK
+from emissions import * #CHECK
+from liftdrag import * #CHECK
+from empennage import * #CHECK
+from landing_gear import * #CHECK
 
 #------------------------------------------------CONVERSION--------------------------------------------------
 
@@ -78,14 +78,14 @@ parameter.write("x_spar1 "+str(0.25)+"\n")
 parameter.write("x_spar2 "+str(0.55)+"\n")
 parameter.write("Afactor "+str(1.2)+"\n")
 parameter.write("e "+str(0.85)+"\n")
-parameter.write("V_s "+str(100)+"\n")
+parameter.write("MTOW "+str(68730.522187827199)+"\n")
 
 for i in range(len(string_TWWS)):
     parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
 
 for i in range(len(string_class_II_final_version)):
     parameter.write(string_class_II_final_version[i] + " " + str(eval(string_class_II_final_version[i])) + "\n")
-
+    print str(eval(string_class_II_final_version[i]))
 for i in range(len(string_class_I)):
     parameter.write(string_class_I[i] + " " + str(eval(string_class_I[i])) + "\n")
 

@@ -13,16 +13,10 @@ import matplotlib.pyplot as plt
 from math import *
 from parameters import *
 
-
-
-Vh =  1         #horizontal tail volume
-Vv = 0.100      #vertical tail volume
-
-
 S = value("S")            #wing surface area
 b = value("b")             #wing span
 MAC =  value("MAC")        #mean aerodynamic chord
-L_fus = 46.55        #fuselage length
+L_fus = value("l_fus")     #fuselage length
 
 
 Vh =  1         #horizontal tail volume
@@ -61,5 +55,3 @@ YMAC_v = (b_v/6.)*(1+2*lambda_v)/(1+lambda_v)
 
 string_empennage = ['Sh','Sv','lh','lv','sweep_h','sweep_v','Ah','Av','lambda_h','lambda_v','b_h','b_v','cr_h',
                     'ct_h','cr_v','ct_v','MAC_h','MAC_v','YMAC_h','YMAC_v']
-
-print (YMAC_h)
