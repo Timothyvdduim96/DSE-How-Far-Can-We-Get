@@ -33,7 +33,6 @@ N_passengers=240 #[-] B:184 A:180,220      WARNING!!! MUST BE MULTIPLE OF SIX!!!
 ext_int_corr=1.088
 N_rows_A321neo = 41
 l_cabin_A321neo = 34.44
-tesdwadwadwat=1
 
 
 #Output
