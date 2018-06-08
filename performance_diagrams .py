@@ -63,21 +63,23 @@ print PaPrlist
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
-# from liftdrag import C_D_cr, C_L_cr
-# from TWWS import thrust, C_D_0
+from parameters import value
 #----------------------------------------------
 W_kg = 72564.                       #max to weight
-S = 128.                      #wing surface
+CD_cr = value("C_D_cr")
+CL_cr = value("C_L_cr")
+T = value("thrust")
+surface = value("S")
+
 rho = [1.225, 1.12102, 1.02393, 0.933405, 0.849137, 0.770816, 0.698145]
-thrust = 220
-C_D_cr = 0.0247
-C_L_cr = 0.6
+
+
 C_D_0  = 0.003 * 5.5
 #---------------------------------------------
 W_newton = W_kg * 9.80665
 
-V_stall1 = sqrt((W_newton/S)*(2/rho[0])*(1/C_L_cr))
-V_stall2 = sqrt((W_newton/S)*(2/rho[5])*(1/C_L_cr))
+V_stall1 = sqrt((W_newton/surface)*(2/rho[0])*(1/CL_cr))
+V_stall2 = sqrt((W_newton/surface)*(2/rho[5])*(1/CL_cr))
 
 v = np.arange(V_stall1,360.,1.)
 v2 = np.arange(V_stall2,450.,1.)
@@ -94,14 +96,14 @@ PaPrlist1 = []
 
 #USE BELOW ONLY WHEN YOU WANT THRUST TO BEGIN AT 0
 # for k in range(len(vnorm)):
-#     Pa = thrust * vnorm[k] * 1000
+#     Pa = T * vnorm[k] * 1000
 #     Pa_list.append(Pa)    
 
 #for j in range(len(rho)):
 for i in v:
-    Pa = thrust * i * 1000
+    Pa = T * i * 1000
     Pa_list.append(Pa)
-    D = C_D_cr * 0.5 * rho[0] * i**2 * S
+    D = CD_cr * 0.5 * rho[0] * i**2 * surface
     #D = (C_D_0 * 0.5 * rho[5] *v[i]**2 * S) + ((4*W_newton**2)/(pi*14*0.8*rho[5]*v[i]**2 *S))
     Pr = D * i
     Pr_list.append(Pr)
@@ -109,9 +111,9 @@ for i in v:
     PaPrlist.append(Pnew)
 
 for k in v2:
-    Pa1 = thrust * k * 1000
+    Pa1 = T * k * 1000
     Pa1_list.append(Pa1)
-    D1 = C_D_cr * 0.5 * rho[5] * k**2 * S
+    D1 = CD_cr * 0.5 * rho[5] * k**2 * surface
     #D = (C_D_0 * 0.5 * rho *v[i]**2 * S) + ((4*W_newton**2)/(pi*14*0.8*rho*v[i]**2 *S))
     Pr1 = D1 * k
     Pr1_list.append(Pr1)
@@ -139,9 +141,9 @@ plt.show()
 #plt.plot(v,PaPrlist1)
 #plt.show()
 
-# print thrust
-# print C_L_cr
-# print C_D_cr
+# print T
+# print CL_cr
+# print CD_cr
 
 # print len(Pa_list)
 # print len(Pr_list)

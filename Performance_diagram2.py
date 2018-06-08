@@ -2,16 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import sqrt
 from parameters import value, ISA_rho
-# from liftdrag import C_D_cr, C_L_cr
-# from TWWS import thrust 
-# from isa import ISA_rho
+#----------------------------------------
 CD_cr = value("C_D_cr")
-
+CL_cr = value("C_L_cr")
+T = value("thrust")
+surface = value("S")
 
 W_kg = 68731.                       #max to weight
-S = 128.                            #wing surface
 W_newton = W_kg * 9.80665
-thrust = 220
+
 
 v = np.arange(1.,400.,1.)
 rho = np.arange(0.38,1.225,0.0001)
@@ -29,7 +28,7 @@ v10list = []
 
 for i in v:
     for j in rho:
-        RC = ((thrust * 1000. - (CD_cr * 0.5 * j * i**2 * S )) * i)/W_newton  
+        RC = ((T * 1000. - (CD_cr * 0.5 * j * i**2 * surface )) * i)/W_newton  
         if 29.9 <= RC <= 30.1:
         #    rholist.append(round(j,5))
             h = ISA_rho(j)
