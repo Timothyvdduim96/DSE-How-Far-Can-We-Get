@@ -29,6 +29,7 @@ WS 5195.96
 TW 0.325
 S 128
 thrust 220.0
+C_D_0 0.0165
 W_wing 8455.50352484
 W_fuselage 10302.1124054
 W_landinggear 2041.24019077
