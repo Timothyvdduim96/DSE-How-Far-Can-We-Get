@@ -103,4 +103,4 @@ OEW1 = W_oew_N/g              # operational empty weight [kg]
 #print
 #raw_input('press enter to close')
 
-string_testpar = ["MTOW1","OEW1","W_empty1","W_crew","W_fuel","payload","N_pax_act"]
+string_class_I = ["MTOW1","OEW1","W_empty1","W_crew","W_fuel","payload","N_pax_act"]
