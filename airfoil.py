@@ -11,7 +11,9 @@ from scipy import optimize as opt
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
-from parameters impor
+from parameters import *
+
+
 
 g = 9.80665
 S = 128.
@@ -80,6 +82,14 @@ alpha_stall_cruise_clean = (CL_max_cruise_clean / CL_alpha_cruise_clean) + alpha
 
 
 
+<<<<<<< HEAD
+#print (CL_des)
+#print (Cl_des)
+#print (Re)
+#print (Cl_des_M0)
+#print (lambdac_0*180/pi)
+=======
+>>>>>>> fddf83763b34400ab673a7a9b0357a3e8f6951ae
 #
 CLmaxclmax = 0.52
 dCL_max = -0.19
@@ -89,7 +99,7 @@ Cl_max = 1.66      #follows from airfoil
 #CL_max = CLmaxclmax*Cl_max + dCL_max
 
 
-print (CL_alpha)
+#print (CL_alpha)
 
 
 
