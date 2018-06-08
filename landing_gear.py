@@ -58,9 +58,4 @@ ymlg1 = (ln+lm)/(np.sqrt((ln*ln+tan(psi)*tan(psi))/(z*z)-1)) #lateral tip over c
 #ymlg3 = b/2.-ye/np.tan(phi)
 #ymls = max([ymlg1,ymlg2,ymlg3])
 
-print(Nmw)
-print(Nnw)
-print (Pmw)
-print (Pnw)
-
-print (ymlg1)
+string_landing_gear = ['Nmw','Nnw','Nst','p','Pmw','Pnw','z','ln','lm','ymlg1','psi','phi']

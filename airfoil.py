@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 from math import *
 from parameters import *
 
+
+
 g = 9.80665
 S = 128.
 M_cr = 0.79
@@ -60,11 +62,11 @@ Cl_des_M0 = Cl_des*np.sqrt(1-M_cr*M_cr)
 
 CL_alpha = (2*pi*A)/(2+np.sqrt(4+(A*beta/eta)**2*(1+tan(lambdac_2)*tan(lambdac_2)/(beta*beta))))
 
-print (CL_des)
-print (Cl_des)
-print (Re)
-print (Cl_des_M0)
-print (lambdac_0*180/pi)
+#print (CL_des)
+#print (Cl_des)
+#print (Re)
+#print (Cl_des_M0)
+#print (lambdac_0*180/pi)
 #
 CLmaxclmax = 0.52
 dCL_max = -0.19
@@ -74,7 +76,7 @@ alpha_trim =  CL_des/CL_alpha + alpha_0L #alpha at CL_des
 #CL_max = CLmaxclmax*Cl_max + dCL_max
 CL_max = 0.9*Cl_max*cos(lambdac_4)
 
-print (CL_alpha)
+#print (CL_alpha)
 
 
 
