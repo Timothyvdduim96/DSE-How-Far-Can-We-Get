@@ -1,13 +1,16 @@
 from math import *
-from wingvol import a,xstart,xend,c_r_f,c_t_f,b,vol,b_cur,d_ext_fus
-from WingLayout import c_r,c_t,lambdac_0,MAC
+#from wingvol import a,xstart,xend,c_r_f,c_t_f,b,vol,b_cur,d_ext_fus
+#from WingLayout import c_r,c_t,lambdac_0,MAC
 import numpy as np
-from Class_II_weight_estimation import *
-from Fuselage_Sizing import *
-from empennage import lh,b_h,sweep_h,ct_h,MAC_h,MAC_v
-from Enginesizing import ln
+#from Class_II_weight_estimation import *
+#from Fuselage_Sizing import *
+#from empennage import lh,b_h,sweep_h,ct_h,MAC_h,MAC_v
+#from Enginesizing import ln
 
-l_fus = l_cockpit + l_tail + l_cabin
+from parameters import *
+
+
+l_fus = value("l_cockpit") + value("l_tail") + value("l_cabin")
 x_oew = 25.
 
 #------------------------------------------OEW COMPONENTS-------------------------------------------
@@ -67,7 +70,7 @@ for i in range(2):
 
     def noselandinggear():
         w = W_LG/kglbs/10. #CHANGE
-        x_cg = x_oew - (mainlandinggear()[0] - x_oew)*mainlandinggear()[1]/w
+        #x_cg = x_oew - (mainlandinggear()[0] - x_oew)*mainlandinggear()[1]/w
         mom = x_cg*w
 
         return x_cg,w,mom
