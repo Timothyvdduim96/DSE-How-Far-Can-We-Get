@@ -3,11 +3,11 @@ from wingvol import a,xstart,xend,c_r_f,c_t_f,b,vol,b_cur,d_ext_fus
 from WingLayout import c_r,c_t,lambdac_0,MAC
 import numpy as np
 from Class_II_weight_estimation import *
-from Fuselage_Sizing import l_nosecone,l_tailcone,l_cabin
+from Fuselage_Sizing import *
 from empennage import lh,b_h,sweep_h,ct_h,MAC_h,MAC_v
 from Enginesizing import ln
 
-l_fus = l_nosecone + l_tailcone + l_cabin
+l_fus = l_cockpit + l_tail + l_cabin
 x_oew = 25.
 
 #------------------------------------------OEW COMPONENTS-------------------------------------------
@@ -24,7 +24,7 @@ for i in range(2):
     def wing():
         span_pos = 0.35*b/2
         chord = c_r - (c_r-c_t)/((b-d_ext_fus/2)/2)*span_pos
-        x_cg = chord*eval(xstart)+(eval(xend)-eval(xstart))*0.7*chord + l_cabin*0.5 + l_nosecone - 0.25*MAC + cos(np.degrees(lambdac_0))*(0.35*(b/2-d_ext_fus/2) - (c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2)))
+        x_cg = chord*eval(xstart)+(eval(xend)-eval(xstart))*0.7*chord + l_cabin*0.5 + l_cockpit - 0.25*MAC + cos(np.degrees(lambdac_0))*(0.35*(b/2-d_ext_fus/2) - (c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2)))
         w = W_wg/kglbs #ADD
         mom = x_cg*w
 
@@ -45,28 +45,28 @@ for i in range(2):
         return x_cg,w,mom
 
     def engines():
-        x_cg = l_cabin*0.5 + l_nosecone - 0.25*MAC + cos(np.degrees(lambdac_0))*(0.35*(b/2-d_ext_fus/2) - (c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2))) - 0.3*ln
+        x_cg = l_cabin*0.5 + l_cockpit - 0.25*MAC + cos(np.degrees(lambdac_0))*(0.35*(b/2-d_ext_fus/2) - (c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2))) - 0.3*ln
         w = W_pg/kglbs #ADD
         mom = x_cg*w
 
         return x_cg,w,mom
 
     def nacelle():
-        x_cg = l_cabin*0.5 + l_nosecone - 0.25*MAC + cos(np.degrees(lambdac_0))*(0.35*(b/2-d_ext_fus/2) - (c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2))) - ln*0.4
+        x_cg = l_cabin*0.5 + l_cockpit - 0.25*MAC + cos(np.degrees(lambdac_0))*(0.35*(b/2-d_ext_fus/2) - (c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2))) - ln*0.4
         w = W_ng/kglbs #ADD
         mom = x_cg*w
 
         return x_cg,w,mom
 
     def mainlandinggear():
-        x_cg = x_oew + 2. #CHECK
-        w = W_LG/kglbs/8*7 #CHANGE
+        x_cg = x_oew + 0.804 #CHECK
+        w = W_LG/kglbs/10.*9. #CHANGE
         mom = x_cg*w
 
         return x_cg,w,mom
 
     def noselandinggear():
-        w = W_LG/kglbs/8 #CHANGE
+        w = W_LG/kglbs/10. #CHANGE
         x_cg = x_oew - (mainlandinggear()[0] - x_oew)*mainlandinggear()[1]/w
         mom = x_cg*w
 
