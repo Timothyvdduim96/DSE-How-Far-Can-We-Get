@@ -5,7 +5,7 @@ from math import *
 
 #Parameters
 
-T      = 170000.                 #take-off thrust [N]
+T      = 220000.                 #take-off thrust [N]
 T_ref  = 120400.                 #take-off thrust reference [N]
 D_ref  = 2.543                   #engine diameter reference [m]
 W_ref  = 3153.                   #engine weight reference [kg]
@@ -36,11 +36,10 @@ print "Welcome to the engine sizing tool."
 print "This tool outputs a first order estimate of the engine sizes."
 print "Method 1: ADSEE method"
 print "Method 2: Raymer"
-<<<<<<< HEAD
+
 choice = raw_input("Which method do you want to use? [Enter the number]")
-=======
-choice = "1"#raw_input("Which method do you want to use? [Enter the number]")
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
+
+
 
 if choice=="1":
         
@@ -83,7 +82,7 @@ if choice=="1":
     print "fan cowl length (lf) = ",lf, "m"
     print
     print "position of max diameter = ",Betalf, "m"
-    
+  
 else:
     W_eng = 14.7*(T/1000)**1.1*exp(-0.045*lamda)   #Engine weight in kg
     L_eng = 0.49*(T/1000)**0.4*M**0.2              #length in m
@@ -105,6 +104,7 @@ else:
     print
     print "Specific fuel consumption in cruise",SFC_cruise, "mg/Ns"
 
+string_enginesizing = ["W_eng","mdot","Di","Dh","Dn","Def","Dg","Deg","ln","lf","Betalf"] 
 #-------------------------------------------------------------------------------
 #Position of engine on wing
 
