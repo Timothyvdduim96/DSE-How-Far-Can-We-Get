@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
 
 #parameters
 l_nose = 6.17  #distance nose to centerline first door on the right
@@ -587,5 +586,4 @@ ax = plt.subplot(111)
 
 ax.legend(loc="center right", bbox_to_anchor=(1, 0.5))
 
->>>>>>> 14ffeb393da27099064b186da8b184460f4dba7a
 plt.show()

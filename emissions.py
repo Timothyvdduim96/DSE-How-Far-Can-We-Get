@@ -31,13 +31,10 @@ TSFC_UHBP_TO = 0.5*TSFC_UHBP_CR
 ##TSFC_2_UHBP_CR = TSFC_UHBP_CR*T_cr[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_2_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr[1]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 TSFC_3_UHBP_TO = TSFC_UHBP_TO*thrust_max*1000/lbf_to_N/hr_to_s*lbm_to_kg
-<<<<<<< HEAD
 TSFC_3_UHBP_CR = TSFC_UHBP_CR*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
 TSFC_3_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr*1000/lbf_to_N/hr_to_s*lbm_to_kg
-=======
 TSFC_3_UHBP_CR = TSFC_UHBP_CR*T_cr/lbf_to_N/hr_to_s*lbm_to_kg
 TSFC_3_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr/lbf_to_N/hr_to_s*lbm_to_kg
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
 ##TSFC_4_UHBP_TO = TSFC_UHBP_TO*thrust_max[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_4_UHBP_CR = TSFC_UHBP_CR*T_cr[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
 ##TSFC_4_UHBP_DES = TSFC_UHBP_TO*0.5*T_cr[3]*1000/lbf_to_N/hr_to_s*lbm_to_kg
@@ -134,11 +131,17 @@ fuelnames = ['confuel','camelina','jatropha','algae','soybean']
 costlst = []
 emissionslst = []
 xlst = []
+fuel_used = []
+fuel_mix = []
 
 fuel1 = 'confuel'
 fuel2 = 'jatropha'
+fuel_used.append(fuel1)
+fuel_used.append(fuel2)
 mix1 = 20
 mix2 = 100 - mix1
+fuel_mix.append(mix1)
+fuel_mix.append(mix2)
 #print mix1,"% of",fuel1,"has been mixed with",mix2,"% of",fuel2
 aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4])/2
 #print "The aromatic compound is",aromatics,"%."
@@ -159,13 +162,14 @@ emissionslst.append(emissions_per_s)
 #print "Per second,",int(emissions_per_s),"grams of CO2eq is burnt. This is ",round(emissions_per_s*total_time/1000,1),"kg of CO2eq over a flight of",end_descdis,"km."
 density1 = fuels[fuelnames.index(fuel1)][2]
 density2 = fuels[fuelnames.index(fuel2)][2]
-volume_needed = c_j*mix1/100*total_time/density1 + c_j*mix2/100*total_time/density2
+fuelvolume_needed = c_j*mix1/100*total_time/density1 + c_j*mix2/100*total_time/density2
 #print "Over this distance we will need",round(cj*mix1/100*total_time/density1 + cj*mix2/100*total_time/density2,2),"m^3 of fuel."
 cost1 = fuels[fuelnames.index(fuel1)][3]
 cost2 = fuels[fuelnames.index(fuel2)][3]
-costlst.append(c_j*mix1/100*cost1 + c_j*mix2/100*cost2)
+fuelcost = c_j*mix1/100*cost1 + c_j*mix2/100*cost2
 #print "The fuel cost per s is",round(cj*mix1/100*cost1 + cj*mix2/100*cost2,2),"USD. The total fuel cost will be",round((cj*mix1/100*cost1 + cj*mix2/100*cost2)*total_time,2), "USD."
 
+string_emissions = ["fuel_used","fuel_mix","fuelvolume_needed","fuelcost","emissions_per_s","aromatics"]
 #blend = '1'#raw_input("Number of fuels blended: ",)
 
 #if blend == '1':

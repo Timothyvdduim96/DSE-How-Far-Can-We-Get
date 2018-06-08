@@ -102,24 +102,26 @@ def ISA_rho(rho):
     T0 = T0lst[i]
     a  = lapselst[i]
     if rho > ISA(11000)[2]:
-        h = (rho/1.225**((-g/(a*R)-1)**-1)-1)*T0/a
+        h = ((rho/1.225)**((-g/(a*R)-1)**-1)-1)*T0/a
+    return h
+
 #--------------speed------------------
 
 def a(h): #speed of sound
 
-    a = sqrt(value("gamma")*value("R")*ISA(h)[0])
+    a = sqrt(gamma*R*ISA(h)[0])
 
     return a
 
 def max_speed(h):
 
-    V = value("M_max")*a(h)
+    V = M_max*a(h)
 
     return V
     
 def cruise_speed(h_cr):
 
-    V_cr = value("M_cr")*a(h_cr)
+    V_cr = M_cr*a(h_cr)
 
     return V_cr
 

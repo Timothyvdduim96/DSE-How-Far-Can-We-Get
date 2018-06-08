@@ -3,6 +3,18 @@ import numpy as np
 
 parameter = open("parameters.txt","w")
 
+from TWWS import *
+from class_II_final_version import *
+from Class_I import *
+from Enginesizing import *
+from Fuselage_Sizing import *
+from wing_layout import *
+from wingvol import *
+from emissions import *
+from liftdrag import *
+from empennage import *
+from landing_gear import *
+
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -61,17 +73,44 @@ parameter.write("C_f_e "+str(C_f_e)+"\n")
 parameter.write("V_s "+str(V_s)+"\n")
 parameter.write("V_rot "+str(V_rot)+"\n")
 parameter.write("n_max "+str(n_max)+"\n")
-#parameter.write("f "+str(f)+"\n")
-
-#from testpar import *
-from TWWS import *
-
-#for i in range(len(string_testpar)):
-#    parameters.write(string_testpar[i] + " " + str(eval(string_testpar[i])) + "\n")
+parameter.write("f "+str(f)+"\n")
+parameter.write("P_c "+str(P_c)+"\n")
+parameter.write("x_spar1 "+str(0.25)+"\n")
+parameter.write("x_spar2 "+str(0.55)+"\n")
+parameter.write("Afactor "+str(1.2)+"\n")
 
 for i in range(len(string_TWWS)):
-    print i
     parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
+
+for i in range(len(string_class_II_final_version)):
+    parameter.write(string_class_II_final_version[i] + " " + str(eval(string_class_II_final_version[i])) + "\n")
+
+for i in range(len(string_class_I)):
+    parameter.write(string_class_I[i] + " " + str(eval(string_class_I[i])) + "\n")
+
+for i in range(len(string_enginesizing)):
+    parameter.write(string_enginesizing[i] + " " + str(eval(string_enginesizing[i])) + "\n")
+
+for i in range(len(string_Fuselage_Sizing)):
+    parameter.write(string_Fuselage_Sizing[i] + " " + str(eval(string_Fuselage_Sizing[i])) + "\n")
+
+for i in range(len(string_wing_layout)):
+    parameter.write(string_wing_layout[i] + " " + str(eval(string_wing_layout[i])) + "\n")
+
+for i in range(len(string_wingvol)):
+    parameter.write(string_wingvol[i] + " " + str(eval(string_wingvol[i])) + "\n")
+
+for i in range(len(string_emissions)):
+    parameter.write(string_emissions[i] + " " + str(eval(string_emissions[i])) + "\n")
+
+for i in range(len(string_liftdrag)):
+    parameter.write(string_liftdrag[i] + " " + str(eval(string_liftdrag[i])) + "\n")
+
+for i in range(len(string_empennage)):
+    parameter.write(string_empennage[i] + " " + str(eval(string_empennage[i])) + "\n")
+
+for i in range(len(string_landing_gear)):
+    parameter.write(string_landing_gear[i] + " " + str(eval(string_landing_gear[i])) + "\n")
 
 parameter.close()
 
