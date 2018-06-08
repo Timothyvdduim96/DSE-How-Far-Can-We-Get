@@ -62,13 +62,15 @@ ratio_nosecone=1.5 #1.0-2.0 Conventional Aircraft Design (drive)
 ratio_tailcone=3.0 #2.0-3.0 
 l_nosecone=d_ext_fus*ratio_nosecone #[m] Length of nosecone
 l_tailcone=d_ext_fus*ratio_tailcone #[m] Length of tailcone
+l_tail=d_ext_fus*ratio_tail
 
 l_fus = l_cockpit+l_cabin+l_tail 
 F=l_fus/(2*r_ext_fus) #Fineness Ratio
 
 theta=2*asin(w_floor/(2*r_int_fus))
 area_cargo=1./2.*r_int_fus**2*(theta-sin(theta)) #[m^2] Area available for Cargo excluding support
-area_ext_fus=pi*r_int_fus**2 #[m^2] Entire Internal Frontal Area
+area_int_fus=pi*r_int_fus**2
+area_ext_fus=pi*r_ext_fus**2 #[m^2] Entire Internal Frontal Area
 area_cabin=area_int_fus-area_cargo #[m^2] Area in cabin 
 
 print "Length of the fuselage is",round(l_fus,2)," m"
