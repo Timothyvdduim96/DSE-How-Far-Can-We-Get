@@ -8,7 +8,7 @@ Created on Thu Jun 07 12:15:16 2018
 import numpy as np
 from math import *
 import matplotlib.pyplot as plt
-from parameters import rho_0,g,A,ISA
+from parameters import g,A,ISA
 from TWWS import C_L_maxto,C_Lcr,C_Lland,C_D_0,thrust,S
 from liftdrag import C_L_cr
 h = raw_input("Enter take-off altitude in m")
