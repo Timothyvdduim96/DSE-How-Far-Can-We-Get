@@ -65,7 +65,7 @@ parameter.write("n_max "+str(n_max)+"\n")
 
 from TWWS import *
 from class_II_final_version import *
-#from Class_I import *
+from Class_I import *
 from Enginesizing import *
 #from Fuselage_Sizing import *
 from wing_layout import *
@@ -79,8 +79,8 @@ for i in range(len(string_TWWS)):
 for i in range(len(string_class_II_final_version)):
     parameter.write(string_class_II_final_version[i] + " " + str(eval(string_class_II_final_version[i])) + "\n")
 
-#for i in range(len(string_class_I)):
-#    parameter.write(string_class_I[i] + " " + str(eval(string_class_I[i])) + "\n")
+for i in range(len(string_class_I)):
+    parameter.write(string_class_I[i] + " " + str(eval(string_class_I[i])) + "\n")
 
 for i in range(len(string_enginesizing)):
     parameter.write(string_enginesizing[i] + " " + str(eval(string_enginesizing[i])) + "\n")
