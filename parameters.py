@@ -98,21 +98,13 @@ def ISA(h):
 
     return T,p,rho
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 979a4eef50a2c678eeb1fbc69f22776d9c7b4e3d
 def ISA_rho(rho):
     T0 = T0lst[i]
     a  = lapselst[i]
     if rho > ISA(11000)[2]:
-<<<<<<< HEAD
         h = ((rho/1.225)**((-g/(a*R)-1)**-1)-1)*T0/a
     return h
 
-=======
-        h = (rho/1.225**((-g/(a*R)-1)**-1)-1)*T0/a
->>>>>>> 979a4eef50a2c678eeb1fbc69f22776d9c7b4e3d
 #--------------speed------------------
 
 def a(h): #speed of sound
