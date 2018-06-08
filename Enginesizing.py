@@ -5,14 +5,14 @@ from math import *
 
 #Parameters
 
-T      = 220000.                 #take-off thrust [N]
-T_ref  = 120400.                 #take-off thrust reference [N]
+T      = 292692.                 #take-off thrust [N]
+T_ref  = 292700.                 #take-off thrust reference [N]
 D_ref  = 2.543                   #engine diameter reference [m]
 W_ref  = 3153.                   #engine weight reference [kg]
 l_ref  = 3.328                   #engine length [m]
 a_eng  = 1.                      #is 1 as preliminary assumption, can vary between 0.8 and 1.3
 N_eng  = 2.                      #number of engines
-lamda  = 14.                     #bypass ratio
+lamda  = 5.5                     #bypass ratio
 n_nozz = 0.97                    #nozzle efficiency
 n_tf   = 0.75                    #efficiency of turbine and fan
 gamma  = 1.4                 
@@ -36,10 +36,7 @@ print "Welcome to the engine sizing tool."
 print "This tool outputs a first order estimate of the engine sizes."
 print "Method 1: ADSEE method"
 print "Method 2: Raymer"
-
 choice = raw_input("Which method do you want to use? [Enter the number]")
-
-
 
 if choice=="1":
         

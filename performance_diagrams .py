@@ -63,13 +63,16 @@ print PaPrlist
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
-from liftdrag import C_D_cr, C_L_cr
-from TWWS import thrust, C_D_0
+# from liftdrag import C_D_cr, C_L_cr
+# from TWWS import thrust, C_D_0
 #----------------------------------------------
 W_kg = 72564.                       #max to weight
 S = 128.                      #wing surface
 rho = [1.225, 1.12102, 1.02393, 0.933405, 0.849137, 0.770816, 0.698145]
-#thrust = 130
+thrust = 220
+C_D_cr = 0.0247
+C_L_cr = 0.6
+C_D_0  = 0.003 * 5.5
 #---------------------------------------------
 W_newton = W_kg * 9.80665
 
@@ -121,10 +124,10 @@ for k in v2:
 #     PaPrlist.append(Pnew)
     
 
-# plt.plot(v,Pa_list) #CHANGE V TO VNORM FOR THRUST TO START AT 0
-# plt.plot(v,Pr_list)
-# plt.plot(v2,Pr1_list)
-# plt.show()
+plt.plot(v,Pa_list) #CHANGE V TO VNORM FOR THRUST TO START AT 0
+plt.plot(v,Pr_list)
+plt.plot(v2,Pr1_list)
+plt.show()
 
 # plt.plot(v,PaPrlist[:239])
 # plt.plot(v,PaPrlist[239:478])
