@@ -70,11 +70,10 @@ CD_cr = value("C_D_cr")
 CL_cr = value("C_L_cr")
 T = value("thrust")
 surface = value("S")
+CD0 = value("C_D_0")
 
 rho = [1.225, 1.12102, 1.02393, 0.933405, 0.849137, 0.770816, 0.698145]
 
-
-C_D_0  = 0.003 * 5.5
 #---------------------------------------------
 W_newton = W_kg * 9.80665
 
@@ -104,7 +103,7 @@ for i in v:
     Pa = T * i * 1000
     Pa_list.append(Pa)
     D = CD_cr * 0.5 * rho[0] * i**2 * surface
-    #D = (C_D_0 * 0.5 * rho[5] *v[i]**2 * S) + ((4*W_newton**2)/(pi*14*0.8*rho[5]*v[i]**2 *S))
+    #D = (CD0 * 0.5 * rho[5] *v[i]**2 * S) + ((4*W_newton**2)/(pi*14*0.8*rho[5]*v[i]**2 *S))
     Pr = D * i
     Pr_list.append(Pr)
     Pnew = (Pa - Pr)/W_newton
@@ -114,7 +113,7 @@ for k in v2:
     Pa1 = T * k * 1000
     Pa1_list.append(Pa1)
     D1 = CD_cr * 0.5 * rho[5] * k**2 * surface
-    #D = (C_D_0 * 0.5 * rho *v[i]**2 * S) + ((4*W_newton**2)/(pi*14*0.8*rho*v[i]**2 *S))
+    #D = (CD0 * 0.5 * rho *v[i]**2 * S) + ((4*W_newton**2)/(pi*14*0.8*rho*v[i]**2 *S))
     Pr1 = D1 * k
     Pr1_list.append(Pr1)
     Pnew1 = (Pa1 - Pr1)/W_newton
