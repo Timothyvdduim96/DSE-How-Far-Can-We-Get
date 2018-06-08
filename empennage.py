@@ -11,33 +11,32 @@ from scipy import optimize as opt
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
+from parameters import *
 
 
 
 
-<<<<<<< HEAD
-Vh =  1         #horizontal tail volume
-Vv = 0.100      #vertical tail volume
-
-=======
 
 Vh =  1         #horizontal tail volume
 Vv = 0.100      #vertical tail volume
 
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
-S = 128            #wing surface area
-b = 42.33202098             #wing span
-MAC =  3.778287263         #mean aerodynamic chord
+
+
+Vh =  1         #horizontal tail volume
+Vv = 0.100      #vertical tail volume
+
+
+S = value("S")            #wing surface area
+b = value("b")             #wing span
+MAC =  value("MAC")        #mean aerodynamic chord
 L_fus = 46.55        #fuselage length
 
-<<<<<<< HEAD
 
-=======
 lh = 27.787         #horizontal tail arm [m]
 lv = 0.45*L_fus
 Sh = Vh*S*MAC/(lh)   #horizontal tail surface area
 Sv = Vv*S*b/(lv)     #vertical tail surface area
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
+
 
 sweep_h = 33    
 sweep_v = 40
@@ -60,20 +59,20 @@ MAC_v = (2/3.)*(cr_v)*((1+lambda_v+lambda_v*lambda_v)/(1+lambda_v))
 YMAC_h = (b_h/6.)*(1+2*lambda_h)/(1+lambda_h) 
 YMAC_v = (b_v/6.)*(1+2*lambda_v)/(1+lambda_v)
 
-<<<<<<< HEAD
 #print (cr_h)
 #print (ct_h)
 #print (cr_v)
 #print (ct_v)
 #print (MAC_h,MAC_v)
-=======
+
 ##print (cr_h)
 ##print (ct_h)
 ##print (Sh)
 ##print (b_h)
 ##print (MAC_h)
 ##print (YMAC_h)
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
+
 
 string_empennage = ['Sh','Sv','lh','lv','sweep_h','sweep_v','Ah','Av','lambda_h','lambda_v','b_h','b_v','cr_h',
                     'ct_h','cr_v','ct_v','MAC_h','MAC_v','YMAC_h','YMAC_v']
+
