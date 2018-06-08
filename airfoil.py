@@ -11,13 +11,13 @@ from scipy import optimize as opt
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
-from parameters import *
+from parameters impor
 
 g = 9.80665
 S = 128.
 M_cr = 0.79
 
-MTOW = 69000.*g
+MTOW = 68731.*g
 Mff_start = 0.99*0.99*0.995*0.98
 Mff_end = 0.99*0.99*0.995*0.98*0.972
 Wf_used_start = (1-Mff_start)*MTOW
@@ -49,30 +49,45 @@ Re_low = (V_low*cos(lambdac_0)*rho_cr*MAC)/mu
 
 
 A = 14.
-beta = np.sqrt(1-M_cr*M_cr)
+beta_cruise = np.sqrt(1-M_cr*M_cr)
 eta = 0.95  #airfoil eff factor
 
+#Clean cruise conditions with cruise Reynold's number
+
+CL_des_cruise_clean = 1.1*(1/q_cr)*(0.5*(WS_start+WS_end))    #design lift coeffcient of the wing
+Cl_des_cruise_clean = CL_des_cruise_clean/(cos(lambdac_0)*cos(lambdac_0))  #design lift coefficient of airfoil
+Cl_des_M0 = Cl_des_cruise_clean*np.sqrt(1-M_cr*M_cr)
+#Airfoil parameters
+Cl_max_cruise_clean =
+Cd_min_cruise_clean =
+Cm_des_cruise_clean =
+alpha_des_cruise_clean =                     #rad
+M_crit_cruise_clean =
+alpha_0L_cruise_clean =                      #rad
+
+lambdac_0 = acos(M_crit_cruise_clean/M_cr)
+lambdac_2 = atan(tan(lambdac_0) - (4/A)*(0.5*(1-taper)/(1+taper)))
+lambdac_4 = atan(tan(lambdac_0) - (4/A)*(0.25*(1-taper)/(1+taper)))
+
+CL_alpha_cruise_clean = (2*pi*A)/(2+np.sqrt(4+(A*beta_cruise/eta)**2*(1+tan(lambdac_2)*tan(lambdac_2)/(beta_cruise*beta_cruise))))
+alpha_trim_cruise_clean =  CL_des_cruise_clean/CL_alpha_cruise_clean + alpha_0L_cruise_clean   #alpha at CL_des in rad
+
+CL_max_cruise_clean = 0.9*Cl_max_cruise_clean*cos(lambdac_4)
+
+alpha_stall_cruise_clean = (CL_max_cruise_clean / CL_alpha_cruise_clean) + alpha_0L_cruise_clean + (4 * pi /180) #rad
 
 
-CL_des = 1.1*(1/q_cr)*(0.5*(WS_start+WS_end))    #design lift coeffcient of the wing
-Cl_des = CL_des/(cos(lambdac_0)*cos(lambdac_0))  #design lift coefficient of airfoil
-Cl_des_M0 = Cl_des*np.sqrt(1-M_cr*M_cr)
 
-CL_alpha = (2*pi*A)/(2+np.sqrt(4+(A*beta/eta)**2*(1+tan(lambdac_2)*tan(lambdac_2)/(beta*beta))))
 
-print (CL_des)
-print (Cl_des)
-print (Re)
-print (Cl_des_M0)
-print (lambdac_0*180/pi)
+
 #
 CLmaxclmax = 0.52
 dCL_max = -0.19
 alpha_0L = -4.9     #alpha at L=0, follows from airfoil
 Cl_max = 1.66      #follows from airfoil
-alpha_trim =  CL_des/CL_alpha + alpha_0L #alpha at CL_des
+
 #CL_max = CLmaxclmax*Cl_max + dCL_max
-CL_max = 0.9*Cl_max*cos(lambdac_4)
+
 
 print (CL_alpha)
 

@@ -25,7 +25,8 @@ papsi      = 0.000145037738   # conversion factor for pascal to pounds-force per
 ##----- Inputs -----
 ##
 # Total weight list
-W_totros = []
+W_totros = []   # empty list for all weight groups from Roskam method
+W_tottor = []   # empty list for all weight groups from Torenbeek method
 # Wing weight
 S           = 127.95*sqmsqft     # wing area [sqft]
 A           = 14.0               # aspect ratio 
@@ -49,7 +50,7 @@ z_h              = 0.0              # distance horizontal tail to vertical tail 
 b_v              = 6.8*mft          # vertical tail span [ft]
 Sv               = 25.9*sqmsqft     # vertical tail area [sqft]
 lv               = 20.947           # distance wing quarter chord to vertical tail quarter chord [ft]
-Sr               = 0.26*S_v         # rudder area [sqft]
+Sr               = 0.26*Sv         # rudder area [sqft]
 A_v              = 1.8              # vertical tail aspect ratio
 lambda_v         = 0.45             # vertical tail taper ratio
 sweep_v          = 40*degrad        # vertical tail quarter chord sweep angle [rad]
@@ -71,8 +72,8 @@ A_inl = 3.858*sqmsqft      # capture area per inlet in [sqft]
 l_n   = 1.6*mft            # nacelle length from inlet lip to compressor face [ft]
 P_2   = 147077.1891*papsi  # max static pressure at engine compressor face [psi] (typically from 15 to 50)
 # Landing gear weight
-EGTS = 300*kglbs   # electric green taxiing system
-W_g  = 39064.07*kglbs     #OEW
+EGTS = 300*kglbs        # electric green taxiing system
+W_g  = 39064.07*kglbs   # OEW
 # power plant weight
     # Engine
 n_e   = 2.0        # number of engines
@@ -85,24 +86,19 @@ K_fsp  = 810.0*kgmlbsgall   # density of fuel [lbs/gal]
 T = (220000.0)*Nlbs     #take-off static thrust per engine [lbs]
 F_to = T/2
 # fixed equipment weight
-    # electrical system 
 n_pil = 2.0           # number of pilots
-battery = 25.5*kglbs  # second battery unit
-    # air conditioning, pressurization and anti-icing system
+battery = 25.5*kglbs  # second battery unit 
 volume_cabin = 254.12*mft**3    # passenger cabin volume [ft^3]
-N_cr  = 7.0              # number of crew
-N_pax = 240.0            # number of passengers
-    # baggage and cargo handling equipment
-K_bc = 0.0646        # factor for preload provisions (check with melkert)
+N_cr    = 7.0              # number of crew
+N_pax   = 240.0            # number of passengers    
+K_bc    = 0.0646        # factor for preload provisions (check with melkert)
 l_cargo = 19.55*mft  # length of cargo hold
-w_cargo = 1.43*mft   # width of cargo hold floor
-    # furnishing weights
-N_fdc = n_pil          # pilot seats
-N_cc  = 5.0            # cabin crew seats
-K_lav = 0.31           # factor for short range aircraft
-K_buf = 1.02           # factor for short range aircraft
-P_c   = 75262.4*papsi  # cabin pressure set at pressure of 8000ft
-    # auxiliary gear weight
+w_cargo = 1.43*mft   # width of cargo hold floor   
+N_fdc   = n_pil          # pilot seats
+N_cc    = 5.0            # cabin crew seats
+K_lav   = 0.31           # factor for short range aircraft
+K_buf   = 1.02           # factor for short range aircraft
+P_c     = 75262.4*papsi  # cabin pressure set at pressure of 8000ft
 W_empty = 38369.82*kglbs   # aircraft empty weight
 #maximum take-off weight
 payload = 20375.28   #payload weight [kg]
@@ -116,25 +112,23 @@ R = 6254*kmnm            #maximum range/ferry range
 ##--------------------------------------------------
 '''!!!!!all weights should be in pounds!!!!!'''
 '''!!!!!all lengths should be in feet!!!!!'''
-W_tottor = []   #empty list for all weight groups
-
 ##
 ##----- Equations -----
 ##
 # Wing group
-W_wg = k_wg*(W_zf)**0.7*(S)**0.3*(n_ult)**0.55*(t_rm)**-0.3*(b/np.cos(lambda_half))**1.05*(1+np.sqrt((6.25*np.cos(lambda_half))/b))   #fuselage group weight
+W_wg = k_wg*(W_zf)**0.7*(S)**0.3*(n_ult)**0.55*(t_r)**-0.3*(b/np.cos(lambdac_2))**1.05*(1+np.sqrt((6.25*np.cos(lambdac_2))/b))   #fuselage group weight
 W_wg = W_wg*0.95    #correction for wing mounted engines
 # Fuselage group
-F = l_fus/d_fus                                       #fuselage fineness ratio
-S_g = pi*d_fus*l_fus*(1-(F_NC/(3*F))-(F_TC/(2*F)))    #gross wetted area
-W_fus = k_fus*(S_g)**1.2*np.sqrt(V_D*(l_h/(2*d_fus))) #fuselage group weight
+F = l_fus/d_ext_fus                                   #fuselage fineness ratio
+S_g = pi*d_ext_fus*l_fus*(1-(ratio_nosecone/(3*F))-(ratio_tailcone/(2*F)))    #gross wetted area
+W_fus = k_fus*(S_g)**1.2*np.sqrt(V_D*(lh/(2*d_ext_fus))) #fuselage group weight
 # Landing gear group
 W_MG = 40.+0.16*W_g**0.75+0.019*W_g+1.5*10**-5*W_g**1.5  #main landing gear weight
 W_NG = 20.+0.10*W_g**0.75+2*10**-6*W_g**1.5             #nose gear weight
-W_LG = W_MG+W_NG+300*kglbs                            #total landing gear weight + EGTS system
+W_LG = W_MG+W_NG+EGTS                           #total landing gear weight + EGTS system
 # Tail group
-W_ht = k_h*S_h*(2.+4.15*math.erf((((S_h)**0.2*V_D)/((10)**3*np.sqrt(np.cos(lambda_h))))-0.65))   #horizontal tail weight
-W_vt = k_v*S_v*(2.+4.15*math.erf((((S_v)**0.2*V_D)/((10)**3*np.sqrt(np.cos(lambda_v))))-0.65))   #vertical tail weight
+W_ht = k_h*Sh*(2.+4.15*math.erf((((Sh)**0.2*V_D)/((10)**3*np.sqrt(np.cos(sweep_h))))-0.65))   #horizontal tail weight
+W_vt = k_v*Sv*(2.+4.15*math.erf((((Sv)**0.2*V_D)/((10)**3*np.sqrt(np.cos(sweep_v))))-0.65))   #vertical tail weight
 W_t = W_ht+W_vt #total tail weight
 # Propulsion group
 W_e = 2.7*(F_to)**0.75      #engine weight for one engine
@@ -208,37 +202,37 @@ W_takeofftor = totalweighttor+payload+fuel
 ##----- Equations -----
 ##
 # Wing weight
-W_w = (0.00428*(S**0.48)*(A)*(M_H**0.43)*(W_to*n_ult)**0.84*Lambda**0.14)/((100*tc_m)**0.76*(np.cos(Lambda_half))**1.54)
+W_w = (0.00428*(S**0.48)*(A)*(M_max**0.43)*(MTOW*n_ult)**0.84*taper**0.14)/((100*t_c)**0.76*(np.cos(lambdac_2))**1.54)
 # Fuselage weight
-W_fus = 10.43*(K_inl)**1.42*(qbar_D/100)**0.283*(W_to/1000)**0.95*(l_f/h_f)**0.71
+W_fus = 10.43*(K_inl)**1.42*(qbar_D/100)**0.283*(MTOW/1000)**0.95*(l_fus/d_ext_fus)**0.71
 # Landing gear weight
-W_lg = 62.21*(W_to/1000)**0.84+EGTS
+W_lg = 62.21*(MTOW/1000)**0.84+EGTS
 # Empennage weight
-W_h = 0.0034*((W_to*n_ult)**0.813*(S_h)**0.584*(b_h/t_r_h)**0.033*(cbar/l_h)**0.28)**0.915  # horizontal tail weight
-W_v = 0.19*((1+(z_h/b_v))**0.5*(W_to*n_ult)**0.363*(S_v)**1.089*(M_H)**0.601*(l_v)**-0.726*(1+(S_r/S_v))**0.217*(A_v)**0.337*(1+Lambda_v)**0.363*(np.cos(Lambda_quarter_v))**-0.484)**1.014   # vertical tail weight
+W_h = 0.0034*((MTOW*n_ult)**0.813*(Sh)**0.584*(b_h/t_r_h)**0.033*(MAC/lh)**0.28)**0.915  # horizontal tail weight
+W_v = 0.19*((1+(z_h/b_v))**0.5*(MTOW*n_ult)**0.363*(Sv)**1.089*(M_max)**0.601*(lv)**-0.726*(1+(Sr/Sv))**0.217*(A_v)**0.337*(1+lambda_v)**0.363*(np.cos(sweep_v))**-0.484)**1.014   # vertical tail weight
 W_emp = W_h+W_v  # total empennage weight
 # Power plant weight
 W_e = n_e*W_eng                                            # engine weight
 W_ai = 0                                                   # air induction system weight included in nacelle weight
 W_fs = 80*(n_e+N_t-1)+15*(N_t)**0.5*(W_fuel/K_fsp)**0.333  # fuel system weight
-W_ec = 88.46*((l_f+b)*(n_e/100))**0.294                    # engine controls weight
+W_ec = 88.46*((l_fus+b)*(n_e/100))**0.294                  # engine controls weight
 W_ess = 38.93*(W_e/1000)**0.918                            # engine starting system
 W_p = W_ec+W_ess                                           # propulsion weight
 W_pp = W_e+W_ai+W_fs+W_p                                   # power plant weight
 # Nacelle weight
 W_n = 3.0*(N_inl)*((A_inl)**0.5*(l_n)*(P_2))**0.731  
 # fixed equipment weight
-W_fc = 56.01*(W_to*(qbar_D/100000))**0.576                                                                                    # flight control system weight
-W_hp = 0.009*W_to                                                                                                             # hydraulic and pneumatic system weight
-W_aie = n_pil*(15+0.032*(W_to/1000))+n_e*(5+0.006*(W_to/1000))+0.15*(W_to/1000)+0.012*W_to                                    # instrumentation, avionics and electronics weight
+W_fc = 56.01*(MTOW*(qbar_D/100000))**0.576                                                                                    # flight control system weight
+W_hp = 0.009*MTOW                                                                                                             # hydraulic and pneumatic system weight
+W_aie = n_pil*(15+0.032*(MTOW/1000))+n_e*(5+0.006*(MTOW/1000))+0.15*(MTOW/1000)+0.012*MTOW                                    # instrumentation, avionics and electronics weight
 W_els = 1.163*((W_fs+W_aie)/1000)**0.506+battery                                                                              # electrical system weight
-W_api = 469*(V_pax*(N_cr+N_pax)/10000)**0.419                                                                                 # air conditioning, pressurization and anti-icing system
+W_api = 469*(volume_cabin*(N_cr+N_pax)/10000)**0.419                                                                                 # air conditioning, pressurization and anti-icing system
 W_ox = 7*(N_cr+N_pax)**0.702                                                                                                  # oxygen system
 S_ff = l_cargo*w_cargo                                                                                                        # cargo hold floor area [sqft]
 W_bc = 3*S_ff                                                                                                                 # bagage and cargo handling equipment weight
-W_fur = 55*N_fdc+32*N_pax+15*N_cc+K_lav*(N_pax)**1.33+K_buf*(N_pax)**1.12+109*(N_pax*((1+P_c)/100))**0.505+0.771*(W_to/1000)  # furnishing weights
+W_fur = 55*N_fdc+32*N_pax+15*N_cc+K_lav*(N_pax)**1.33+K_buf*(N_pax)**1.12+109*(N_pax*((1+P_c)/100))**0.505+0.771*(MTOW/1000)  # furnishing weights
 W_aux = 0.01*W_empty                                                                                                          # auxiliary gear weights
-W_pt = 0.0045*W_to                                                                                                            # weight of paint
+W_pt = 0.0045*MTOW                                                                                                            # weight of paint
 W_fe = W_fc+W_hp+W_aie+W_els+W_api+W_ox+W_bc+W_fur+W_aux+W_pt                                                                 # total fixed equipment weight
 
 ##
@@ -283,20 +277,20 @@ W_empennage = (W_tottor[3] + W_totros[3])/2
 W_propulsion = (W_tottor[4] + W_totros[4])/2
 W_nacelle = (W_tottor[5] + W_totros[5])/2
 W_equipment = (W_tottor[6] + W_tottor[7] + W_tottor[8] + W_tottor[9] + W_tottor[10] + W_tottor[11] + W_tottor[12] + W_totros[6])/2
-W_OEW = (sum(W_totros)+sum(W_tottor))/2
-W_MTOW = W_OEW + payload + fuel
-print
-print
-print 'Component weights for the average of the two methods:'
-print 'The wing weight =', W_wing, '[kg]'
-print 'The fuselage weight =', W_fuselage, '[kg]'
-print 'The landing gear weight =', W_landinggear, '[kg]'
-print 'The empennage weight =', W_empennage, '[kg]'
-print 'The propulsion weight =', W_propulsion, '[kg]'
-print 'The nacelle weight =', W_nacelle, '[kg]'
-print 'The equipment and furnishing weight =', W_equipment, '[kg]'
-print
-print 'The operational empty weight =', W_OEW, '[kg]'
-print 'The take-off weight =', W_MTOW, '[kg]'
+OEW = (sum(W_totros)+sum(W_tottor))/2
+MTOW = OEW + payload + fuel
+#print
+#print
+#print 'Component weights for the average of the two methods:'
+#print 'The wing weight =', W_wing, '[kg]'
+#print 'The fuselage weight =', W_fuselage, '[kg]'
+#print 'The landing gear weight =', W_landinggear, '[kg]'
+#print 'The empennage weight =', W_empennage, '[kg]'
+#print 'The propulsion weight =', W_propulsion, '[kg]'
+#print 'The nacelle weight =', W_nacelle, '[kg]'
+#print 'The equipment and furnishing weight =', W_equipment, '[kg]'
+#print
+#print 'The operational empty weight =', OEW, '[kg]'
+#print 'The take-off weight =', MTOW, '[kg]'
 
-
+string_class_II_final_version = ["W_wing","W_fuselage","W_landinggear","W_empennage","W_propulsion","W_nacelle","W_equipment","OEW","MTOW"]
