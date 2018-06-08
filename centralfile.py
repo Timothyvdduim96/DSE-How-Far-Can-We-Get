@@ -1,7 +1,17 @@
 from math import *
 import numpy as np
 
-parameter = open("parameters.txt","w")
+from TWWS import *
+from class_II_final_version import *
+from Class_I import *
+from Enginesizing import *
+from Fuselage_Sizing import *
+from wing_layout import *
+from wingvol import *
+from emissions import *
+from liftdrag import *
+from empennage import *
+from landing_gear import *
 
 #------------------------------------------------CONVERSION--------------------------------------------------
 
@@ -42,6 +52,7 @@ V_rot = 1.1                         #rotation speed
 n_max = 2.5                         #max load factor (CS25)
 f = 0.9745                          #fuel fraction during cruise
 
+parameter = open("parameters.txt","w")
 parameter.write("M_tf "+str(M_tf)+"\n")
 parameter.write("FL "+str(FL)+"\n")
 parameter.write("h_cr "+str(h_cr)+"\n")
@@ -62,16 +73,12 @@ parameter.write("V_s "+str(V_s)+"\n")
 parameter.write("V_rot "+str(V_rot)+"\n")
 parameter.write("n_max "+str(n_max)+"\n")
 parameter.write("f "+str(f)+"\n")
-
-from TWWS import *
-from class_II_final_version import *
-from Class_I import *
-from Enginesizing import *
-from Fuselage_Sizing import *
-from wing_layout import *
-from wingvol import *
-from emissions import *
-from liftdrag import *
+parameter.write("P_c "+str(P_c)+"\n")
+parameter.write("x_spar1 "+str(0.25)+"\n")
+parameter.write("x_spar2 "+str(0.55)+"\n")
+parameter.write("Afactor "+str(1.2)+"\n")
+parameter.write("e "+str(0.85)+"\n")
+parameter.write("V_s "+str(100)+"\n")
 
 for i in range(len(string_TWWS)):
     parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
@@ -99,6 +106,12 @@ for i in range(len(string_emissions)):
 
 for i in range(len(string_liftdrag)):
     parameter.write(string_liftdrag[i] + " " + str(eval(string_liftdrag[i])) + "\n")
+
+for i in range(len(string_empennage)):
+    parameter.write(string_empennage[i] + " " + str(eval(string_empennage[i])) + "\n")
+
+for i in range(len(string_landing_gear)):
+    parameter.write(string_landing_gear[i] + " " + str(eval(string_landing_gear[i])) + "\n")
 
 parameter.close()
 

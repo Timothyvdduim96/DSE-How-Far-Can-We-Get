@@ -8,7 +8,7 @@ from parameters import *
 #CLmax_takoff
 #CLmax_land
 
-q = q(cruise_speed(h_cr),h_cr)
+q = q(cruise_speed(value("h_cr")),value("h_cr"))
 
 C_L_cr = MTOW*g/(q*S)
 
@@ -17,7 +17,7 @@ M_dd = M_cr + 0.03
 
 #--------alt calc--------
 #p = p0 * (1-(lambda_alt*h)/T0)**(g0/(R*lambda_alt))
-q = cruise_q(h_cr)
+q = cruise_q(value("h_cr"))
 
 #-------------outputs-----------
 #CL_cruise = MTOW/(q*S)
