@@ -61,13 +61,13 @@ parameter.write("C_f_e "+str(C_f_e)+"\n")
 parameter.write("V_s "+str(V_s)+"\n")
 parameter.write("V_rot "+str(V_rot)+"\n")
 parameter.write("n_max "+str(n_max)+"\n")
-#parameter.write("f "+str(f)+"\n")
+parameter.write("f "+str(f)+"\n")
 
 from TWWS import *
 from class_II_final_version import *
 from Class_I import *
 from Enginesizing import *
-#from Fuselage_Sizing import *
+from Fuselage_Sizing import *
 from wing_layout import *
 from wingvol import *
 from emissions import *
@@ -85,8 +85,8 @@ for i in range(len(string_class_I)):
 for i in range(len(string_enginesizing)):
     parameter.write(string_enginesizing[i] + " " + str(eval(string_enginesizing[i])) + "\n")
 
-#for i in range(len(string_Fuselage_Sizing)):
-#    parameter.write(string_Fuselage_Sizing[i] + " " + str(eval(string_Fuselage_Sizing[i])) + "\n")
+for i in range(len(string_Fuselage_Sizing)):
+    parameter.write(string_Fuselage_Sizing[i] + " " + str(eval(string_Fuselage_Sizing[i])) + "\n")
 
 for i in range(len(string_wing_layout)):
     parameter.write(string_wing_layout[i] + " " + str(eval(string_wing_layout[i])) + "\n")
