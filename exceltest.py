@@ -1,6 +1,7 @@
 from math import *
+import numpy as np
 
-parameters = open("parameters.txt","w")
+parameter = open("parameters.txt","w")
 
 #------------------------------------------------CONVERSION--------------------------------------------------
 
@@ -41,30 +42,54 @@ V_rot = 1.1                         #rotation speed
 n_max = 2.5                         #max load factor (CS25)
 f = 0.9745                          #fuel fraction during cruise
 
-parameters.write("M_tf "+str(M_tf)+"\n")
-parameters.write("FL "+str(FL)+"\n")
-parameters.write("h_cr "+str(h_cr)+"\n")
-parameters.write("R "+str(R)+"\n")
-parameters.write("g "+str(g)+"\n")
-parameters.write("gamma "+str(gamma)+"\n")
-parameters.write("M_cr "+str(M_cr)+"\n")
-parameters.write("M_max "+str(M_max)+"\n")
-parameters.write("rho_0 "+str(rho_0)+"\n")
-parameters.write("T_0 "+str(T_0)+"\n")
-parameters.write("s_l "+str(s_l)+"\n")
-parameters.write("V_land "+str(V_land)+"\n")
-parameters.write("cV "+str(cV)+"\n")
-parameters.write("A "+str(A)+"\n")
-parameters.write("c "+str(c)+"\n")
-parameters.write("C_f_e "+str(C_f_e)+"\n")
-parameters.write("V_s "+str(V_s)+"\n")
-parameters.write("V_rot "+str(V_rot)+"\n")
-parameters.write("n_max "+str(n_max)+"\n")
-parameters.write("f "+str(f)+"\n")
+parameter.write("M_tf "+str(M_tf)+"\n")
+parameter.write("FL "+str(FL)+"\n")
+parameter.write("h_cr "+str(h_cr)+"\n")
+parameter.write("R "+str(R)+"\n")
+parameter.write("g "+str(g)+"\n")
+parameter.write("gamma "+str(gamma)+"\n")
+parameter.write("M_cr "+str(M_cr)+"\n")
+parameter.write("M_max "+str(M_max)+"\n")
+parameter.write("rho_0 "+str(rho_0)+"\n")
+parameter.write("T_0 "+str(T_0)+"\n")
+parameter.write("s_l "+str(s_l)+"\n")
+parameter.write("V_land "+str(V_land)+"\n")
+parameter.write("cV "+str(cV)+"\n")
+parameter.write("A "+str(A)+"\n")
+parameter.write("c "+str(c)+"\n")
+parameter.write("C_f_e "+str(C_f_e)+"\n")
+parameter.write("V_s "+str(V_s)+"\n")
+parameter.write("V_rot "+str(V_rot)+"\n")
+parameter.write("n_max "+str(n_max)+"\n")
+#parameter.write("f "+str(f)+"\n")
 
-from testpar import *
+#from testpar import *
+from TWWS import *
 
-for i in range(len(string_testpar)):
-    parameters.write(string_testpar[i] + " " + str(eval(string_testpar[i])) + "\n")
-    
-parameters.close()
+#for i in range(len(string_testpar)):
+#    parameters.write(string_testpar[i] + " " + str(eval(string_testpar[i])) + "\n")
+
+for i in range(len(string_TWWS)):
+    print i
+    parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
+
+parameter.close()
+
+#from testpar import *
+
+file = 'parameters.txt'
+file = np.genfromtxt(file, dtype=str, delimiter=';')
+lst = []
+checkdoubles = []
+count = []
+doubles = []
+found = False
+
+for i in range(len(file)):
+    lst.append(file[i].split())
+
+for i in range(len(lst)):
+    checkdoubles.append(lst[i][0])
+    count.append(checkdoubles.count(lst[i][0]))
+    if checkdoubles.count(lst[i][0]) > 1:
+        doubles.append([lst[i][0],checkdoubles.count(lst[i][0])])
