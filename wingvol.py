@@ -5,10 +5,9 @@ import sympy
 from scipy.integrate import quad
 from TWWS import S
 from emissions import volume_needed
-<<<<<<< HEAD
-=======
+
 from WingLayout import b,c_r,c_t,taper
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
+
 
 #------------------------------------------------upper coordinates-----------------------------------------------------------
 
@@ -96,13 +95,13 @@ def fint(xstart,xend):
 #c_r = 2*b/(A*(1+taper))             #root chord
 #c_t = c_r*taper                     #tip chord
 b_frac = 1                          #wing span used for fuel (from the inside)
-<<<<<<< HEAD
+
 d_fus = 2.                          #IMPORT FROM PATRIK
 b_eff = (b - d_fus)*b_frac - 2
-=======
+
 d_ext_fus = 2.                          #IMPORT FROM PATRIK
 b_eff = (b - d_ext_fus)*b_frac - 2
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
+
 cfac = 0.9                          #correction factor for loss of space in fuel tank
 
 a = fint(xstart,xend)
@@ -121,17 +120,16 @@ for i in range(len(b_cur)):
         c_avg = sqrt((c_r_f**3 - c_t_f**3)/(3*(c_r_f - c_t_f)))
         volume = cfac*2*b_cur[i]*a*c_avg**2
         vol.append(volume)
-<<<<<<< HEAD
+
         if volume >= volume_needed:
             ilst.append(i)
-=======
+
         ilst.append(i)
         if volume >= volume_needed:
             break
 
 print c_r_f
 print c_t_f
->>>>>>> af6e807275de47b92cbeaf27f70ca0418002ab59
 
 if len(ilst) > 0:
     print volume_needed,"m^3 of fuel can be fit within", round(b_cur[ilst[0]]/(b/2)*100,2), "% of the half span. The fuel tank is positioned in between", xstart, "and", xend, "x/c."
