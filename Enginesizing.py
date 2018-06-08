@@ -5,8 +5,13 @@ from math import *
 
 #Parameters
 
+<<<<<<< HEAD
 T      = 292692.                 #take-off thrust [N]
 T_ref  = 292700.                 #take-off thrust reference [N]
+=======
+T      = 220000.                 #take-off thrust [N]
+T_ref  = 120400.                 #take-off thrust reference [N]
+>>>>>>> 979a4eef50a2c678eeb1fbc69f22776d9c7b4e3d
 D_ref  = 2.543                   #engine diameter reference [m]
 W_ref  = 3153.                   #engine weight reference [kg]
 l_ref  = 3.328                   #engine length [m]
@@ -36,7 +41,14 @@ print "Welcome to the engine sizing tool."
 print "This tool outputs a first order estimate of the engine sizes."
 print "Method 1: ADSEE method"
 print "Method 2: Raymer"
+<<<<<<< HEAD
 choice = raw_input("Which method do you want to use? [Enter the number]")
+=======
+
+choice = raw_input("Which method do you want to use? [Enter the number]")
+
+
+>>>>>>> 979a4eef50a2c678eeb1fbc69f22776d9c7b4e3d
 
 if choice=="1":
         

@@ -18,6 +18,27 @@ m_to_mm=1000.
 cm_to_m=1/100.
 inch_to_m=inch_to_cm*cm_to_m
 
+M_tf = 0.935                        #technology factor for supercritical airfoils
+FL = 390                            #flight level
+h_cr = FL*FL_to_m                   #cruise altitude
+R = 287.05
+g = 9.80665                         #gravitational acc.
+gamma = 1.4
+M_cr = 0.79                         #cruise mach number (req)
+M_max = 0.82                        #maximum cruise mach number
+rho_0 = 1.225                       #sea-level density
+T_0 = 288.15                        #sea-level temperature 
+s_l = 2000.                         #landing distance
+V_land = sqrt(s_l/0.5847)           #landing velocity based on landing distance
+cV = 0.024                          #climb gradient requirement from CS25
+A = 14.                             #Aspect ratio
+c = 17.                             #climb rate as from ref. aircraft
+C_f_e = 0.003                       #friction coefficient
+V_s = 100.                          #stall speed based on reference aircraft
+V_rot = 1.1                         #rotation speed
+n_max = 2.5                         #max load factor (CS25)
+f = 0.9745                          #fuel fraction during cruise
+
 #------------------------------------------------FUNCTIONS-----------------------------------------------------
 
 #---------PARAMETERS----------
@@ -77,14 +98,21 @@ def ISA(h):
 
     return T,p,rho
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 979a4eef50a2c678eeb1fbc69f22776d9c7b4e3d
 def ISA_rho(rho):
-    T0 = T0lst[0]
-    a  = lapselst[0]
+    T0 = T0lst[i]
+    a  = lapselst[i]
     if rho > ISA(11000)[2]:
+<<<<<<< HEAD
         h = ((rho/1.225)**((-g/(a*R)-1)**-1)-1)*T0/a
     return h
 
+=======
+        h = (rho/1.225**((-g/(a*R)-1)**-1)-1)*T0/a
+>>>>>>> 979a4eef50a2c678eeb1fbc69f22776d9c7b4e3d
 #--------------speed------------------
 
 def a(h): #speed of sound
