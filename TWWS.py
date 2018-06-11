@@ -304,4 +304,4 @@ print 'C_L_max_cr = ', findclcr(WS,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L
 print "C_L_max_land = ", findcland(WS,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
 print "C_L_max_takeoff = ", findclto(TW,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 
-string_TWWS = ["C_L_max_clean","C_L_max_land","C_L_max_to","WS","TW","S","thrust","C_D_0"]
+string_TWWS = ["WS","TW","S","thrust","C_D_0"]
