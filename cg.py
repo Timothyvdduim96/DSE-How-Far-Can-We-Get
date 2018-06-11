@@ -1,5 +1,5 @@
 from math import *
-from wingvol import vol,b_cur
+from wingvol import vol,b_cur,b_frac
 #from WingLayout import c_r,c_t,lambdac_0,MAC
 import numpy as np
 #from Class_II_weight_estimation import *
@@ -17,7 +17,7 @@ MAC = value("MAC")
 b = value("b")
 c_r = value("c_r")
 c_t = value("c_t")
-d_ext_fus = value("d_ext_fus")
+d_ext_fus = 2.#value("d_ext_fus")
 xstart = value("x_spar1")
 xend = value("x_spar2")
 lambdac_0 = value("lambdac_0")
@@ -91,8 +91,6 @@ for i in range(2):
         mom = x_cg*w
 
         return x_cg,w,mom
-        
-    
 
     x_oew_up = (fus()[2] + wing()[2] + hortail()[2] + verttail()[2] + engines()[2] + nacelle()[2] + mainlandinggear()[2] + noselandinggear()[2])/(fus()[1] + wing()[1] + hortail()[1] + verttail()[1] + engines()[1] + nacelle()[1] + mainlandinggear()[1] + noselandinggear()[1])
     print x_oew_up

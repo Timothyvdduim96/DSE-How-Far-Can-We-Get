@@ -91,7 +91,7 @@ taper = value("taper")#0.4 #IMPORT FROM WINGPLANFORM
 c_r = value("c_r")#2*b/(A*(1+taper))             #root chord
 c_t = value("c_t")#c_r*taper                     #tip chord
 b_frac = 0.95                          #wing span used for fuel (from the inside)
-d_ext_fus = value("d_ext_fus")#2.                          #IMPORT FROM PATRIK
+d_ext_fus = 2.#value("d_ext_fus")#2.                          #IMPORT FROM PATRIK
 b_eff = (b - d_ext_fus)*b_frac - 2
 cfac = 0.9                          #correction factor for loss of space in fuel tank
 

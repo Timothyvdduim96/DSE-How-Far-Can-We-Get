@@ -16,7 +16,7 @@ from parameters import *
 S = value("S")            #wing surface area
 b = value("b")             #wing span
 MAC =  value("MAC")        #mean aerodynamic chord
-L_fus = value("l_fus")     #fuselage length
+L_fus = 40.#value("l_fus")     #fuselage length
 
 
 Vh =  1         #horizontal tail volume
