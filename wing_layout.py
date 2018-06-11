@@ -9,6 +9,8 @@ from parameters import *
 
 q = q(cruise_speed(value("h_cr")),value("h_cr"))
 
+M_crit = 0.663 #NACA SC20612
+
 C_L_cr = value("C_L_cr")#MTOW*g/(q*S)
 
 M_tf = value("M_tf")
@@ -49,7 +51,7 @@ dihedral = 1 - degrees(lambdac_4)/10
 MAC = (2/3)*c_r*(1+taper+taper**2)/(1+taper)
 
 
-string_wing_layout = ['lambdac_4 ','lambdac_2','lambdac_0','taper','b','c_r','c_t','t_c','dihedral','MAC','M_dd']
+string_wing_layout = ['lambdac_0','taper','b','c_r','c_t','t_c','dihedral','MAC','M_dd']
 
 
 
