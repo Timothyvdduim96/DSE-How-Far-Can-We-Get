@@ -2,24 +2,25 @@
 
 import numpy as np
 from math import *
+from parameters import *
 
 #Parameters
 
-T      = 292692.                 #take-off thrust [N]
-T_ref  = 292700.                 #take-off thrust reference [N]
+T      = value("thrust")*1000                 #take-off thrust [N]
+T_ref  = 120400.                 #take-off thrust reference [N]
 D_ref  = 2.543                   #engine diameter reference [m]
 W_ref  = 3153.                   #engine weight reference [kg]
 l_ref  = 3.328                   #engine length [m]
 a_eng  = 1.                      #is 1 as preliminary assumption, can vary between 0.8 and 1.3
 N_eng  = 2.                      #number of engines
-lamda  = 5.5                     #bypass ratio
+lamda  = 14.                     #bypass ratio
 n_nozz = 0.97                    #nozzle efficiency
 n_tf   = 0.75                    #efficiency of turbine and fan
-gamma  = 1.4                 
-R      = 287     
-T_0    = 288.15                  #standard ISA temperature at sea level
+gamma  = value("gamma")                 
+R      = value("R")     
+T_0    = value("T_0")                  #standard ISA temperature at sea level
 a0     = sqrt(gamma*R*T_0)       #speed of sound at sea level ISA
-rho_0  = 1.225                   #density at sea level ISA
+rho_0  = value("rho_0")                   #density at sea level ISA
 Temp_4 = 1350.                   #turbine inlet temperature, between 1350 - 1650K, depends on technologie used
 G_eng  = (Temp_4/600.)-1.25      #specific gas generator power 
 Cl_eng = 7.8                     #standard parameter for categorie C engine
@@ -27,7 +28,7 @@ delta_l= 0.10                    #standard parameter for categorie C engine
 phi_eng= 0.75                    #should be selected based on experience/assumption, 0.5 - 0.75
 Beta   = 0.21+(0.12/sqrt(phi_eng-0.3)) #standard parameter for categorie C engine
 eta    = 0.32
-M = 0.79 #mach number
+M = value("M_cr") #mach number
 
 #-------------------------------------------------------------------------------
 #Engine basic sizes
@@ -36,7 +37,10 @@ print "Welcome to the engine sizing tool."
 print "This tool outputs a first order estimate of the engine sizes."
 print "Method 1: ADSEE method"
 print "Method 2: Raymer"
+
 choice = raw_input("Which method do you want to use? [Enter the number]")
+
+
 
 if choice=="1":
         

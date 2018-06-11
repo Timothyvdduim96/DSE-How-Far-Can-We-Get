@@ -107,4 +107,3 @@ plt.xlabel("V [m/s]")
 plt.title("V-n diagram")
 plt.show()
 
-print (V_D)

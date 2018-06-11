@@ -33,7 +33,6 @@ N_passengers=240 #[-] B:184 A:180,220      WARNING!!! MUST BE MULTIPLE OF SIX!!!
 ext_int_corr=1.088
 N_rows_A321neo = 41
 l_cabin_A321neo = 34.44
-tesdwadwadwat=1
 
 
 #Output
@@ -79,7 +78,7 @@ print "Diameter of the fuselage is",round(d_int_fus,2)," m"
 print "Width of the floor is",round(w_floor,2)," m"
 print "Height of the floor is",h_floor,"m"
 
-string_Fuselage_Sizing=["N_aisle","w_seat","w_aisle","sidewall_clearance","seat_corr","h_floor","t_floor","h_headspace","h_aisle","h_luggage","h_extra","seat_pitch","N_seat_row","l_cockpit","ratio_tail","N_passengers","ext_int_corr","N_rows","w_floor","d_int_fus","d_ext_fus","r_int_fus","r_ext_fus","l_seats","l_cabin","ratio_nosecone","ratio_tailcone","l_nosecone","l_tailcone","l_fus","F","area_cargo","area_cabin","area_ext_fus"]
+string_Fuselage_Sizing=["N_aisle","w_seat","w_aisle","sidewall_clearance","seat_corr","h_floor","t_floor","h_headspace","h_aisle","h_luggage","h_extra","seat_pitch","N_seat_row","l_cockpit","ratio_tail","N_passengers","ext_int_corr","N_rows","w_floor","d_int_fus","d_ext_fus","r_int_fus","r_ext_fus","l_seats","l_cabin","ratio_nosecone","ratio_tailcone","l_nosecone","l_tailcone","l_fus","F","area_cargo","area_cabin","area_ext_fus","l_tail"]
 
 
 
