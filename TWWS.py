@@ -5,17 +5,10 @@ from parameters import *
 
 #-----------------------------------------------parameters--------------------------------------------------
 xsize = 11000
-<<<<<<< HEAD
-rho = ISA(0)[2]
-rho_cr = ISA(value("FL")*FL_to_m)[2]
-T = ISA(value("FL")*FL_to_m)[0]
-SwetSref = 5.5   #GET FROM PATRIK?
-=======
 T = ISA(FL*FL_to_m)[0]
 rho = ISA(0)[2]
 rho_cr = ISA(FL*FL_to_m)[2]
 SwetSref = 5.5   #GET FROM PATRIK??
->>>>>>> 6127c6d9459d42725836452a8d11649e2330bb25
 
 #------------------------------------design specific parameters---------------------------------------------
 
@@ -23,35 +16,6 @@ designdatalst = 'dop.csv'
 
 designdata = np.genfromtxt(designdatalst, dtype='string', delimiter=';')
 
-<<<<<<< HEAD
-#ch = raw_input("choose your design nr (1 to 6): ")
-
-C_L_max_1 = eval(designdata[1][3]) 
-C_L_max_2 = eval(designdata[2][3]) 
-C_L_max_3 = eval(designdata[3][3]) 
-C_L_clean_1 = eval(designdata[4][3]) 
-C_L_clean_2 = eval(designdata[5][3]) 
-C_L_clean_3 = eval(designdata[6][3])
-C_L_TO_1 = eval(designdata[7][3]) 
-C_L_TO_2 = eval(designdata[8][3])
-C_L_TO_3 = eval(designdata[9][3])
-V_s = eval(designdata[9][3])
-C_f_e = value("C_f_e")#value("C_f_e")
-C_D_0 = C_f_e*SwetSref#eval(designdata[19][ch]) 
-e = value("e")
-C_D_0 = value("C_f_e")*SwetSref#eval(designdata[19][ch])
-A = value("A")
-cV = value("cV")
-c = value("c")
-rho_0 = value("rho_0")
-V_land = sqrt(value("s_l")/0.5835)
-f = value("f")
-n_max = value("n_max")
-TOP = eval(designdata[15][3])
-V = V_s
-V_max = max_speed(value("FL")*FL_to_m)
-MTOW = eval(designdata[16][3])
-=======
 ch = raw_input("choose your design nr (1 to 6): ")
 
 C_L_max_1 = eval(designdata[1][ch]) 
@@ -70,7 +34,6 @@ e = 0.85
 TOP = eval(designdata[15][ch])
 V = V_s
 MTOW = eval(designdata[16][ch])
->>>>>>> 6127c6d9459d42725836452a8d11649e2330bb25
 
 #land limit
 
@@ -101,6 +64,8 @@ def climb_gradient(cV,C_D_0,A,e):
 
     factor = 2 #one engine inoperative (CS25)
     TW_1 = factor*(cV + 2*sqrt(C_D_0/(pi*A*e)))
+    #TW_2 = factor*(cV + 2*sqrt(C_D_0/(pi*A_2*e)))
+    #TW_3 = factor*(cV + 2*sqrt(C_D_0/(pi*A_3*e)))
 
     return TW_1
 
@@ -110,6 +75,8 @@ def climb_rate(c,rho,C_D_0,A,e,xsize):
 
     C_D = 4*C_D_0
     C_L_1 = sqrt(3*C_D_0*pi*A*e)
+    #C_L_2 = sqrt(3*C_D_0*pi*A_2*e)
+    #C_L_3 = sqrt(3*C_D_0*pi*A_3*e)
 
     TW_1 = []
     TW_2 = []
@@ -120,6 +87,8 @@ def climb_rate(c,rho,C_D_0,A,e,xsize):
     for i in range(len(WS)):
     
         TW_1.append(c/(sqrt(2*WS[i]/(rho*C_L_1))) + C_D/C_L_1)
+        #TW_2.append(c/(sqrt(2*WS[i]/(rho*C_L_2))) + C_D/C_L_2)
+        #TW_3.append(c/(sqrt(2*WS[i]/(rho*C_L_3))) + C_D/C_L_3)
 
     return WS,TW_1
 
@@ -148,12 +117,16 @@ def take_off(TOP,C_L_TO_1,C_L_TO_2,C_L_TO_3,rho,rho_0):
 def speed_limit(C_D_0,rho_cr,V_max,A,e):
 
     TW_1 = []
+    #TW_2 = []
+    #TW_3 = []
 
     WS = np.arange(1,xsize)
     
     for i in range(len(WS)):
     
         TW_1.append(0.8/0.9*(1.225/rho_cr)**0.75*((C_D_0*rho_cr*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A*e*0.5*rho_cr*V_max**2)))
+        #TW_2.append(0.8/0.9*(1.225/rho_cr)**0.75*((C_D_0*rho_cr*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A_2*e*0.5*rho_cr*V_max**2)))
+        #TW_3.append(0.8/0.9*(1.225/rho_cr)**0.75*((C_D_0*rho_cr*0.5*V_max**2)/(0.8*WS[i]) + (0.8*WS[i])/(pi*A_3*e*0.5*rho_cr*V_max**2)))
 
     return TW_1
 
@@ -161,12 +134,16 @@ def loadfactor_limit(C_D_0,rho_cr,V,n_max,A):
 
     n_max = n_max + 0.1 #safety factor
     TW_1 = []
+    #TW_2 = []
+    #TW_3 = []
 
     WS = np.arange(1,xsize)
     
     for i in range(len(WS)):
     
         TW_1.append(C_D_0*0.5*rho_cr*V**2/WS[i]+WS[i]*n_max**2/(pi*A*e*0.5*rho_cr*V**2))
+        #TW_2.append(C_D_0*0.5*rho_cr*V**2/WS[i]+WS[i]*n_max**2/(pi*A_2*e*0.5*rho_cr*V**2))
+        #TW_3.append(C_D_0*0.5*rho_cr*V**2/WS[i]+WS[i]*n_max**2/(pi*A_3*e*0.5*rho_cr*V**2))
 
     return TW_1
 
@@ -190,8 +167,6 @@ for i in range(len(WS)):
         xend.append(i)
         yend.append(toform[i])
 
-<<<<<<< HEAD
-=======
 #equation design point
 ##MTOW = 66904
 ##s = 0. #define desired surface area
@@ -213,7 +188,6 @@ for i in range(len(WS)):
 ##        'size'   : 14}
 ##
 ##plt.rc('font', **font)
->>>>>>> 6127c6d9459d42725836452a8d11649e2330bb25
 
 #plotting
 landlimit_1 = land_limit(rho,C_L_max_1,C_L_max_2,C_L_max_3,V_land,f)[0]
@@ -231,13 +205,6 @@ plt.axvline(crlimit_2, linestyle="dotted", color="Blue",label="Cruising with CL=
 plt.axvline(crlimit_3, linestyle="solid", color="Blue",label="Cruising with CL=1.4")
 
 climbgradientlimit_1 = climb_gradient(cV,C_D_0,A,e)
-<<<<<<< HEAD
-#plt.axhline(climbgradientlimit_1, linestyle="solid", color="Green",label="Climb gradient with A=10.5")
-
-xaxis = climb_rate(c,rho,C_D_0,A,e,xsize)[0]
-climbratelimit_1 = climb_rate(c,rho,C_D_0,A,e,xsize)[1]
-#plt.plot(xaxis, climbratelimit_1, linestyle="solid", color="Black",label="Climb rate with A=10.5")
-=======
 #climbgradientlimit_2 = climb_gradient(cV,C_D_0,A,A_2,A_3,e)[1]
 #climbgradientlimit_3 = climb_gradient(cV,C_D_0,A,A_2,A_3,e)[2]
 plt.axhline(climbgradientlimit_1, linestyle="solid", color="Green",label="Climb gradient with A=10.5")
@@ -251,7 +218,6 @@ climbratelimit_1 = climb_rate(c,rho,C_D_0,A,e,xsize)[1]
 plt.plot(xaxis, climbratelimit_1, linestyle="solid", color="Black",label="Climb rate with A=10.5")
 #plt.plot(xaxis, climbratelimit_2, linestyle="dotted", color="Black",label="Climb rate with A=12")
 #plt.plot(xaxis, climbratelimit_3, linestyle="solid", color="Black",label="Climb rate with A=13")
->>>>>>> 6127c6d9459d42725836452a8d11649e2330bb25
 
 takeofflimit_1 = take_off(TOP,C_L_TO_1,C_L_TO_2,C_L_TO_3,rho,rho_0)[0]
 takeofflimit_2 = take_off(TOP,C_L_TO_1,C_L_TO_2,C_L_TO_3,rho,rho_0)[1]
@@ -261,13 +227,6 @@ plt.plot(xaxis, takeofflimit_1, linestyle="dashed", color="Cyan",label="Taking o
 plt.plot(xaxis, takeofflimit_3, linestyle="solid", color="Cyan",label="Taking off with CL=3.0")
 
 maxspeedlimit_1 = speed_limit(C_D_0,rho_cr,V_max,A,e)
-<<<<<<< HEAD
-#plt.plot(xaxis, maxspeedlimit_1, linestyle="solid", color="Violet",label="Max speed with A=10.5")
-
-loadfactorlimit_1 = loadfactor_limit(C_D_0,rho,V,n_max,A)
-#plt.plot(xaxis, loadfactorlimit_1, linestyle="solid", color="Maroon",label="Load factor with A=10.5")
-'''
-=======
 #maxspeedlimit_2 = speed_limit(C_D_0,rho_cr,V_max,A,A_2,A_3,e)[1]
 #maxspeedlimit_3 = speed_limit(C_D_0,rho_cr,V_max,A,A_2,A_3,e)[2]
 plt.plot(xaxis, maxspeedlimit_1, linestyle="solid", color="Violet",label="Max speed with A=10.5")
@@ -281,7 +240,6 @@ plt.plot(xaxis, loadfactorlimit_1, linestyle="solid", color="Maroon",label="Load
 #plt.plot(xaxis, loadfactorlimit_2, linestyle="dotted", color="Maroon",label="Load factor with A=12")
 #plt.plot(xaxis, loadfactorlimit_3, linestyle="solid", color="Maroon",label="Load factor with A=13")
 
->>>>>>> 6127c6d9459d42725836452a8d11649e2330bb25
 a=[[7457,0.32]]
 plt.plot(*zip(*a), marker='o', markersize=8, color='fuchsia', label="reference aircraft") #A321neo
 ##b=[[6239,0.35]]
@@ -321,28 +279,6 @@ box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.grid()
-<<<<<<< HEAD
-#plt.show()
-'''
-WS = 5302.#raw_input("Fill in a x-coordinate of a design point: ")
-TW = 0.325#raw_input("Fill in a y-coordinate of a design point: ")
-DP = []
-DP.append(WS)
-DP.append(TW)
-S = round(MTOW*g/WS,2)
-thrust = round(MTOW*g*TW/1000)
-print "Wing area = ", S, "m^2"
-print "Thrust = ", thrust, "kN"
-
-def findclcr(WS,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3):
-
-    if WS < crlimit_1:
-        C_Lcr = round((WS/crlimit_1*C_L_clean_1),2)
-    elif WS >= crlimit_1 and WS <= crlimit_2:
-        C_Lcr = round(((WS-crlimit_1)/(crlimit_2-crlimit_1)*(C_L_clean_2-C_L_clean_1)+C_L_clean_1),2)
-    elif WS > crlimit_2 and WS <= crlimit_3:
-        C_Lcr = round(((WS-crlimit_2)/(crlimit_3-crlimit_2)*(C_L_clean_3-C_L_clean_2)+C_L_clean_2),2)
-=======
 plt.show()
 
 DPx = raw_input("Fill in a x-coordinate of a design point: ")
@@ -368,7 +304,6 @@ def findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean
         C_Lcr = round(((DPx-crlimit_1)/(crlimit_2-crlimit_1)*(C_L_clean_2-C_L_clean_1)+C_L_clean_1),2)
     elif DPx > crlimit_2 and DPx <= crlimit_3:
         C_Lcr = round(((DPx-crlimit_2)/(crlimit_3-crlimit_2)*(C_L_clean_3-C_L_clean_2)+C_L_clean_2),2)
->>>>>>> 6127c6d9459d42725836452a8d11649e2330bb25
     else:
         C_Lcr = "cr requirement not satisfied"
 
@@ -406,22 +341,10 @@ def findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_ma
 
     return C_Lland
 
-<<<<<<< HEAD
-C_L_max_land = findcland(WS,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
-
-print 'C_L_max_clean = ', findclcr(WS,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
-print "C_L_max_land = ", findcland(WS,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
-print "C_L_max_takeoff = ", findclto(TW,to1,to2,to3,C_L_TO_1,C_L_TO_2)
-=======
 C_Lland = findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
->>>>>>> 6127c6d9459d42725836452a8d11649e2330bb25
 
 print 'C_L_max_cr = ', findclcr(DPx,crlimit_1,crlimit_2,crlimit_3,C_L_clean_1,C_L_clean_2,C_L_clean_3)
 print "C_L_max_land = ", findcland(DPx,landlimit_1,landlimit_2,landlimit_3,C_L_max_1,C_L_max_2,C_L_max_3)
 print "C_L_max_takeoff = ", findclto(DPy,to1,to2,to3,C_L_TO_1,C_L_TO_2)
 
-<<<<<<< HEAD
-string_TWWS = ["C_L_max_clean","C_L_max_land","C_L_max_to","WS","TW","S","thrust","C_D_0"]
-=======
     
->>>>>>> 6127c6d9459d42725836452a8d11649e2330bb25

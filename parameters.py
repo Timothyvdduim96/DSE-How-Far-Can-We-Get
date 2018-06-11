@@ -17,6 +17,16 @@ mm_to_m=1./1000.
 m_to_mm=1000.
 cm_to_m=1/100.
 inch_to_m=inch_to_cm*cm_to_m
+mft        = 3.2808399        # conversion factor meters to feet
+kglbs      = 2.20462262       # conversion factor kilograms to pounds
+sqmsqft    = 10.7639104       # conversion factor square meters to square feet
+mskts      = 1.94384449       # conversion factor meters per seconds to knots
+degrad     = 0.0174532925     # conversion factor degrees to radians
+kmnm       = 0.539956803      # conversion factor kilometers to nautical miles
+Nlbs       = 0.224808943      # conversion factor newtons to pounds
+papsf      = 0.02089          # conversion factor pascal to pound-force per square foot
+kgmlbsgall = 0.00834540445    # conversion factor for kilogram per cubic meter to pounds per gallon
+papsi      = 0.000145037738   # conversion factor for pascal to pounds-force per square inch
 
 #------------------------------------------------FUNCTIONS-----------------------------------------------------
 
@@ -81,9 +91,7 @@ def ISA_rho(rho):
     T0 = T0lst[i]
     a  = lapselst[i]
     if rho > ISA(11000)[2]:
-        h = ((rho/1.225)**((-g/(a*R)-1)**-1)-1)*T0/a
-    return h
-
+        h = (rho/1.225**((-g/(a*R)-1)**-1)-1)*T0/a
 #--------------speed------------------
 
 def a(h): #speed of sound
