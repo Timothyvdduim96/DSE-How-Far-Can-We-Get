@@ -17,7 +17,7 @@ x_cargo = 19.0 #position c.g. baggage compartment
 w_cargo = value("MTOW") - value("OEW") - w_luggage - w_pax  #weight of aft cargo
 MAC = value("MAC")    #mean aerodynamic chord
 X_LEMAC = value("x_lemac") #X-position leading edge mean aerodynamic chord
-cg_oew = value("x_oew")  #center of gravity at operational empty weight
+cg_oew = value("xcg_oew")  #center of gravity at operational empty weight
 row_mid_emergency_exit = n_rows/2
 row_final_emergency_exit = 29
 
