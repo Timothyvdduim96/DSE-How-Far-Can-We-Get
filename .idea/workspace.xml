@@ -14,8 +14,8 @@
       <file leaf-file-name="airfoil.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/airfoil.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="46" column="38" lean-forward="false" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
+            <state relative-caret-position="645">
+              <caret line="48" column="38" lean-forward="false" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
               <folding>
                 <element signature="e#115#147#0" expanded="true" />
               </folding>
@@ -26,8 +26,8 @@
       <file leaf-file-name="airfoil2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/airfoil2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="562">
-              <caret line="108" column="24" lean-forward="true" selection-start-line="108" selection-start-column="24" selection-end-line="108" selection-end-column="24" />
+            <state relative-caret-position="1200">
+              <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
               <folding>
                 <element signature="e#237#248#0" expanded="true" />
               </folding>
@@ -48,7 +48,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -67,8 +67,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scratches" />
+      <pane id="ProjectPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -157,8 +157,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.027083334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -198,6 +197,26 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/airfoil.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="48" column="38" lean-forward="false" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
+          <folding>
+            <element signature="e#115#147#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/airfoil2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1185">
+          <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding>
+            <element signature="e#237#248#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/airfoil.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="46" column="38" lean-forward="false" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
           <folding>
@@ -218,8 +237,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/airfoil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="46" column="38" lean-forward="false" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
+        <state relative-caret-position="645">
+          <caret line="48" column="38" lean-forward="false" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
           <folding>
             <element signature="e#115#147#0" expanded="true" />
           </folding>
@@ -230,14 +249,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1700">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/airfoil2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="108" column="24" lean-forward="true" selection-start-line="108" selection-start-column="24" selection-end-line="108" selection-end-column="24" />
+        <state relative-caret-position="1200">
+          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
           <folding>
             <element signature="e#237#248#0" expanded="true" />
           </folding>
