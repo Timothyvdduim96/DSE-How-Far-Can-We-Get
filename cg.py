@@ -97,7 +97,7 @@ for i in range(2):
     if i == 0:
         x_oew = x_oew_up
 
-x_oew = x_oew_up
+xcg_oew = x_oew_up
 #----------------------------------------------FUEL-------------------------------------------------
 
 vols = []
@@ -109,10 +109,10 @@ cgspan = float(vols.index(round(vol[len(vol)-1]/2,3)))/len(vols)*(float(len(vols
 
 dis1 = cos(np.degrees(lambdac_0))*cgspan
 
-chord = c_r - (c_r-c_t)/((b-d_ext_fus)/2)*cgspan
+chord = c_r - (c_r-c_t)/((b-d_ext_fus/2)/2)*cgspan
 
-x_bar_fuel = dis1 + chord*(xstart+xend)/2
+xcg_fuel = dis1 + chord*(xstart+xend)/2 + x_lemac - cos(np.degrees(lambdac_0))*(c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2))
 
 #----------------------------------------------PAYLOAD----------------------------------------------
 
-string_cg = ["x_lemac","x_oew","x_bar_fuel"]
+string_cg = ["x_lemac","xcg_oew","xcg_fuel"]
