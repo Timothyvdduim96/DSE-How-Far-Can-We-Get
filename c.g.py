@@ -9,9 +9,9 @@ import numpy as np
 
 from parameters import *
 
-l_cockpit = value("l_cockpit")
-l_tail = value("l_tail")
-l_cabin = value("l_cabin")
+l_cockpit = 5.        #value("l_cockpit")
+l_tail = 6.           #value("l_tail")
+l_cabin = 33. # value("l_cabin")
 l_fus = value("l_fus")
 MAC = value("MAC")
 b = value("b")
