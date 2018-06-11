@@ -74,6 +74,8 @@ for i in range(2):
         mom = x_cg*w
 
         return x_cg,w,mom
+        
+    
 
     x_oew_up = (fus()[2] + wing()[2] + hortail()[2] + verttail()[2] + engines()[2] + nacelle()[2] + mainlandinggear()[2] + noselandinggear()[2])/(fus()[1] + wing()[1] + hortail()[1] + verttail()[1] + engines()[1] + nacelle()[1] + mainlandinggear()[1] + noselandinggear()[1])
     print x_oew_up

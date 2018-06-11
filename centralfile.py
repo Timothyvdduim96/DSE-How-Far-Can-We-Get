@@ -12,7 +12,7 @@ from emissions import * #CHECK
 from liftdrag import * #CHECK
 from empennage import * #CHECK
 from landing_gear import * #CHECK
-
+from airfoil2 import * #CHECK
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -46,7 +46,7 @@ V_land = sqrt(s_l/0.5847)           #landing velocity based on landing distance
 cV = 0.024                          #climb gradient requirement from CS25
 A = 14.                             #Aspect ratio
 c = 17.                             #climb rate as from ref. aircraft
-C_f_e = 0.003                       #friction coefficient
+C_f_e = 0.0026                      #friction coefficient
 V_s = 100.                          #stall speed based on reference aircraft
 V_rot = 1.1                         #rotation speed
 n_max = 2.5                         #max load factor (CS25)
@@ -112,6 +112,9 @@ for i in range(len(string_empennage)):
 
 for i in range(len(string_landing_gear)):
     parameter.write(string_landing_gear[i] + " " + str(eval(string_landing_gear[i])) + "\n")
+
+for i in range(len(string_airfoil2)):
+    parameter.write(string_airfoil2[i] + " " + str(eval(string_airfoil2[i])) + "\n")
 
 parameter.close()
 
