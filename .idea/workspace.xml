@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b083833-9173-4e5e-ba64-c3a9c26bc6b8" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wing_layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/wing_layout.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,6 +14,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
+      <file leaf-file-name="wing_layout.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wing_layout.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="167">
+              <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parameters.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/parameters.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+=======
 <<<<<<< HEAD
       <file leaf-file-name="airfoil.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/airfoil.py">
@@ -41,6 +58,7 @@
               <folding>
                 <element signature="e#14#32#0" expanded="true" />
               </folding>
+>>>>>>> f3104e14ce806e9dadfcc58d917644b6f5b63f2e
             </state>
           </provider>
         </entry>
@@ -60,8 +78,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1440" />
-    <option name="height" value="900" />
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -194,14 +212,18 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
 =======
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+<<<<<<< HEAD
+    <editor active="true" />
+=======
 >>>>>>> 1b86805a0f9ef24c02bf9e74074ae468da767f1c
+>>>>>>> f3104e14ce806e9dadfcc58d917644b6f5b63f2e
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20969023" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32905984" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32905984" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
@@ -231,6 +253,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/wing_layout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/airfoil.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
@@ -255,9 +284,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="46" column="21" lean-forward="true" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
-          <folding>
-            <element signature="e#115#147#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -265,9 +291,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1605">
           <caret line="108" column="24" lean-forward="true" selection-start-line="108" selection-start-column="24" selection-end-line="108" selection-end-column="24" />
-          <folding>
-            <element signature="e#237#248#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -279,10 +302,13 @@
 =======
         <state relative-caret-position="615">
           <caret line="46" column="38" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
+<<<<<<< HEAD
+=======
 >>>>>>> 1b86805a0f9ef24c02bf9e74074ae468da767f1c
           <folding>
             <element signature="e#115#147#0" expanded="true" />
           </folding>
+>>>>>>> f3104e14ce806e9dadfcc58d917644b6f5b63f2e
         </state>
       </provider>
     </entry>
@@ -294,10 +320,13 @@
 =======
         <state relative-caret-position="1110">
           <caret line="78" column="15" selection-start-line="78" selection-start-column="15" selection-end-line="78" selection-end-column="15" />
+<<<<<<< HEAD
+=======
           <folding>
             <element signature="e#237#248#0" expanded="true" />
           </folding>
 >>>>>>> 1b86805a0f9ef24c02bf9e74074ae468da767f1c
+>>>>>>> f3104e14ce806e9dadfcc58d917644b6f5b63f2e
         </state>
       </provider>
     </entry>
@@ -314,10 +343,13 @@
 =======
         <state relative-caret-position="562">
           <caret line="108" column="24" selection-start-line="108" selection-start-column="24" selection-end-line="108" selection-end-column="24" />
+<<<<<<< HEAD
+=======
 >>>>>>> 1b86805a0f9ef24c02bf9e74074ae468da767f1c
           <folding>
             <element signature="e#237#248#0" expanded="true" />
           </folding>
+>>>>>>> f3104e14ce806e9dadfcc58d917644b6f5b63f2e
         </state>
       </provider>
     </entry>
@@ -325,19 +357,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
-          <folding>
-            <element signature="e#115#147#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wing_layout.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
-          <folding>
-            <element signature="e#14#32#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="167">
+          <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parameters.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
         </state>
       </provider>
     </entry>
