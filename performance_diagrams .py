@@ -123,22 +123,22 @@ for k in v2:
 # for b in range(len(Pr_list)):
 #     Pnew = (Pa_list[121 + b] - Pr_list[b])/W_newton
 #     PaPrlist.append(Pnew)
-    
+print CD_cr
 
-plt.plot(v,Pa_list) #CHANGE V TO VNORM FOR THRUST TO START AT 0
-plt.plot(v,Pr_list)
-plt.plot(v2,Pr1_list)
-plt.show()
-
-# plt.plot(v,PaPrlist[:239])
-# plt.plot(v,PaPrlist[239:478])
-# plt.plot(v,PaPrlist[478:717])
-# plt.plot(v,PaPrlist[717:956])
+# plt.plot(v,Pa_list) #CHANGE V TO VNORM FOR THRUST TO START AT 0
+# plt.plot(v,Pr_list)
+# #plt.plot(v2,Pr1_list)
 # plt.show()
 
-#plt.plot(v,PaPrlist)
-#plt.plot(v,PaPrlist1)
-#plt.show()
+# # plt.plot(v,PaPrlist[:239])
+# # plt.plot(v,PaPrlist[239:478])
+# # plt.plot(v,PaPrlist[478:717])
+# # plt.plot(v,PaPrlist[717:956])
+# # plt.show()
+
+# plt.plot(v,PaPrlist)
+# #plt.plot(v,PaPrlist1)
+# plt.show()
 
 # print T
 # print CL_cr
