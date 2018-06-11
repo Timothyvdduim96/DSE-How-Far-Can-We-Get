@@ -2,16 +2,14 @@ from math import *
 import numpy as np
 import matplotlib.pyplot as plt
 from parameters import *
-from TWWS import S,thrust
-from liftdrag import C_D_cr
 
 #parameters
-V_cr = cruise_speed(h_cr)
+V_cr = cruise_speed(value("h_cr"))
 #V_taxi = 10.
 #C_D_cr = [0.0282,0.0323,0.0253,0.0245,0.0253,0.0227]
 #S = [130.6,119.6,128.,127.5,126.5,152.5]
-thrust_max = thrust#[181.,181.,177.,220.,175.,187.]
-T_cr = cruise_thrust(h_cr,C_D_cr,S)#[0.5*rho*V_cruise**2*C_D_cr[0]*S[0]/1000,0.5*rho*V_cruise**2*C_D_cr[1]*S[1]/1000,0.5*rho*V_cruise**2*C_D_cr[2]*S[2]/1000,0.5*rho*V_cruise**2*C_D_cr[3]*S[3]/1000,0.5*rho*V_cruise**2*C_D_cr[4]*S[4]/1000,0.5*rho*V_cruise**2*C_D_cr[5]*S[5]/1000]
+thrust_max = value("thrust")#[181.,181.,177.,220.,175.,187.]
+T_cr = cruise_thrust(value("h_cr"),value("C_D_cr"),value("S"))#[0.5*rho*V_cruise**2*C_D_cr[0]*S[0]/1000,0.5*rho*V_cruise**2*C_D_cr[1]*S[1]/1000,0.5*rho*V_cruise**2*C_D_cr[2]*S[2]/1000,0.5*rho*V_cruise**2*C_D_cr[3]*S[3]/1000,0.5*rho*V_cruise**2*C_D_cr[4]*S[4]/1000,0.5*rho*V_cruise**2*C_D_cr[5]*S[5]/1000]
 
 #thrust specific fuel consumption ([lbm/hr/lbf])
 
@@ -52,12 +50,12 @@ end_climbdis = 156. #GET FROM PAYLOAD-RANGE DIAGRAM
 climb_dis = sqrt((39000*ft_to_km)**2+(end_climbdis-taxi_dis)**2) 
 begin_descdis = 5756. #GET FROM PAYLOAD-RANGE DIAGRAM
 end_descdis = 6006. #GET FROM PAYLOAD-RANGE DIAGRAM
-desc_dis = sqrt((end_descdis-begin_descdis)**2+(FL*100*ft_to_km)**2)
+desc_dis = sqrt((end_descdis-begin_descdis)**2+(value("FL")*100*ft_to_km)**2)
 cruise_dis = begin_descdis - end_climbdis
 #taxi_time = taxi_dis/(V_taxi/1000)
 cruise_time = cruise_dis/(V_cr/1000)
-climb_time = climb_dis/((V_cr + V_rot)/1000/2)
-desc_time = desc_dis/((V_cr + V_land)/1000/2)
+climb_time = climb_dis/((V_cr + value("V_rot"))/1000/2)
+desc_time = desc_dis/((V_cr + value("V_land"))/1000/2)
 total_time = cruise_time + climb_time + desc_time
 nocruise_time = total_time - cruise_time
 
