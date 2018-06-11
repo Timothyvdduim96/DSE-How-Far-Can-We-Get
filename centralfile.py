@@ -13,6 +13,7 @@ from liftdrag import * #CHECK
 from empennage import * #CHECK
 from landing_gear import * #CHECK
 from airfoil2 import * #CHECK
+from cg import *
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -115,6 +116,9 @@ for i in range(len(string_landing_gear)):
 
 for i in range(len(string_airfoil2)):
     parameter.write(string_airfoil2[i] + " " + str(eval(string_airfoil2[i])) + "\n")
+
+for i in range(len(string_cg)):
+    parameter.write(string_cg[i] + " " + str(eval(string_cg[i])) + "\n")
 
 parameter.close()
 
