@@ -1,19 +1,24 @@
 import matplotlib.pyplot as plt
+from parameters import *
 
 #parameters
-l_nose = 6.17  #distance nose to centerline first door on the right
-w_door = 0.69  #door width first door on the right
-pitch = 0.79   #pitch seats
+l_cockpit = value("l_cockpit")  #distance nose to centerline first door on the right
+w_door = 1.  #door width first door on the right
+w_toilet = 36*inch_to_cm/100 #from jenkinson
+pitch = value("seat_pitch")*inch_to_cm/100   #pitch seats
 x_cargo = 19.0 #position c.g. baggage compartment 
 w_cargo = 1000  #weight of aft cargo
 w_pax = 2925   #total passenger weight
 w_luggage = 574 #luggage weight
 w_oe = 11501    #operational empty weight
 w_mto = 20000   #maximum take-off weight
-n_pax = 37     #number of passengers/seats
+n_pax = 240     #number of passengers/seats
+n_rows = 40    #number of seat rows
 MAC = 2.865    #mean aerodynamic chord
 X_LEMAC = 12.594 #X-position leading edge mean aerodynamic chord
 cg_oew = 12.453  #center of gravity at operational empty weight
+row_mid_emergency_exit = n_rows/2
+row_final_emergency_exit = 29
 
 w_pl = w_pax + w_luggage + w_cargo  #total payload weight
 w_fuelatmaxpayload = w_mto - (w_oe + w_pl)  #fuel weight at max. payload weight
@@ -28,15 +33,28 @@ xcolor3 = []
 ycolor3 = []
 
 def seatcoordinates():
-    l_nose = 6.17  #distance nose to centerline first door on the right
-    w_door = 0.69  #door width first door on the right
-    pitch = 0.79   #pitch seats
-    n_rows = 12    #number of seat rows
-    pos_initial = l_nose + w_door/2 #initial position of seats (1st seat)
+    pos = l_cockpit + w_door + w_toilet + 0.3 #initial position of seats (1st seat)
     positions = []
 
-    for i in range(0,n_rows+1):
-        positions.append(pos_initial + pitch*i) 
+    for i in range(n_rows):
+        if i == row_mid_emergency_exit:
+            row = []
+            pos = pos + pitch + 0.20
+            for j in range(6):
+                row.append(pos)
+            positions.append(row)
+        elif i == row_final_emergency_exit:
+            row = []
+            pos = pos + pitch + 0.80
+            for j in range(6):
+                row.append(pos)
+            positions.append(row)
+        else:
+            row = []
+            pos = pos + pitch
+            for j in range(6):
+                row.append(pos)
+            positions.append(row)
     
     return positions
 
