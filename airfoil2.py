@@ -102,7 +102,7 @@ CL_max_low_clean = 0.9*Cl_max_low_clean*cos(lambdac_4)
 alpha_stall_low_clean = (CL_max_low_clean / CL_alpha_low_clean) + alpha_0L_low_clean + (4 * pi /180)  #rad
 #HLD requirements
 CL_TO = 2.1
-CL_land = 2.47
+CL_land = 2.2
 
 
 dCL_HLD_TO = CL_TO - CL_max_low_clean
