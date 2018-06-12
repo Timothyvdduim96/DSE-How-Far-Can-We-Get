@@ -27,8 +27,8 @@ ct_h = value("ct_h")
 MAC_h = value("MAC_h")
 MAC_v = value("MAC_v")
 ln = value("ln")
-x_oew = 25.
-x_lemac = l_cabin*0.5 + l_cockpit - 0.25*MAC
+x_oew = 20.
+x_lemac = l_cabin*0.46 + l_cockpit - 0.25*MAC
 
 #------------------------------------------OEW COMPONENTS-------------------------------------------
 
@@ -44,7 +44,7 @@ for i in range(2):
     def wing():
         span_pos = 0.35*b/2
         chord = c_r - (c_r-c_t)/((b-d_ext_fus/2)/2)*span_pos
-        x_cg = chord*xstart+(xend-xstart)*0.7*chord + l_cabin*0.5 + l_cockpit - 0.25*MAC + cos(np.degrees(lambdac_0))*(0.35*(b/2-d_ext_fus/2) - (c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2)))
+        x_cg = chord*xstart+(xend-xstart)*0.7*chord + x_lemac + cos(np.degrees(lambdac_0))*(0.35*(b/2-d_ext_fus/2) - (c_r - MAC)/((c_r-c_t)/((b-d_ext_fus/2)/2)))
         w = value("W_wing") #ADD
         mom = x_cg*w
 
@@ -123,3 +123,6 @@ xcg_fuel = dis1 + chord*(xstart+xend)/2 + x_lemac - cos(np.degrees(lambdac_0))*(
 #----------------------------------------------PAYLOAD----------------------------------------------
 
 string_cg = ["x_lemac","xcg_oew","xcg_fuel"]
+
+
+print wing()[0], x_lemac
