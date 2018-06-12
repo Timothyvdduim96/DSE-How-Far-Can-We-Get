@@ -9,7 +9,7 @@ import numpy as np
 from math import *
 from parameters import ISA
 import matplotlib.pyplot as plt
-'''
+
 A = 14.
 g = 9.80665
 thrust = 213000.
@@ -91,7 +91,8 @@ for V in range(V_min0,300,1):
     X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
     ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
     T_a = thrust*ratio #*  ratio_net_to_static
-    print T_a
+    #print T_a
+    
     #print ratio  
     CL = MTOW/(0.5*dens*V**2*S)
     #print CL
@@ -106,8 +107,8 @@ for V in range(V_min0,300,1):
     
     
     Vc = ((pa - pr)/MTOW)*196.58
-    if Vc <= 0:
-        break
+    # if Vc <= 0:
+    #     break
     palist_0.append(pa)
     prlist_0.append(pr)
     
@@ -115,8 +116,8 @@ for V in range(V_min0,300,1):
     Vc_sealevel_uns.append(Vc_uns)
     Vc_sealevel.append(Vc)
     speeds_sealevel.append(V)
+'''
 
-"""
 V_min5000 = int(sqrt((MTOW/S)*(2/ISA(1524)[2])*(1/CL_max_clean)))
 for V in range(V_min5000,300,1):     
     P_alt = ISA(1524)[1]
@@ -466,8 +467,8 @@ for V in range(V_min39000,300,1):
     Vc_39000_uns.append(Vc_uns)
     Vc_39000.append(Vc)
     speeds_39000.append(V)
+'''
 
-"""
 #power available/required
 plt.subplot(2,2,1)
 plt.plot(speeds_sealevel,palist_0,label="Pa Sea level")
@@ -562,9 +563,9 @@ plt.show()
 #plt.title('Rate of climb')
 ##plt.text(500, 2400, r'Sea level take-off distance:1706 m') #make sure to change this value
 #plt.show()
-'''
-#-----VERIFICATION
 
+#-----VERIFICATION
+'''
 
 A = 12.
 g = 9.80665
@@ -779,7 +780,7 @@ plt.title('Power required vs speed')
 plt.show()
 
 
-'''
+
 #power available/required
 plt.subplot(2,2,1)
 plt.plot(speeds_sealevel,palist_0,label="Pa Sea level")
