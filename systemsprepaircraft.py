@@ -59,7 +59,7 @@ def seatcoordinates():
     
     return positions
 
-seatcoordinates = seatcoordinates()
+seatcoordinates = seatcoordinates()[0]
 
 #left data points
 
