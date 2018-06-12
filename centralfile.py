@@ -79,7 +79,9 @@ parameter.write("x_spar1 "+str(0.25)+"\n")
 parameter.write("x_spar2 "+str(0.55)+"\n")
 parameter.write("Afactor "+str(1.2)+"\n")
 parameter.write("e "+str(0.85)+"\n")
-parameter.write("MTOW "+str(68730.522187827199)+"\n")
+parameter.write("MTOW "+str(67834.)+"\n")
+parameter.write("S "+str(110.)+"\n")
+parameter.write("thrust "+str(213.)+"\n")
 
 for i in range(len(string_TWWS)):
     parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")

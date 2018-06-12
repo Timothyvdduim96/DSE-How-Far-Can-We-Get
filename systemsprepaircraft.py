@@ -86,19 +86,19 @@ for i in range(0,len(seatcoordinates)):
     ycolor2.append(weight[i])
 
 #find middle seats data points
-for i in range(1,len(seatcoordinates)):
+for i in range(0,len(seatcoordinates)):
     xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
-    w += w_seat   #update the weight
+    w += 2*w_seat   #update the weight
     weight.append(w)
     xcolor3 = []
     ycolor3 = []
 
 #find aisle seats data points
-for i in range(1,len(seatcoordinates)):
+for i in range(0,len(seatcoordinates)):
     xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
-    w += w_seat   #update the weight
+    w += 2*w_seat   #update the weight
     weight.append(w)
     xcolor4 = []
     ycolor4 = []
@@ -139,7 +139,7 @@ for i in range(0,len(seatcoordinates)):
     i = len(seatcoordinates) - i - 1
     xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
-    w += w_seat   #update the weight
+    w += 2*w_seat   #update the weight
     weight.append(w)
 
 #find aisle seats data points
@@ -147,7 +147,7 @@ for i in range(0,len(seatcoordinates)):
     i = len(seatcoordinates) - i - 1
     xbarcgr.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
-    w += w_seat   #update the weight
+    w += 2*w_seat   #update the weight
     weightr.append(w)
 
 #plotting

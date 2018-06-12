@@ -59,6 +59,7 @@ eta = 0.95  #airfoil eff factor
 CL_des_cruise_clean = 1.1*(1/q_cr)*(0.5*(WS_start+WS_end))    #design lift coeffcient of the wing
 Cl_des_cruise_clean = CL_des_cruise_clean/(cos(lambdac_0)*cos(lambdac_0))  #design lift coefficient of airfoil
 Cl_des_M0 = Cl_des_cruise_clean*np.sqrt(1-M_cr*M_cr)
+
 #Airfoil parameters
 Cl_max_cruise_clean =
 Cd_min_cruise_clean =
