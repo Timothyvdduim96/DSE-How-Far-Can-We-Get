@@ -26,7 +26,8 @@ q = q(cruise_speed(value("h_cr")),value("h_cr"))
 C_L_cr = value("MTOW")*g/(q*value("S"))
 e = value("e")#4.61*(1-0.045*A**0.68)*(cos(sweep_LE))**0.15-3.1
 K = 1/(pi*value("A")*Afactor*e)
-C_D_0 = 0.02 #KAMBIA
+C_f_e = value("C_f_e")#value("C_f_e")
+C_D_0 = C_f_e*SwetSref#eval(designdata[19][ch]) 
 C_D_cr = C_D_0 + K*C_L_cr**2
 LoverD = (q*C_D_0/WS+WS*K/q)**-1
 
@@ -43,4 +44,4 @@ for i in range(len(CLlst)):
 ##plt.show()
 #print C_L_cr
 
-string_liftdrag = ["C_L_cr","K","C_D_cr","LoverD"]
+string_liftdrag = ["C_L_cr","K","C_D_cr","LoverD","C_D_0"]
