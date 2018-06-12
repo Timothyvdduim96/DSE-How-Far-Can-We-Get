@@ -144,25 +144,13 @@ dCD_excresence = 0.03
 #total CD0
 CD0_tot = (CD0_base + C_D_fus1 +C_D_fus2 ) * (1+dCD_excresence)
 
-print(CD0_tot)
 
 #drag due to lift
 A_eff = value("A") + 0.75
-e = 4.61 * (1- (0.045 * A_eff**0.68)) * (cos(value("lambdac_LE")))**0.15 -3.1
-lambdap = 1 - (0.45 * exp(-0.375 * value("lambdac_4")) - 0.357)
-flambda = 0.0524 * lambdap**4 - 0.15 * lambdap**3 + 0.166 * lambdap**2 + 0.0706 * lambdap + 0.0119
-et = 1/ (1 + (A_eff * flambda))
-
-eb = 1- 2 * (4/ value("b"))**2
-
-eD = 0.873
-
-eM = 1 - 1.52 *10**-4 *(value("M_cr")/0.3 -1)**10.82
-
-e = et * eb * eD * eM
+e = 1 / (1.05 + 0.007* pi * A_eff)              # Obert method
 #e = e + 0.0046 * delta_f #for flap deflection
 CL = 0.55
 CD = CD0_tot + CL**2 / (pi * A_eff * e)
-print(e, et, eb, eD, eM)
 
-string_drag = []
+string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet']
+print(S_wet/S_ref)

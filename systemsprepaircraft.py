@@ -13,10 +13,10 @@ w_luggage = 10*n_pax #luggage weight
 w_oe = value("OEW")    #operational empty weight
 w_mto = value("MTOW")   #maximum take-off weight
 w_design_fuel = value("W_fuel")
-x_cargo = 39.0 #position c.g. baggage compartment 
-w_cargo = value("MTOW") - value("OEW") - w_luggage - w_pax  #weight of aft cargo
+x_cargo = 20.0 #position c.g. baggage compartment 
+w_cargo = value("MTOW") - value("OEW") - w_luggage - w_pax - 5000  #weight of aft cargo
 MAC = value("MAC")    #mean aerodynamic chord
-X_LEMAC = value("x_lemac") #X-position leading edge mean aerodynamic chord
+X_LEMAC = 19.0712          #value("x_lemac") #X-position leading edge mean aerodynamic chord
 cg_oew = value("xcg_oew")  #center of gravity at operational empty weight
 row_mid_emergency_exit = n_rows/2
 row_final_emergency_exit = 29
@@ -24,7 +24,7 @@ row_final_emergency_exit = 29
 w_pl = w_pax + w_luggage + w_cargo  #total payload weight
 w_fuelatmaxpayload = w_mto - (w_oe + w_pl)  #fuel weight at max. payload weight
 w_seat = w_pax/(n_pax) + w_luggage/n_pax  #weight at each seat position
-x_fuel = X_LEMAC + MAC/2   #assumed position c.g. fuel
+x_fuel = value("xcg_fuel")   #assumed position c.g. fuel
 
 xcolor1 = []
 ycolor1 = []
@@ -55,7 +55,7 @@ def seatcoordinates():
     
     return positions
 
-seatcoordinates = seatcoordinates()[0]
+seatcoordinates = seatcoordinates()
 
 #left data points
 
@@ -78,7 +78,7 @@ for i in range(0,disc_cargo):
 
 #find window seats data points
 for i in range(0,len(seatcoordinates)):
-    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC) 
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
     w += 2*w_seat #update the weight
     weight.append(w)
@@ -91,8 +91,8 @@ for i in range(0,len(seatcoordinates)):
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
     w += 2*w_seat   #update the weight
     weight.append(w)
-    xcolor3 = []
-    ycolor3 = []
+    xcolor3.append(xbarcg[i])
+    ycolor3.append(weight[i])
 
 #find aisle seats data points
 for i in range(0,len(seatcoordinates)):
@@ -100,14 +100,13 @@ for i in range(0,len(seatcoordinates)):
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
     w += 2*w_seat   #update the weight
     weight.append(w)
-    xcolor4 = []
-    ycolor4 = []
-
+    xcolor4.append(xbarcg[i])
+    ycolor4.append(weight[i])
+    
 #find final data point (MTOW)
 xbarcg.append(((xcg*w + x_fuel*w_fuelatmaxpayload)/(w + w_fuelatmaxpayload) - X_LEMAC)/MAC)
 w += w_fuelatmaxpayload   #update the weight
 weight.append(w)
-
 
 #right data points
 
@@ -137,10 +136,10 @@ for i in range(0,len(seatcoordinates)):
 #find middle seats data points
 for i in range(0,len(seatcoordinates)):
     i = len(seatcoordinates) - i - 1
-    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xbarcgr.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
     w += 2*w_seat   #update the weight
-    weight.append(w)
+    weightr.append(w)
 
 #find aisle seats data points
 for i in range(0,len(seatcoordinates)):
@@ -149,6 +148,9 @@ for i in range(0,len(seatcoordinates)):
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
     w += 2*w_seat   #update the weight
     weightr.append(w)
+
+# Fuel contribution
+
 
 #plotting
 
