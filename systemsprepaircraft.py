@@ -55,7 +55,7 @@ def seatcoordinates():
     
     return positions
 
-seatcoordinates = seatcoordinates()[0]
+seatcoordinates = seatcoordinates()
 
 #left data points
 

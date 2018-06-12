@@ -11,7 +11,7 @@ q = q(cruise_speed(value("h_cr")),value("h_cr"))
 
 M_crit = 0.663 #NACA SC20612
 
-C_L_cr = value("C_L_cr")#MTOW*g/(q*S)
+C_L_cr = 1.#value("C_L_cr")#MTOW*g/(q*S)
 
 M_tf = value("M_tf")
 
