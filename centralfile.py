@@ -15,6 +15,7 @@ from landing_gear import * #CHECK
 from airfoil2 import * #CHECK
 from cg import *
 from Drag import *
+from systemsprepaircraft import *
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -76,7 +77,7 @@ parameter.write("V_s "+str(V_s)+"\n")
 parameter.write("V_rot "+str(V_rot)+"\n")
 parameter.write("n_max "+str(n_max)+"\n")
 parameter.write("f "+str(f)+"\n")
-#parameter.write("P_c "+str(P_c)+"\n")
+parameter.write("P_c "+str(P_c)+"\n")
 parameter.write("x_spar1 "+str(0.25)+"\n")
 parameter.write("x_spar2 "+str(0.55)+"\n")
 parameter.write("Afactor "+str(1.2)+"\n")
@@ -102,7 +103,6 @@ for i in range(len(string_Fuselage_Sizing)):
     parameter.write(string_Fuselage_Sizing[i] + " " + str(eval(string_Fuselage_Sizing[i])) + "\n")
 
 for i in range(len(string_wing_layout)):
-    print eval(string_wing_layout[i])
     parameter.write(string_wing_layout[i] + " " + str(eval(string_wing_layout[i])) + "\n")
 
 for i in range(len(string_wingvol)):
@@ -129,6 +129,8 @@ for i in range(len(string_cg)):
 for i in range(len(string_drag)):
     parameter.write(string_drag[i] + " " + str(eval(string_drag[i])) + "\n")
 
+for i in range(len(string_loadingdiagram)):
+    parameter.write(string_loadingdiagram[i] + " " + str(eval(string_loadingdiagram[i])) + "\n")
 
 parameter.close()
 

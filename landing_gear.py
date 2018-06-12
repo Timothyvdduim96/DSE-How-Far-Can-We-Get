@@ -36,10 +36,13 @@ p = 430*np.log(LCN)-680
 Pmw = 0.92*MTOW/Nmw
 Pnw = 0.08*MTOW/Nnw
 
+<<<<<<< HEAD
+=======
 
 
 
 
+>>>>>>> 1dc4f6a9ac4c3298025993b2355aa15c37a9f607
 ln = 5
 lm = 5
 #psi = 55. * (pi/180)
@@ -57,7 +60,10 @@ z = 4.0    #vertical CG position
 #ye =  
 #phi = 5. * (pi/180.)
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1dc4f6a9ac4c3298025993b2355aa15c37a9f607
 ln = 16 #distance from nose gear to CG
 lm = 3.5  #distance from main gear to CG
 psi = 63. * (pi/180)
