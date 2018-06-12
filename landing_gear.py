@@ -5,10 +5,10 @@ Created on Fri Jun  1 09:41:05 2018
 @author: mrvan
 """
 
-from scipy.integrate import quad
-from scipy import optimize as opt
+#from scipy.integrate import quad
+#from scipy import optimize as opt
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from math import *
 from parameters import *
 
@@ -38,16 +38,16 @@ Pnw = 0.08*MTOW/Nnw
 
 ln = 5
 lm = 5
-psi = 55. * (pi/180)
+#psi = 55. * (pi/180)
 z = 5
 zt = 5
 ye = 5
 phi = 5. * (pi/180.)
 
-ln = 15.3 #distance from nose gear to CG
-lm = 4.4  #distance from main gear to CG
-psi = 60. * (pi/180)
-z = 4.0    #vertical CG position
+ln = 16 #distance from nose gear to CG
+lm = 3.5  #distance from main gear to CG
+psi = 63. * (pi/180)
+z = 3    #vertical CG position
 #zt =
 #ye =  
 #phi = 5. * (pi/180.)
@@ -56,5 +56,7 @@ ymlg1 = (ln+lm)/(np.sqrt((ln*ln+tan(psi)*tan(psi))/(z*z)-1)) #lateral tip over c
 #ymlg2 = b/2.-zt/np.tan(phi)
 #ymlg3 = b/2.-ye/np.tan(phi)
 #ymls = max([ymlg1,ymlg2,ymlg3])
+
+print(ymlg1)
 
 string_landing_gear = ['Nmw','Nnw','Nst','p','Pmw','Pnw','z','ln','lm','ymlg1','psi','phi']
