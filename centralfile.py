@@ -1,7 +1,7 @@
 from math import *
 import numpy as np
 
-from TWWS import * #CHECK
+#from TWWS import * #CHECK
 from class_II_final_version import * #CHECK
 from Class_I import * #CHECK
 from Enginesizing import * #CHECK
@@ -52,6 +52,7 @@ V_s = 100.                          #stall speed based on reference aircraft
 V_rot = 1.1                         #rotation speed
 n_max = 2.5                         #max load factor (CS25)
 f = 0.9745                          #fuel fraction during cruise
+SwetSref = 5.5
 
 parameter = open("parameters.txt","w")
 parameter.write("M_tf "+str(M_tf)+"\n")
@@ -82,9 +83,10 @@ parameter.write("e "+str(0.85)+"\n")
 parameter.write("MTOW "+str(67834.)+"\n")
 parameter.write("S "+str(110.)+"\n")
 parameter.write("thrust "+str(213.)+"\n")
+parameter.write("SwetSref "+str(SwetSref)+"\n")
 
-for i in range(len(string_TWWS)):
-    parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
+#for i in range(len(string_TWWS)):
+#5    parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
 
 for i in range(len(string_class_II_final_version)):
     parameter.write(string_class_II_final_version[i] + " " + str(eval(string_class_II_final_version[i])) + "\n")
