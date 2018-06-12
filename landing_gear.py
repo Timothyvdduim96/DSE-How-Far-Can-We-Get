@@ -36,10 +36,10 @@ p = 430*np.log(LCN)-680
 Pmw = 0.92*MTOW/Nmw
 Pnw = 0.08*MTOW/Nnw
 
-<<<<<<< HEAD
+
 
 =======
->>>>>>> 3a20fd9686c16460eaf592ede67b4f449ba593ff
+
 ln = 5
 lm = 5
 #psi = 55. * (pi/180)
@@ -48,7 +48,7 @@ zt = 5
 ye = 5
 phi = 5. * (pi/180.)
 
-<<<<<<< HEAD
+
 ln = 15.3 #distance from nose gear to CG
 lm = 4.4  #distance from main gear to CG
 psi = 60. * (pi/180)
@@ -65,7 +65,7 @@ z = 3    #vertical CG position
 #zt =
 #ye =  
 #phi = 5. * (pi/180.)
->>>>>>> 3a20fd9686c16460eaf592ede67b4f449ba593ff
+
 
 ymlg1 = (ln+lm)/(np.sqrt((ln*ln+tan(psi)*tan(psi))/(z*z)-1)) #lateral tip over criterion
 #ymlg2 = b/2.-zt/np.tan(phi)
