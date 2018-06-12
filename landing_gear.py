@@ -38,7 +38,7 @@ Pnw = 0.08*MTOW/Nnw
 
 
 
-=======
+
 
 ln = 5
 lm = 5
@@ -57,7 +57,7 @@ z = 4.0    #vertical CG position
 #ye =  
 #phi = 5. * (pi/180.)
 
-=======
+
 ln = 16 #distance from nose gear to CG
 lm = 3.5  #distance from main gear to CG
 psi = 63. * (pi/180)

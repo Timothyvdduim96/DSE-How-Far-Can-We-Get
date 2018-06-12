@@ -102,9 +102,9 @@ M_dd 0.82
 c_r_f 4.34239031253
 c_t_f 1.58304814679
 c_avg 3.06793133334
-fuel_in_wings 9.8177
+fuel_in_wings 10.0105
 empty_tip 0.93
-A_cross_section 0.0347208306394
+A_cross_section 0.0354026320176
 fuel_used ['confuel', 'jatropha']
 fuel_mix [20, 80]
 fuelvolume_needed 10.1993148585
