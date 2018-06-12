@@ -152,10 +152,10 @@ Cd_min_cruise_clean 0.006
 Cm_des_cruise_clean -0.116
 alpha_0L_cruise_clean -0.0666715774262
 alpha_0L_low_clean -0.0666715774262
-alpha_des_cruise_clean 0.0118333323285
+alpha_des_cruise_clean 0.0237364778271
 alpha_stall_cruise_clean 0.174282044879
 alpha_stall_low_clean 0.381447952722
-alpha_trim_cruise_clean 0.0801675283244
+alpha_trim_cruise_clean 0.053469509097
 CL_max_cruise_clean_plane 0.944327272727
 CL_max_cruise_clean_wing 1.03876
 CL_max_low_clean 1.76819242385
@@ -167,7 +167,7 @@ lambdac_LE 0.574911356893
 lambdac_2 0.517666951232
 lambdac_4 0.546787527368
 dCL_HLD_land 0.701807576149
-dCL_HLD_TO 0.0318075761495
+dCL_HLD_TO 0.331807576149
 x_lemac 20.4487900872
 xcg_oew 19.930409246
 xcg_fuel 21.4706079759
