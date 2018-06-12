@@ -38,11 +38,11 @@ lambdac_2 = atan(tan(lambdac_4) - 4/value("A") * 0.25*(1-taper)/(1+taper)) #rad 
 
 lambdac_0 = atan(tan(lambdac_4) - 4/value("A") * -0.25*(1-taper)/(1+taper))
 
-b = value("b")#sqrt(S*A)
+b = sqrt(S*A)
 
-c_r = value("c_r")#(2*S)/((1+taper)*b)
+c_r = (2*S)/((1+taper)*b)
 
-c_t = value("c_t")#c_r * taper
+c_t = c_r * taper
 
 t_c = min(0.18, (cos(lambdac_2)**3*(M_tf-M_dd*cos(lambdac_2))-0.115*C_L_cr**1.5)/(cos(lambdac_2)**2))
 
