@@ -83,14 +83,11 @@ alpha_stall_cruise_clean = (CL_max_cruise_clean / CL_alpha_cruise_clean) + alpha
 
 
 
-<<<<<<< HEAD
 #print (CL_des)
 #print (Cl_des)
 #print (Re)
 #print (Cl_des_M0)
 #print (lambdac_0*180/pi)
-=======
->>>>>>> fddf83763b34400ab673a7a9b0357a3e8f6951ae
 #
 CLmaxclmax = 0.52
 dCL_max = -0.19

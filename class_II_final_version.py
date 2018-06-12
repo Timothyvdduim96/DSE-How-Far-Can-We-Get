@@ -13,7 +13,7 @@ from parameters import *
 W_totros = []   # empty list for all weight groups from Roskam method
 W_tottor = []   # empty list for all weight groups from Torenbeek method
 # Wing weight
-S         = 127.95*sqmsqft     # wing area [sqft]
+S         = 115.*sqmsqft     # wing area [sqft]
 A         = 14.0               # aspect ratio 
 M_max     = 0.82               # max mach number at sea level 
 MTOW      = 69176.55*kglbs     # take-off weight [lbs]
@@ -24,7 +24,7 @@ taper     = 0.27               # taper ratio
 k_wg      = 0.0017             # constant
 W_zf      = 59646.88*kglbs     # zero fuel weight [lbs]
 t_r       = 0.5724*mft         # wing root thickness [ft]
-b         = 42.33*mft          # wingspan [ft]
+b         = 40.125*mft          # wingspan [ft]
 # Empennage weight
 Sh       = 17.4*sqmsqft     # horizontal tail area [ft]
 b_h      = 8.75*mft         # horizontal tail span [ft]
@@ -264,18 +264,18 @@ W_nacelle = (W_tottor[5] + W_totros[5])/2
 W_equipment = (W_tottor[6] + W_tottor[7] + W_tottor[8] + W_tottor[9] + W_tottor[10] + W_tottor[11] + W_tottor[12] + W_totros[6])/2
 OEW = (sum(W_totros)+sum(W_tottor))/2
 MTOW = OEW + payload + fuel
-#print
-#print
-#print 'Component weights for the average of the two methods:'
-#print 'The wing weight =', W_wing, '[kg]'
-#print 'The fuselage weight =', W_fuselage, '[kg]'
-#print 'The landing gear weight =', W_landinggear, '[kg]'
-#print 'The empennage weight =', W_empennage, '[kg]'
-#print 'The propulsion weight =', W_propulsion, '[kg]'
-#print 'The nacelle weight =', W_nacelle, '[kg]'
-#print 'The equipment and furnishing weight =', W_equipment, '[kg]'
-#print
-#print 'The operational empty weight =', OEW, '[kg]'
-#print 'The take-off weight =', MTOW, '[kg]'
+print
+print
+print 'Component weights for the average of the two methods:'
+print 'The wing weight =', W_wing, '[kg]'
+print 'The fuselage weight =', W_fuselage, '[kg]'
+print 'The landing gear weight =', W_landinggear, '[kg]'
+print 'The empennage weight =', W_empennage, '[kg]'
+print 'The propulsion weight =', W_propulsion, '[kg]'
+print 'The nacelle weight =', W_nacelle, '[kg]'
+print 'The equipment and furnishing weight =', W_equipment, '[kg]'
+print
+print 'The operational empty weight =', OEW, '[kg]'
+print 'The take-off weight =', MTOW, '[kg]'
 
 string_class_II_final_version = ["W_wing","W_fuselage","W_landinggear","W_empennage","W_propulsion","W_nacelle","W_equipment","OEW"]
