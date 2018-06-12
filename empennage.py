@@ -16,20 +16,24 @@ from parameters import *
 S = value("S")            #wing surface area
 b = value("b")             #wing span
 MAC =  value("MAC")        #mean aerodynamic chord
+
+L_fus = value("l_fus")        #fuselage length
+
 L_fus = value("l_fus")     #fuselage length
+
 
 
 Vh =  1         #horizontal tail volume
 Vv = 0.100      #vertical tail volume
 
 
-lh = 27.787         #horizontal tail arm [m]
+lh = 0.49*L_fus#27.787         #horizontal tail arm [m]
 lv = 0.45*L_fus
 Sh = Vh*S*MAC/(lh)   #horizontal tail surface area
 Sv = Vv*S*b/(lv)     #vertical tail surface area
 
 
-sweep_h = 33    
+sweep_h = 33  #degrees  
 sweep_v = 40
 Ah = 4.4    #aspect ratio
 Av = 1.8
@@ -55,3 +59,4 @@ YMAC_v = (b_v/6.)*(1+2*lambda_v)/(1+lambda_v)
 
 string_empennage = ['Sh','Sv','lh','lv','sweep_h','sweep_v','Ah','Av','lambda_h','lambda_v','b_h','b_v','cr_h',
                     'ct_h','cr_v','ct_v','MAC_h','MAC_v','YMAC_h','YMAC_v']
+
