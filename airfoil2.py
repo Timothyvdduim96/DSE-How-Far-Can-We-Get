@@ -16,7 +16,7 @@ from parameters import *
 #aircraft parameters
 
 g = value("g")
-S = 90.
+S = 110.
 M_cr = value("M_cr")
 A = value("A")
 taper = value("taper")
@@ -34,7 +34,7 @@ W_end = MTOW - Wf_used_end
 WS_start = W_start/S
 WS_end = W_end/S
 
-lambdac_0 = 32.83 *pi /180 #leading edge sweep
+lambdac_0 =  value('lambdac_0') #leading edge sweep
 a_cr = a(h_cr)
 q_cr = cruise_q(h_cr)
 V_cr = M_cr * a_cr
