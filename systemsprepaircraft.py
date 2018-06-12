@@ -17,7 +17,7 @@ w_fuel_mtow = 1000
 x_cargo = 20.0 #position c.g. baggage compartment 
 w_cargo = value("MTOW") - value("OEW") - w_luggage - w_pax - w_fuel_mtow #weight of aft cargo
 MAC = value("MAC")    #mean aerodynamic chord
-X_LEMAC = value("x_lemac")          #value("x_lemac") #X-position leading edge mean aerodynamic chord
+X_LEMAC = 18.5890300872     #value("x_lemac")          #value("x_lemac") #X-position leading edge mean aerodynamic chord
 cg_oew = value("xcg_oew")  #center of gravity at operational empty weight
 row_mid_emergency_exit = n_rows/2
 row_final_emergency_exit = 29
@@ -178,13 +178,6 @@ for i in range(0,len(seatcoordinates)):
     xcolor8.append(x_bar_cg)
     ycolor8.append(w)
 
-<<<<<<< HEAD
-# Fuel contribution
-
-
-#plotting
-
-=======
 frontcg = min(min(xbarcg),min(xbarcgr))
 aftcg = max(max(xbarcg),max(xbarcgr))
 cgrange_mac = aftcg - frontcg
@@ -192,7 +185,6 @@ cgrange = cgrange_mac*value("MAC")
 print cgrange_mac,cgrange
 print frontcg
 print aftcg
->>>>>>> 044d6a41595e19ceafabf2b525912dbe699fe329
 
 plt.plot(xbarcg,weight,xbarcgr,weightr, color="black")
 plt.scatter(xcolor0, ycolor0, color="gray", label = "OEW")
