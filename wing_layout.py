@@ -17,6 +17,11 @@ M_tf = value("M_tf")
 
 M_dd = value("M_cr") + 0.03
 
+#S = value('S')
+S = 110
+
+A = value('A')
+
 #--------alt calc--------
 #p = p0 * (1-(lambda_alt*h)/T0)**(g0/(R*lambda_alt))
 q = cruise_q(value("h_cr"))
@@ -30,7 +35,7 @@ cos_lambdac_4 =  0.75 * (M_tf/M_dd)
 if value("M_cr") < 0.7:
     cos_lambdac_4 = 1
 
-lambdac_4 = cos(cos_lambdac_4) #rad
+lambdac_4 = acos(cos_lambdac_4) #rad
 
 taper = 0.2*(2-lambdac_4)
 
