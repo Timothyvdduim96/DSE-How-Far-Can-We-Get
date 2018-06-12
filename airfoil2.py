@@ -16,7 +16,7 @@ from parameters import *
 #aircraft parameters
 
 g = value("g")
-S = value("S")
+S = 90.
 M_cr = value("M_cr")
 A = value("A")
 taper = value("taper")
@@ -54,7 +54,7 @@ CL_des_cruise_clean_plane = (1/q_cr)*(0.5*(WS_start+WS_end)) #design lift coeffi
 CL_des_cruise_clean_wing = 1.1*(1/q_cr)*(0.5*(WS_start+WS_end))    #design lift coeffcient of the wing
 Cl_des_cruise_clean = CL_des_cruise_clean_wing/(cos(lambdac_0)*cos(lambdac_0))  #design lift coefficient of airfoil
 Cl_des_M0 = Cl_des_cruise_clean*np.sqrt(1-M_cr*M_cr)
-
+print Cl_des_M0
 
 #Airfoil parameters
 eta_airfoil = 0.95  #airfoil eff factor
