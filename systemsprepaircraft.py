@@ -6,17 +6,18 @@ l_cockpit = value("l_cockpit")  #distance nose to centerline first door on the r
 w_door = 1.  #door width first door on the right
 w_toilet = 36*inch_to_cm/100 #from jenkinson
 pitch = value("seat_pitch")*inch_to_cm/100   #pitch seats
-x_cargo = 19.0 #position c.g. baggage compartment 
-w_cargo = 1000  #weight of aft cargo
-w_pax = 2925   #total passenger weight
-w_luggage = 574 #luggage weight
-w_oe = 11501    #operational empty weight
-w_mto = 20000   #maximum take-off weight
 n_pax = 240     #number of passengers/seats
 n_rows = 40    #number of seat rows
-MAC = 2.865    #mean aerodynamic chord
-X_LEMAC = 12.594 #X-position leading edge mean aerodynamic chord
-cg_oew = 12.453  #center of gravity at operational empty weight
+w_pax = 80*n_pax   #total passenger weight
+w_luggage = 10*n_pax #luggage weight
+w_oe = value("OEW")    #operational empty weight
+w_mto = value("MTOW")   #maximum take-off weight
+w_design_fuel = value("W_fuel")
+x_cargo = 39.0 #position c.g. baggage compartment 
+w_cargo = value("MTOW") - value("OEW") - w_luggage - w_pax  #weight of aft cargo
+MAC = value("MAC")    #mean aerodynamic chord
+X_LEMAC = value("x_lemac") #X-position leading edge mean aerodynamic chord
+cg_oew = value("xcg_oew")  #center of gravity at operational empty weight
 row_mid_emergency_exit = n_rows/2
 row_final_emergency_exit = 29
 
@@ -31,6 +32,8 @@ xcolor2 = []
 ycolor2 = []
 xcolor3 = []
 ycolor3 = []
+xcolor4 = []
+ycolor4 = []
 
 def seatcoordinates():
     pos = l_cockpit + w_door + w_toilet + 0.3 #initial position of seats (1st seat)
@@ -40,25 +43,19 @@ def seatcoordinates():
         if i == row_mid_emergency_exit:
             row = []
             pos = pos + pitch + 0.20
-            for j in range(6):
-                row.append(pos)
-            positions.append(row)
+            positions.append(pos)
         elif i == row_final_emergency_exit:
             row = []
             pos = pos + pitch + 0.80
-            for j in range(6):
-                row.append(pos)
-            positions.append(row)
+            positions.append(pos)
         else:
             row = []
             pos = pos + pitch
-            for j in range(6):
-                row.append(pos)
-            positions.append(row)
+            positions.append(pos)
     
     return positions
 
-seatcoordinates = seatcoordinates()
+seatcoordinates = seatcoordinates()[0]
 
 #left data points
 
@@ -81,30 +78,30 @@ for i in range(0,disc_cargo):
 
 #find window seats data points
 for i in range(0,len(seatcoordinates)):
-    #print(xcg)
-    if i == 0: 
-        xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat)/(w + w_seat) - X_LEMAC)/MAC)
-        xcg = (xcg*w + seatcoordinates[i]*w_seat)/(w + w_seat)  #find the new cg
-        w += w_seat   #update the weight
-        weight.append(w)
-        xcolor2.append(xbarcg[i])
-        ycolor2.append(weight[i])
-    else:
-        xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
-        xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
-        w += 2*w_seat #update the weight
-        weight.append(w)
-        xcolor2.append(xbarcg[i])
-        ycolor2.append(weight[i])
+    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
+    w += 2*w_seat #update the weight
+    weight.append(w)
+    xcolor2.append(xbarcg[i])
+    ycolor2.append(weight[i])
 
-#find aisle seats data points
-for i in range(1,len(seatcoordinates)):
-    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat)/(w + w_seat) - X_LEMAC)/MAC)
-    xcg = (xcg*w + seatcoordinates[i]*w_seat)/(w + w_seat)  #find the new cg
-    w += w_seat   #update the weight
+#find middle seats data points
+for i in range(0,len(seatcoordinates)):
+    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
+    w += 2*w_seat   #update the weight
     weight.append(w)
     xcolor3 = []
     ycolor3 = []
+
+#find aisle seats data points
+for i in range(0,len(seatcoordinates)):
+    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
+    w += 2*w_seat   #update the weight
+    weight.append(w)
+    xcolor4 = []
+    ycolor4 = []
 
 #find final data point (MTOW)
 xbarcg.append(((xcg*w + x_fuel*w_fuelatmaxpayload)/(w + w_fuelatmaxpayload) - X_LEMAC)/MAC)
@@ -132,28 +129,26 @@ for i in range(0,disc_cargo):
 #find window seats data points
 for i in range(0,len(seatcoordinates)):
     i = len(seatcoordinates) - i - 1
-    #print(xcg)
-    if i == 0: 
-        xbarcgr.append(((xcg*w + seatcoordinates[i]*w_seat)/(w + w_seat) - X_LEMAC)/MAC)
-        xcg = (xcg*w + seatcoordinates[i]*w_seat)/(w + w_seat)  #find the new cg
-        w += w_seat   #update the weight
-        weightr.append(w)
-    else:
-        xbarcgr.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
-        xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
-        w += 2*w_seat #update the weight
-        weightr.append(w)
-
-#find aisle seats data points
-for i in range(1,len(seatcoordinates)):
-    i = len(seatcoordinates) - i 
-    xbarcgr.append(((xcg*w + seatcoordinates[i]*w_seat)/(w + w_seat) - X_LEMAC)/MAC)
-    xcg = (xcg*w + seatcoordinates[i]*w_seat)/(w + w_seat)  #find the new cg
-    w += w_seat   #update the weight
+    xbarcgr.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
+    w += 2*w_seat #update the weight
     weightr.append(w)
 
-print(xbarcg)
-print(weight)
+#find middle seats data points
+for i in range(0,len(seatcoordinates)):
+    i = len(seatcoordinates) - i - 1
+    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
+    w += 2*w_seat   #update the weight
+    weight.append(w)
+
+#find aisle seats data points
+for i in range(0,len(seatcoordinates)):
+    i = len(seatcoordinates) - i - 1
+    xbarcgr.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
+    w += 2*w_seat   #update the weight
+    weightr.append(w)
 
 #plotting
 
