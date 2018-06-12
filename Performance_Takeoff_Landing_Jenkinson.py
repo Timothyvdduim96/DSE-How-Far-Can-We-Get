@@ -11,26 +11,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 #----- constants
 g = 9.80665
-MTOW = 68731. *g #68731
+MTOW = 67834.*g#68731. *g #68731
 mu_roll = 0.02
 mu_brake = 0.5
 #alt = raw_input("Input the altitude of the airport in meters:")
 #alt = eval(alt)
-S = 128.  
+S = 110.  
 A = 14.
-thrust = 220000.
+thrust = 213000.
 oswald = 0.85
 gamma_climb = radians(3.)
 gamma_land = radians(3.)
 h_scr = 15.24 #screen height in m change to 15.24
 lamda = 14. #bypass ratio
-CL_max_to = 1.8
+CL_max_to = 2.1
 CL_to = 0.6 #takeoff cl during ground roll
 CD0_to = 0.04
 CD0_climb = 0.06
 CL_max_land = 2.47
 CD0_land = 0.06
-MLW = MTOW - (0.67*9500)
+MLW = MTOW - (0.67*9500*9.80665)
 n_land = 1.2
 #------ ground roll
 takeoff_distances = []
@@ -51,7 +51,9 @@ for alt in range(0,5000,500):
     CD_to = CD0_to + (CL_to)**2/(pi*A*oswald)
     ratio_net_to_static = (1-(2*M_takeoff*((1+lamda)/(3+2*lamda)))) #from CADP p. 412 chapter 10, Jenkinson suggests using 0.864
     #ratio_net_to_static = 0.864
-    K_T = (ratio_net_to_static*thrust/MTOW)-mu_roll
+    ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.5)*M_takeoff) + ((0.23+(0.19*sqrt(lamda)))*M_takeoff**2)   
+        
+    K_T = (ratio_speed*thrust/MTOW)-mu_roll
     K_A = dens/((2*MTOW)/S)*(-CD_to+(mu_roll*CL_to))
     
     x_groundrun = (1/(2*g*K_A))*log((K_T+(K_A*V_LOF**2))/K_T)
