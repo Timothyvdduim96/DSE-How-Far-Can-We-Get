@@ -16,7 +16,7 @@ from parameters import *
 #aircraft parameters
 
 g = value("g")
-S = 90.
+S = value('S')
 M_cr = value("M_cr")
 A = value("A")
 taper = value("taper")
@@ -34,7 +34,7 @@ W_end = MTOW - Wf_used_end
 WS_start = W_start/S
 WS_end = W_end/S
 
-lambdac_0 = 32.83 *pi /180 #leading edge sweep
+lambdac_0 =  value('lambdac_0') #leading edge sweep
 a_cr = a(h_cr)
 q_cr = cruise_q(h_cr)
 V_cr = M_cr * a_cr
@@ -54,14 +54,13 @@ CL_des_cruise_clean_plane = (1/q_cr)*(0.5*(WS_start+WS_end)) #design lift coeffi
 CL_des_cruise_clean_wing = 1.1*(1/q_cr)*(0.5*(WS_start+WS_end))    #design lift coeffcient of the wing
 Cl_des_cruise_clean = CL_des_cruise_clean_wing/(cos(lambdac_0)*cos(lambdac_0))  #design lift coefficient of airfoil
 Cl_des_M0 = Cl_des_cruise_clean*np.sqrt(1-M_cr*M_cr)
-print Cl_des_M0
 
 #Airfoil parameters
 eta_airfoil = 0.95  #airfoil eff factor
 Cl_max_cruise_clean = 2.363
 Cd_min_cruise_clean = 0.006
 Cm_des_cruise_clean = -0.116
-alpha_des_cruise_clean = 0.678 *pi /180               #rad
+alpha_des_cruise_clean = 1.36 *pi /180               #rad
 M_crit_cruise_clean = 0.663
 alpha_0L_cruise_clean = -3.82 *pi /180               #rad
 
@@ -102,8 +101,8 @@ CL_max_low_clean = 0.9*Cl_max_low_clean*cos(lambdac_4)
 
 alpha_stall_low_clean = (CL_max_low_clean / CL_alpha_low_clean) + alpha_0L_low_clean + (4 * pi /180)  #rad
 #HLD requirements
-CL_TO = 1.8
-CL_land = 2.47
+CL_TO = 2.1
+CL_land = 2.2
 
 
 dCL_HLD_TO = CL_TO - CL_max_low_clean
