@@ -136,10 +136,10 @@ for i in range(0,len(seatcoordinates)):
 #find middle seats data points
 for i in range(0,len(seatcoordinates)):
     i = len(seatcoordinates) - i - 1
-    xbarcg.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
+    xbarcgr.append(((xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2) - X_LEMAC)/MAC)
     xcg = (xcg*w + seatcoordinates[i]*w_seat*2)/(w + w_seat*2)  #find the new cg
     w += 2*w_seat   #update the weight
-    weight.append(w)
+    weightr.append(w)
 
 #find aisle seats data points
 for i in range(0,len(seatcoordinates)):
