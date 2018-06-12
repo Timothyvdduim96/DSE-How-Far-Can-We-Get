@@ -154,41 +154,6 @@ for i in range(0,len(seatcoordinates)):
 
 #plotting
 
-xcolor0 = []
-ycolor0 = []
-xcolor1 = []
-ycolor1 = []
-xcolor2 = []
-ycolor2 = []
-xcolor3 = []
-ycolor3 = []
-xcolor4 = []
-ycolor4 = []
-xcolor5 = []
-ycolor5 = []
-xcolor6 = []
-ycolor6 = []
-
-for i in range(len(xbarcg)):
-    if i < disc_cargo:
-        xcolor0.append(xbarcg[i])
-        ycolor0.append(weight[i])
-    elif i == disc_cargo:
-        xcolor1.append(xbarcg[i])
-        ycolor1.append(weight[i])
-    elif disc_cargo <= i <= len(seatcoordinates) + 1:
-        xcolor2.append(xbarcg[i])
-        ycolor2.append(weight[i])
-        xcolor5.append(xbarcgr[i])
-        ycolor5.append(weightr[i])
-    elif len(seatcoordinates) + 1 < i <= 2*len(seatcoordinates):
-        xcolor3.append(xbarcg[i])
-        ycolor3.append(weight[i])
-        xcolor6.append(xbarcgr[i])
-        ycolor6.append(weightr[i])
-    else:
-        xcolor4.append(xbarcg[i])
-        ycolor4.append(weight[i])
 
 plt.plot(xbarcg,weight,xbarcgr,weightr, color="black")
 plt.scatter(xcolor0, ycolor0, color="gray", label = "OEW")
