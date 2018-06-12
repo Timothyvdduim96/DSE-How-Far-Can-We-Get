@@ -13,18 +13,18 @@ from parameters import *
 W_totros = []   # empty list for all weight groups from Roskam method
 W_tottor = []   # empty list for all weight groups from Torenbeek method
 # Wing weight
-S         = 115.*sqmsqft     # wing area [sqft]
+S         = 110.*sqmsqft     # wing area [sqft]
 A         = 14.0               # aspect ratio 
 M_max     = 0.82               # max mach number at sea level 
 MTOW      = 69176.55*kglbs     # take-off weight [lbs]
 n_ult     = 3.75               # ultimate load factor
 t_c       = 0.12               # thickness to chord 
-lambdac_2 = 0.63               # wing half-chord sweep angle [rad]
+lambdac_2 = 0.518              # wing half-chord sweep angle [rad]
 taper     = 0.27               # taper ratio
 k_wg      = 0.0017             # constant
 W_zf      = 59646.88*kglbs     # zero fuel weight [lbs]
-t_r       = 0.5724*mft         # wing root thickness [ft]
-b         = 40.125*mft          # wingspan [ft]
+t_r       = 0.52104*mft        # wing root thickness [ft]
+b         = 39.24*mft          # wingspan [ft]
 # Empennage weight
 Sh       = 17.4*sqmsqft     # horizontal tail area [ft]
 b_h      = 8.75*mft         # horizontal tail span [ft]
@@ -68,7 +68,7 @@ N_t    = 8.0                # number of separate fuel tanks
 W_fuel = 9529.68*kglbs      # mission fuel weight (including reserves) [lbs]
 K_fsp  = 810.0*kgmlbsgall   # density of fuel [lbs/gal]
     # propulsion system
-T    = (220000.0)*Nlbs  # take-off static thrust [lbs]
+T    = (213000.0)*Nlbs  # take-off static thrust [lbs]
 F_to = T/2              # take-off static thrust per engine [lbs]
 # fixed equipment weight
 n_pil        = 2.0             # number of pilots
