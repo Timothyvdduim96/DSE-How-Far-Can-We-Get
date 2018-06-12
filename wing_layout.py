@@ -18,7 +18,7 @@ M_tf = value("M_tf")
 M_dd = value("M_cr") + 0.03
 
 #S = value('S')
-S = 110
+S = value('S')
 
 A = value('A')
 
