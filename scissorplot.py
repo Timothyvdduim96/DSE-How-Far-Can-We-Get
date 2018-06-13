@@ -7,10 +7,10 @@ from parameters import *
 SM = 0.05
 C_L_alpha_h =
 C_L_alpha_Ah =
-downwash =
-l_h = 
+downwash = 
+l_h = value("l_h")
 c_bar =
-V_h_over_V =
+V_h_over_V = sqrt(0.85) #vraag In 't Veld
 c_bar_ac =
 C_L_h = -0.8
 C_L_Ah = 
