@@ -38,13 +38,9 @@ for i in x_bar_ac:
 
     Sh_S_cont.append(n*i + p)
 
-<<<<<<< HEAD
-Sh_S_cont = n**x_bar_cg + p
-=======
 plt.plot(x_bar_ac,Sh_S_stab)
 plt.plot(x_bar_ac,Sh_S_cont)
 plt.xlabel("x_bar_ac")
 plt.ylabel("Sh/S")
 plt.label
 plt.show()
->>>>>>> b92183a805b266e0dd49e0cebd74a7dcad9e788b
