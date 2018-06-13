@@ -17,6 +17,7 @@ mm_to_m=1./1000.
 m_to_mm=1000.
 cm_to_m=1/100.
 inch_to_m=inch_to_cm*cm_to_m
+m_to_cm=1/100.
 
 M_tf = 0.935                        #technology factor for supercritical airfoils
 FL = 390                            #flight level
