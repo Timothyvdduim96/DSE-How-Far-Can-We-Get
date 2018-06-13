@@ -39,6 +39,10 @@ takeoff_distances = []
 landing_distances = []
 altitude = []
 
+A_eng = 3.1196
+V_eng = 132.39
+Vj = 400
+
 for alt in range(0,3000,500):
     dens = ISA(alt)[2]
     Temp = ISA(alt)[0]
@@ -54,9 +58,9 @@ for alt in range(0,3000,500):
     CD_to = CD0_to + (CL_to)**2/(pi*A*oswald)
     ratio_net_to_static = (1-(2*M_takeoff*((1+lamda)/(3+2*lamda)))) #from CADP p. 412 chapter 10, Jenkinson suggests using 0.864
     #ratio_net_to_static = 0.864
-    ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.5)*M_takeoff) + ((0.23+(0.19*sqrt(lamda)))*M_takeoff**2)   
-    ratio = (P_alt/P_0) *sqrt(T_0/Temp)     
-    K_T = (ratio_speed*thrust*ratio/MTOW)-mu_roll
+    #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.5)*M_takeoff) + ((0.23+(0.19*sqrt(lamda)))*M_takeoff**2)   
+    ratio = (P_alt/P_0) *sqrt(T_0/Temp)      #effect of altitude based on thrust  
+    K_T = (ratio_net_to_static*thrust*ratio/MTOW)-mu_roll
     K_A = dens/((2*MTOW)/S)*(-CD_to+(mu_roll*CL_to))
     
     x_groundrun = (1/(2*g*K_A))*log((K_T+(K_A*V_LOF**2))/K_T)
@@ -100,7 +104,7 @@ for alt in range(0,3000,500):
         CD_trim = 0.05*CD_climb
         CD_secondsegmentclimb = CD_climb + CD_failedengine +CD_trim
         D_secondsegmentclimb = 0.5*dens * (V2)**2 *S * CD_secondsegmentclimb
-        climb_gradient_secondsegment_OEI = ((0.5*ratio_net_to_static*thrust) - D_secondsegmentclimb)/(MTOW)
+        climb_gradient_secondsegment_OEI = ((0.5*ratio_speed*thrust) - D_secondsegmentclimb)/(MTOW)
         
         if climb_gradient_secondsegment_OEI >= 0.024:
             print "V - The climb gradient requirement for OEI during the second segment of climb is MET!"
@@ -142,7 +146,7 @@ plt.xlabel('Airport altitude [m]')
 plt.ylabel('Take-off distance [m]')
 plt.legend(loc=4)
 plt.title('Take-off distance as a function of airport altitude')
-plt.text(500, 2400, r'Sea level take-off distance:1969 m') #make sure to change this value
+plt.text(500, 2400, r'Sea level take-off distance:1903 m') #make sure to change this value
 plt.show()
 #-----Second-segment climb
 
