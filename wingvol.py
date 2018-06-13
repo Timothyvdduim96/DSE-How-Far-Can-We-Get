@@ -1,7 +1,7 @@
 from math import *
 import numpy as np
 import matplotlib.pyplot as plt
-import sympy
+#import sympy
 from scipy.integrate import quad
 from parameters import *
 
@@ -92,22 +92,22 @@ c_r = value("c_r")#2*b/(A*(1+taper))             #root chord
 c_t = value("c_t")#c_r*taper                     #tip chord
 b_frac = 0.95                          #wing span used for fuel (from the inside)
 d_ext_fus = value("d_ext_fus")#2.                          #IMPORT FROM PATRIK
-b_eff = (b - d_ext_fus)*b_frac - 2
+b_eff = (b) - 2
 cfac = 0.9                          #correction factor for loss of space in fuel tank
 
 A_cross_section = fint(xstart,xend)
-b_cur = np.arange(0,(b-d_ext_fus)/2+0.001,0.001)
+b_cur = np.arange(0.1,(b)/2+0.001,0.1)
 vol = []
 ilst = []
 
 for i in range(len(b_cur)):
-    if b_cur[i] <= d_ext_fus/2:
-        vol.append(0)
-    elif b_cur[i] >= b_eff/2:
+    # if b_cur[i] <= d_ext_fus/2:
+    #     vol.append(0)
+    if b_cur[i] >= b_eff/2:
         vol.append(max(vol))
     else:
         c_r_f = c_r
-        c_t_f = c_r - b_cur[i]/((b-d_ext_fus)/2)*(c_r - c_t)
+        c_t_f = c_r - b_cur[i] / (b / 2) * (c_r - c_t)
         c_avg = sqrt((c_r_f**3 - c_t_f**3)/(3*(c_r_f - c_t_f)))
         volume = cfac*2*b_cur[i]*A_cross_section*c_avg**2
         vol.append(volume)
@@ -117,6 +117,8 @@ for i in range(len(b_cur)):
 
 fuel_in_wings = round(vol[len(vol)-1],4)
 empty_tip = round((1-b_frac)*((b-d_ext_fus)/2),2)
+print(ilst)
+print(len(vol))
 #print c_r_f
 #print c_t_f
 
@@ -130,22 +132,23 @@ empty_tip = round((1-b_frac)*((b-d_ext_fus)/2),2)
 ##font = {'family' : 'normal',
 ##        'weight' : 'normal',
 ##        'size'   : 14}
-#plt.axhline(volneeded, linestyle="dashed", color="Red",label="17 m^3")
-##plt.plot(b_cur,vol)
-##plt.scatter(xcoordupper,ycoordupper)
-##plt.scatter(xcoordlower,ycoordlower,label="airfoil coordinates")
-plt.plot(x,yupper,color="red",label="4th order polynomial")
-##plt.plot(x,ylower,color="red")
-##plt.axis((0,1,-0.5,0.5))
-##plt.rc('font', **font)
-##plt.xlabel("x [m]")
-##plt.ylabel("fuel volume [m^3]")
-##ax = plt.subplot(111)
-##box = ax.get_position()
-##ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-##ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-###plt.plot(xcoordlower,ycoordlower)
-##plt.grid()
-##plt.show()
+plt.axhline(value('fuelvolume_needed'), linestyle="dashed", color="Red",label="17 m^3")
+plt.plot(b_cur[0:ilst[0]+1],vol)
+#plt.scatter(xcoordupper,ycoordupper)
+#plt.scatter(xcoordlower,ycoordlower,label="airfoil coordinates")
+#plt.plot(x,yupper,color="red",label="4th order polynomial")
+#plt.plot(x,ylower,color="red")
+#plt.axis((0,1,-0.5,0.5))
+#plt.rc('font', **font)
+plt.xlabel("x [m]")
+plt.ylabel("fuel volume [m^3]")
+ax = plt.subplot(111)
+box = ax.get_position()
+ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+#plt.plot(xcoordlower,ycoordlower)
+plt.grid()
+plt.show()
 
 string_wingvol = ["c_r_f","c_t_f","c_avg","fuel_in_wings","empty_tip","A_cross_section"]
+print(fuel_in_wings)

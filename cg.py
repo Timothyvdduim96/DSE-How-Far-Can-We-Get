@@ -27,7 +27,7 @@ ct_h = value("ct_h")
 MAC_h = value("MAC_h")
 MAC_v = value("MAC_v")
 ln = value("ln")
-x_lemac = l_cabin*0.46 + l_cockpit - 0.25*MAC
+x_lemac = l_cabin*0.446 + l_cockpit - 0.25*MAC
 
 #------------------------------------------OEW COMPONENTS-------------------------------------------
 
