@@ -27,7 +27,7 @@ ct_h = value("ct_h")
 MAC_h = value("MAC_h")
 MAC_v = value("MAC_v")
 ln = value("ln")
-x_lemac = l_cabin*0.446 + l_cockpit - 0.25*MAC
+x_lemac = l_cabin*0.445 + l_cockpit - 0.25*MAC
 
 #------------------------------------------OEW COMPONENTS-------------------------------------------
 
@@ -106,7 +106,7 @@ vols = []
 for i in range(len(vol)):
     vols.append(round(vol[i],3))
 
-cgspan = float(vols.index(round(vol[len(vol)-1]/2,3)))/len(vols)*(float(len(vols))/len(b_cur))*b/2
+cgspan = 5.35972#float(vols.index(round(vol[len(vol)-1]/2,3)))/len(vols)*(float(len(vols))/len(b_cur))*b/2
 
 dis1 = cos(np.degrees(lambdac_0))*cgspan
 
