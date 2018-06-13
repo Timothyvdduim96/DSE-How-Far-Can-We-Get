@@ -116,7 +116,7 @@ xcg_fuel = dis1 + chord*(xstart+xend)/2 + x_lemac - cos(np.degrees(lambdac_0))*(
 
 #----------------------------------------------PAYLOAD----------------------------------------------
 
-string_cg = ["x_lemac","xcg_oew","xcg_fuel"]
+string_cg = ["x_lemac","x_cg_oew","xcg_fuel"]
 
 
 print wing()[0], x_lemac
