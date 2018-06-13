@@ -1,7 +1,7 @@
 from math import *
 import numpy as np
 import matplotlib.pyplot as plt
-import sympy
+#import sympy
 from scipy.integrate import quad
 from parameters import *
 
