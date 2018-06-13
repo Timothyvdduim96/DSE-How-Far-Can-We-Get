@@ -178,13 +178,6 @@ for i in range(0,len(seatcoordinates)):
     xcolor8.append(x_bar_cg)
     ycolor8.append(w)
 
-<<<<<<< HEAD
-# Fuel contribution
-
-
-#plotting
-
-=======
 frontcg = min(min(xbarcg),min(xbarcgr))
 aftcg = max(max(xbarcg),max(xbarcgr))
 cgrange_mac = aftcg - frontcg
@@ -192,7 +185,6 @@ cgrange = cgrange_mac*value("MAC")
 print cgrange_mac,cgrange
 print frontcg
 print aftcg
->>>>>>> 044d6a41595e19ceafabf2b525912dbe699fe329
 
 plt.plot(xbarcg,weight,xbarcgr,weightr, color="black")
 plt.scatter(xcolor0, ycolor0, color="gray", label = "OEW")
