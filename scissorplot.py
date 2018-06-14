@@ -1,7 +1,7 @@
 from math import *
 import matplotlib.pyplot as plt
 from parameters import *
-
+from systemsprepaircraft import frontcg,aftcg,x_lemac_lst
 #---------------------------------PARAMETERS---------------------------------------
 
 SM = 0.05
@@ -52,12 +52,12 @@ x_bar_ac = x_bar_ac_wf + x_bar_ac_n
 C_L_0 = 0.31
 C_m_0_airfoil = -0.114
 C_m_ac_w = C_m_0_airfoil*(A*cos(value("lambdac_0"))**2/(A + 2*cos(value("lambdac_0"))))
-mu_1 = 0.2 #CHANGE, NEED HELP FROM AC GUYS
-mu_2 = 0.9 #CHANGE ""
-mu_3 = 0.05 #CHANGE ""
+mu_1 = 0.2
+mu_2 = 0.65
+mu_3 = 0.057
 delta_C_l_max = value("dCL_HLD_land")
-c_ratio = 1.4 #CHANGE ""
-S_wf = S + 10. #CHANGE ""
+c_ratio = value("c_ext_c_land")
+S_wf = S + value("S_flaps_land")
 C_m_ac_flaps = mu_2*(-mu_1*delta_C_l_max*c_ratio - (C_L_Ah + delta_C_l_max*(1 - S_wf/S))/8*c_ratio*(c_ratio - 1)) + 0.7*A/(1 + 2/A)*mu_3*delta_C_l_max*tan(lambda_14_w) - C_L_Ah*(0.25 - x_bar_ac)
 C_m_ac_fus = -1.8*(1 - 2.5*b_f/l_f)*pi*b_f*h_f*l_f/(4*S*c_bar)*C_L_0/C_L_alpha_Ah/value("CL_alpha_low_clean")*C_L_alpha_w
 C_m_ac_nac = -0.05
@@ -91,15 +91,33 @@ for i in x_bar_cg:
 
     Sh_S_cont.append(n*i + p)
 
-plt.plot(x_bar_cg,Sh_S_cont,label="Controllability")
-plt.plot(x_bar_cg,Sh_S_stab_2,label="Neutral stability")
-plt.plot(x_bar_cg,Sh_S_stab,label="Stability incl. S.M.")
-plt.axis((0,max(x_bar_cg),0,max(max(Sh_S_stab),max(Sh_S_cont))))
-ax = plt.subplot(111)
-box = ax.get_position()
-ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-plt.xlabel("x_bar_cg")
-plt.ylabel("Sh/S")
-plt.grid()
+fig, ax1 = plt.subplots()
+ax1.plot(frontcg,x_lemac_lst, color="black")
+ax1.plot(aftcg,x_lemac_lst, color="black")
+ax1.set_xlabel('x_cg/MAC')
+# Make the y-axis label, ticks and tick labels match the line color.
+ax1.set_ylabel('X_lemac/l_fus', color='b')
+ax1.tick_params('y', colors='b')
+
+ax2 = ax1.twinx()
+ax2.plot(x_bar_cg,Sh_S_cont,label="Controllability")
+ax2.plot(x_bar_cg,Sh_S_stab,label="Stability incl. S.M.")
+ax2.axis((0,max(x_bar_cg),0,max(max(Sh_S_stab),max(Sh_S_cont))))
+ax2.set_ylabel('S_h/S', color='r')
+ax2.tick_params('y', colors='r')
+
+fig.tight_layout()
 plt.show()
+
+##plt.plot(x_bar_cg,Sh_S_cont,label="Controllability")
+##plt.plot(x_bar_cg,Sh_S_stab_2,label="Neutral stability")
+##plt.plot(x_bar_cg,Sh_S_stab,label="Stability incl. S.M.")
+##plt.axis((0,max(x_bar_cg),0,max(max(Sh_S_stab),max(Sh_S_cont))))
+##ax = plt.subplot(111)
+##box = ax.get_position()
+##ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+##ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+##plt.xlabel("x_bar_cg")
+##plt.ylabel("Sh/S")
+##plt.grid()
+##plt.show()
