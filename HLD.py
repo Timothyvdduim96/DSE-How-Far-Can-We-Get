@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from math import *
 from scipy.optimize import fsolve
 
+
 S = value('S')
 A = value('A')
 b = value('b')
@@ -65,8 +66,8 @@ Swf_LE = max([Swf_land_LE,Swf_to_LE])
 dalpha_0l_airfoil_land = -15 #deg
 dalpha_0l_airfoil_to = -10 #deg
 
-dalpha_0L_land = dalpha_0l_airfoil_land*(Swf_TE/S)*cos(lambda_hingeline)#deg
-dalpha_0L_to = dalpha_0l_airfoil_to*(Swf_TE/S)*cos(lambda_hingeline) #deg
+dalpha_0L_land = dalpha_0l_airfoil_land*(Swf_TE/S)*cos(lambda_hingeline_flap)#deg
+dalpha_0L_to = dalpha_0l_airfoil_to*(Swf_TE/S)*cos(lambda_hingeline_flap) #deg
 
 CL_alpha_low_clean = value('CL_alpha_low_clean')* pi/180. #per deg
 S_ext_S_land = 1 + (Swf_TE/S)*(c_ext_c_land-1)
@@ -142,7 +143,6 @@ bs_i = r_fus + 2 #inboard slat position
 func2 = lambda x2 : (x2-bs_i)*(2*a1-a2*bs_i-a2*x2) - Swf_LE
 bs_o_init = 6
 bs_o = fsolve(func2, bs_o_init )[0]  #outboard slat position
-
 
 
 string_HLD = ['Swf_LE','Swf_TE','S_flaps_land','S_flaps_to','S_slats','bs_i','bs_o','bf_i','bf_o','d_f_land','d_f_to','c_ext_c_land','c_ext_c_to']
