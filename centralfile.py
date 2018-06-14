@@ -16,6 +16,7 @@ from airfoil2 import * #CHECK
 from cg import *
 from Drag import *
 from systemsprepaircraft import *
+from HLD import * 
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -131,6 +132,9 @@ for i in range(len(string_drag)):
 
 for i in range(len(string_loadingdiagram)):
     parameter.write(string_loadingdiagram[i] + " " + str(eval(string_loadingdiagram[i])) + "\n")
+
+for i in range(len(string_HLD)):
+    parameter.write(string_HLD[i] + " " + str(eval(string_HLD[i])) + "\n")
 
 parameter.close()
 
