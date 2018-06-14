@@ -16,6 +16,8 @@ from airfoil2 import * #CHECK
 from cg import *
 from Drag import *
 from systemsprepaircraft import *
+from HLD import *
+from ailerons import *
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -78,8 +80,8 @@ parameter.write("V_rot "+str(V_rot)+"\n")
 parameter.write("n_max "+str(n_max)+"\n")
 parameter.write("f "+str(f)+"\n")
 parameter.write("P_c "+str(P_c)+"\n")
-parameter.write("x_spar1 "+str(0.25)+"\n")
-parameter.write("x_spar2 "+str(0.55)+"\n")
+parameter.write("x_spar1 "+str(0.20)+"\n")
+parameter.write("x_spar2 "+str(0.65)+"\n")
 parameter.write("Afactor "+str(1.2)+"\n")
 parameter.write("e "+str(0.85)+"\n")
 parameter.write("MTOW "+str(67834.)+"\n")
@@ -131,6 +133,12 @@ for i in range(len(string_drag)):
 
 for i in range(len(string_loadingdiagram)):
     parameter.write(string_loadingdiagram[i] + " " + str(eval(string_loadingdiagram[i])) + "\n")
+
+for i in range(len(string_HLD)):
+    parameter.write(string_HLD[i] + " " + str(eval(string_HLD[i])) + "\n")
+
+for i in range(len(string_ailerons)):
+    parameter.write(string_ailerons[i] + " " + str(eval(string_ailerons[i])) + "\n")
 
 parameter.close()
 

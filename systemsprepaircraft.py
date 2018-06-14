@@ -13,12 +13,12 @@ w_luggage = 10*n_pax #luggage weight
 w_oe = value("OEW")    #operational empty weight
 w_mto = value("MTOW")   #maximum take-off weight
 w_design_fuel = value("W_fuel")
-w_fuel_mtow = 1000
+w_fuel_mtow = 1000.
 x_cargo = 20.0 #position c.g. baggage compartment 
 w_cargo = value("MTOW") - value("OEW") - w_luggage - w_pax - w_fuel_mtow #weight of aft cargo
 MAC = value("MAC")    #mean aerodynamic chord
-X_LEMAC = 18.5890300872     #value("x_lemac")          #value("x_lemac") #X-position leading edge mean aerodynamic chord
-cg_oew = value("xcg_oew")  #center of gravity at operational empty weight
+X_LEMAC = 18.38239#value("x_lemac")           #X-position leading edge mean aerodynamic chord
+cg_oew = value("x_cg_oew")  #center of gravity at operational empty weight
 row_mid_emergency_exit = n_rows/2
 row_final_emergency_exit = 29
 

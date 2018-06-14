@@ -17,7 +17,7 @@ MAC = value("MAC")
 b = value("b")
 c_r = value("c_r")
 c_t = value("c_t")
-d_ext_fus = 2.#value("d_ext_fus")
+d_ext_fus = value("d_ext_fus")
 xstart = value("x_spar1")
 xend = value("x_spar2")
 lambdac_0 = value("lambdac_0")
@@ -27,7 +27,8 @@ ct_h = value("ct_h")
 MAC_h = value("MAC_h")
 MAC_v = value("MAC_v")
 ln = value("ln")
-x_lemac = l_cabin*0.446 + l_cockpit - 0.25*MAC
+x_lemac = l_cabin*0.44 + l_cockpit - 0.25*MAC
+l_h = (l_fus - (cos(np.radians(sweep_h))*b_h/2 + ct_h) + cos(np.radians(sweep_h))*0.38*b_h/2 + 0.25*MAC_h) - (x_lemac + 0.25*MAC)
 
 #------------------------------------------OEW COMPONENTS-------------------------------------------
 
@@ -106,7 +107,7 @@ vols = []
 for i in range(len(vol)):
     vols.append(round(vol[i],3))
 
-cgspan = float(vols.index(round(vol[len(vol)-1]/2,3)))/len(vols)*(float(len(vols))/len(b_cur))*b/2
+cgspan = 5.35972#float(vols.index(round(vol[len(vol)-1]/2,3)))/len(vols)*(float(len(vols))/len(b_cur))*b/2
 
 dis1 = cos(np.degrees(lambdac_0))*cgspan
 
@@ -116,7 +117,7 @@ xcg_fuel = dis1 + chord*(xstart+xend)/2 + x_lemac - cos(np.degrees(lambdac_0))*(
 
 #----------------------------------------------PAYLOAD----------------------------------------------
 
-string_cg = ["x_lemac","xcg_oew","xcg_fuel"]
+string_cg = ["x_lemac","x_cg_oew","xcg_fuel","l_h"]
 
 
 print wing()[0], x_lemac
