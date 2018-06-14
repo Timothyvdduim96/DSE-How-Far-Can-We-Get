@@ -36,7 +36,8 @@ WS_end = W_end/S
 
 lambdac_0 =  value('lambdac_0') #leading edge sweep
 a_cr = a(h_cr)
-q_cr = cruise_q(h_cr)
+rho_cr = 
+q_cr = 0.5 * rho_cr * value('v_cr')**2
 V_cr = M_cr * a_cr
 
 

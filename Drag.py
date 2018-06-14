@@ -153,4 +153,4 @@ CL = 0.55
 CD = CD0_tot + CL**2 / (pi * A_eff * e)
 
 string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet']
-print()
+print(e)
