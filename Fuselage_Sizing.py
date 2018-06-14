@@ -46,9 +46,9 @@ d_ext_fus= 4.0
 r_int_fus=d_int_fus*0.5 #Radius 
 r_ext_fus= 2.0 #[m] External Radius
 
-l_seats=N_rows_A321neo*seat_pitch*inch_to_m # [meters] Length of seating area
-
-restcabinspace = l_cabin_A321neo -l_seats
+l_seats_A321neo=N_rows_A321neo*seat_pitch*inch_to_m # [meters] Length of seating area
+l_seats = N_rows*seat_pitch*inch_to_m
+restcabinspace = l_cabin_A321neo -l_seats_A321neo
 
 l_cabin = l_seats+restcabinspace 
 

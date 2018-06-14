@@ -88,6 +88,9 @@ parameter.write("MTOW "+str(67834.)+"\n")
 parameter.write("S "+str(110.)+"\n")
 parameter.write("thrust "+str(213.)+"\n")
 parameter.write("SwetSref "+str(SwetSref)+"\n")
+#parameter.write("alpha_0L_low_clean "+str(np.radians(-3.82))+"\n")
+#parameter.write("CL_alpha_low_clean"+str((2*pi*A)/(2+np.sqrt(4+(A*beta_low/eta_airfoil)**2*(1+tan(lambdac_2)*tan(lambdac_2)/(beta_low**2)))))+"\n")
+#parameter.write("alpha_stall_low_clean"+str((CL_max_low_clean / CL_alpha_low_clean) + alpha_0L_low_clean + (4 * pi /180))+"\n")
 
 #for i in range(len(string_TWWS)):
 #    parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
