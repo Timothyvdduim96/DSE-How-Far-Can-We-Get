@@ -93,9 +93,9 @@ Cl_max_low_clean = 2.3
 Cd_min_low_clean = 0.005
 Cp_min_low_clean = -1.314
 M_crit_low_clean = 0.645
-alpha_0L_low_clean = -3.82 *pi /180                  #rad
+alpha_0L_low_clean = np.radians(-3.82)              #rad
 
-CL_alpha_low_clean = (2*pi*A)/(2+np.sqrt(4+(A*beta_low/eta_airfoil)**2*(1+tan(lambdac_2)*tan(lambdac_2)/(beta_low*beta_low))))
+CL_alpha_low_clean = (2*pi*A)/(2+np.sqrt(4+(A*beta_low/eta_airfoil)**2*(1+tan(lambdac_2)*tan(lambdac_2)/(beta_low**2))))
 
 CL_max_low_clean = 0.9*Cl_max_low_clean*cos(lambdac_4)
 
@@ -113,4 +113,4 @@ dCL_HLD_land = CL_land - CL_max_low_clean
 
 #Landing conditions
 
-string_airfoil2 = ["V_cr", "eta_airfoil", "Cl_max_cruise_clean", "Cd_min_cruise_clean", "Cm_des_cruise_clean", "alpha_0L_cruise_clean", "alpha_0L_low_clean", "alpha_des_cruise_clean", "alpha_stall_cruise_clean", "alpha_stall_low_clean", "alpha_trim_cruise_clean", "CL_max_cruise_clean_plane", "CL_max_cruise_clean_wing", "CL_max_low_clean", "CL_alpha_low_clean", "CL_alpha_cruise_clean", "Cd_min_low_clean", "M_crit_cruise_clean", "lambdac_LE", "lambdac_2", "lambdac_4", "dCL_HLD_land", "dCL_HLD_TO", 'CL_0']
+string_airfoil2 = ["V_cr", "eta_airfoil", "Cl_max_cruise_clean", "alpha_0L_low_clean", "CL_alpha_low_clean", "alpha_stall_low_clean", "Cd_min_cruise_clean", "Cm_des_cruise_clean", "alpha_0L_cruise_clean", "alpha_des_cruise_clean", "alpha_stall_cruise_clean", "alpha_trim_cruise_clean", "CL_max_cruise_clean_plane", "CL_max_cruise_clean_wing", "CL_max_low_clean", "CL_alpha_cruise_clean", "Cd_min_low_clean", "M_crit_cruise_clean", "lambdac_LE", "lambdac_2", "lambdac_4", "dCL_HLD_land", "dCL_HLD_TO", 'CL_0']
