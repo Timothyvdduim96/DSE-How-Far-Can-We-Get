@@ -130,14 +130,14 @@ C_D_fus2 = (3.83 * u**2.5 * pi * (4/2)**2) /S_ref
 # S_s =
 # dCD_landinggear = C_D_S * S_s/ S_ref
 
-# # Flaps higher than 10 degrees
-# F_flap = 0.0074
-# C_f =   #flap chord length
-# c =       #wing chord
-# Sflap =      #flap surface area
-# delta_flap =        #should be in degrees
-# dCD_flap = F_flap *(c_f / c) * (S_flap / S_ref) * (delta_flap -10 )
-
+# Flaps higher than 10 degrees
+F_flap = 0.0074
+c_fc = 0.35  #flap chord length      #wing chord
+S_flap = value('swf_TE')     #flap surface area
+delta_flap_land =  value('t_f_land')      #should be in degrees
+dCD_flap_land = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_land -10 )
+delta_flap_TO =  value('t_f_to')      #should be in degrees
+dCD_flap_TO = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_TO -10 )
 #Excresence drag
 dCD_excresence = 0.03
 
@@ -152,5 +152,4 @@ e = 1 / (1.05 + 0.007* pi * A_eff)              # Obert method
 CL = 0.55
 CD = CD0_tot + CL**2 / (pi * A_eff * e)
 
-string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet']
-print(e)
+string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet', 'dCD_flap_TO', 'dCD_flap_land']

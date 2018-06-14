@@ -36,19 +36,19 @@ WS_end = W_end/S
 
 lambdac_0 =  value('lambdac_0') #leading edge sweep
 a_cr = a(h_cr)
-rho_cr = 
-q_cr = 0.5 * rho_cr * value('v_cr')**2
+rho_cr = 0.316
 V_cr = M_cr * a_cr
+q_cr = 0.5 * rho_cr * V_cr**2
+
 
 
 MAC = value("MAC")
 nu =  8.73*10**(-6)            #kinematic viscosity at T = 216.6499 K
 mu = 14.21*10**(-6)
-rho_cr = value("rho_cr")
 rho0 = value("rho_0")
 
 #Clean cruise conditions with cruise Reynold's number
-beta_cruise = np.sqrt(1-M_cr*M_cr)
+beta_cruise = np.sqrt(1-(M_cr*M_cr))
 
 #Re_cr = (V_cr * cos(lambdac_0) * rho_cr * MAC) / mu                 #Reynolds number
 CL_des_cruise_clean_plane = (1/q_cr)*(0.5*(WS_start+WS_end)) #design lift coefficient of the entire aircraft
@@ -113,5 +113,6 @@ dCL_HLD_land = CL_land - CL_max_low_clean
 
 
 #Landing conditions
+print V_low
 
 string_airfoil2 = ["V_cr", "eta_airfoil", "Cl_max_cruise_clean", "alpha_0L_low_clean", "CL_alpha_low_clean", "alpha_stall_low_clean", "Cd_min_cruise_clean", "Cm_des_cruise_clean", "alpha_0L_cruise_clean", "alpha_des_cruise_clean", "alpha_stall_cruise_clean", "alpha_trim_cruise_clean", "CL_max_cruise_clean_plane", "CL_max_cruise_clean_wing", "CL_max_low_clean", "CL_alpha_cruise_clean", "Cd_min_low_clean", "M_crit_cruise_clean", "lambdac_LE", "lambdac_2", "lambdac_4", "dCL_HLD_land", "dCL_HLD_TO", 'CL_0']
