@@ -49,6 +49,13 @@ S_a = 0.5*(c_a2+c_a1)*(b2-b1) #aileron area
 P = -(C_l_da/C_l_p)*da*(2*V/b)
 dt = dphi/P
 
+ba_i_perc = ba_i/(b/2.)
+ba_o_perc = ba_o/(b/2.)
+print (dt)
+
+print (ba_i_perc)
+print (ba_o_perc)
+
 
 string_ailerons = ['S_a','ba_i','ba_o',]
 

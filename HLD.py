@@ -26,8 +26,12 @@ a2 = (c_r-c_t)/(0.5*b)
 
 CL_max_low_clean = value('CL_max_low_clean')
 
-dC_L_max_to = value('dCL_HLD_TO') + 0.2
-dC_L_max_land =  value('dCL_HLD_land') + 0.3
+CL_to = 2.1
+CL_land = 2.5
+
+
+dC_L_max_to = CL_to - CL_max_low_clean + 0.2
+dC_L_max_land =  CL_land - CL_max_low_clean + 0.3
 
 
 
@@ -35,11 +39,11 @@ lambda_hingeline_flap = atan(tan(lambdac_LE) - (4/A)*(1*(1-taper)/(1+taper)))
 lambda_hingeline_slat = lambdac_LE
 
 
-d_f_land = 50 #deg flap deflection at landing
-d_f_to = 20 #deg flap deflection at take-off
+d_f_land = 40 #deg flap deflection at landing
+d_f_to = 15 #deg flap deflection at take-off
 
 
-dc_cf_land = 0.7 #single slotted (0.9 for double slotted)
+dc_cf_land = 0.6 #single slotted (0.8 for double slotted)
 dc_cf_to = 0.5 #single slotted (0.6 for double slotted)
 
 cf_c = 0.35 #flap chord/wing chord for slotted flaps
@@ -54,13 +58,13 @@ dC_l_max_slat = 0.3 * c_ext_c_slat
 
 
 
-Swf_land_TE = (0.8*dC_L_max_land*S)/(0.9*dC_l_max_flap*cos(lambda_hingeline_flap))
-Swf_to_TE = (0.8*dC_L_max_to*S)/(0.9*0.8*dC_l_max_flap*cos(lambda_hingeline_flap))
+Swf_land_TE = (0.85*dC_L_max_land*S)/(0.9*dC_l_max_flap*cos(lambda_hingeline_flap))
+Swf_to_TE = (0.9*dC_L_max_to*S)/(0.9*0.7*dC_l_max_flap*cos(lambda_hingeline_flap))
 Swf_TE = max([Swf_land_TE,Swf_to_TE])
 
 
-Swf_land_LE = (0.2*dC_L_max_land*S)/(0.9*dC_l_max_slat*cos(lambda_hingeline_slat))
-Swf_to_LE = (0.2*dC_L_max_land*S)/(0.9*0.8*dC_l_max_slat*cos(lambda_hingeline_slat))
+Swf_land_LE = (0.15*dC_L_max_land*S)/(0.9*dC_l_max_slat*cos(lambda_hingeline_slat))
+Swf_to_LE = (0.1*dC_L_max_land*S)/(0.9*0.7*dC_l_max_slat*cos(lambda_hingeline_slat))
 Swf_LE = max([Swf_land_LE,Swf_to_LE])
 
 dalpha_0l_airfoil_land = -15 #deg
@@ -89,13 +93,13 @@ C_L_curve_to = CL_alpha_flapped_slatted_to*(alpha - alpha_0L_low_clean - dalpha_
 alpha_stall_low_clean = value('alpha_stall_low_clean')*180./pi #deg 
 
 
-CL_land = 2.2
+CL_land = CL_land
 CL_max_land = CL_max_low_clean + dC_L_max_land
 CL_land_margin = CL_max_land 
 alpha_stall_flapped_land = (CL_land_margin/ CL_alpha_flapped_slatted_land) + alpha_0L_low_clean + dalpha_0L_land +  4 
 
 
-CL_to = 2.1
+CL_to = CL_to
 CL_max_to = CL_max_low_clean + dC_L_max_to
 CL_to_margin = CL_max_to 
 alpha_stall_flapped_to = (CL_to_margin / CL_alpha_flapped_slatted_to) + alpha_0L_low_clean + dalpha_0L_to +  4 
@@ -144,6 +148,18 @@ func2 = lambda x2 : (x2-bs_i)*(2*a1-a2*bs_i-a2*x2) - Swf_LE
 bs_o_init = 6
 bs_o = fsolve(func2, bs_o_init )[0]  #outboard slat position
 
+bf_i_perc = bf_i/(b/2.)
+bf_o_perc = bf_o/(b/2.)
+bs_i_perc = bs_i/(b/2.)
+bs_o_perc = bs_o/(b/2.)
 
-string_HLD = ['Swf_LE','Swf_TE','S_flaps_land','S_flaps_to','S_slats','bs_i','bs_o','bf_i','bf_o','d_f_land','d_f_to','c_ext_c_land','c_ext_c_to']
+print (bf_i_perc)
+print (bf_o_perc)
+print (bs_i_perc)
+print (bs_o_perc)
+
+
+
+
+string_HLD = ['Swf_LE','Swf_TE','S_flaps_land','S_flaps_to','S_slats','bs_i','bs_o','bf_i','bf_o','d_f_land','d_f_to','c_ext_c_land','c_ext_c_to','cf_c','cs_c']
 
