@@ -12,8 +12,13 @@ import matplotlib.pyplot as plt
 
 A = 14.75
 g = 9.80665
+
+thrust = 213000.
+MTOW = 67834.*g#67834.2*g#68731. *g
+
 thrust = 213000.
 MTOW = 67834.2*g#68731. *g
+
 S = 110.
 oswald = 0.7276
 CL_max_clean = 0.8
@@ -82,16 +87,38 @@ for V in range(V_min0,300,1):
     dens = ISA(0)[2]
     a = sqrt(1.4*287.*Temp)
     M_c = V/a
+
+    #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
+    #ratio = (P_alt/P_0) *sqrt(T_0/Temp)  
+    #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)   
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7  
+    T_a = thrust*ratio 
     V = sqrt(rho_0/dens)*V  
     
     # ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     # ratio = (P_alt/P_0) *sqrt(T_0/Temp)  
     # ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)   
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
     T_a = thrust*ratio #* ratio_speed#*  ratio_net_to_static
+
     #print T_a
     
     #print ratio  
@@ -118,7 +145,7 @@ for V in range(V_min0,300,1):
     Vc_sealevel.append(Vc)
     speeds_sealevel.append(V)
 
-
+    
 V_min5000 = int(sqrt((MTOW/S)*(2/ISA(1524)[2])*(1/CL_max_clean)))
 for V in range(V_min5000,300,1):     
     P_alt = ISA(1524)[1]
@@ -128,16 +155,32 @@ for V in range(V_min5000,300,1):
     dens = ISA(1524)[2]
     a = sqrt(1.4*287*Temp)
     M_c = V/a
+
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
+    
+    
+    
     V = sqrt(rho_0/dens)*V 
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
-    
-    
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+#    
+    #T_a = dens*A_eng*V_eng*(Vj-V)
     T_a = thrust*ratio #*ratio_net_to_static
     #print ratio 
     #print V    
@@ -156,13 +199,15 @@ for V in range(V_min5000,300,1):
     palist_5000.append(pa)
     prlist_5000.append(pr)
     Vc = ((pa - pr)/MTOW)*196.58
-    # if Vc <= 0:
-    #     break
+
+#    if Vc <= 0:
+#        break
+
     Vc_uns = ((1+((M_c**2*gamma/2)*(((R/g)*-0.0065)+1)))**-1)*Vc
     Vc_5000_uns.append(Vc_uns)
     Vc_5000.append(Vc)
     speeds_5000.append(V)
-'''
+
 V_min10000 = int(sqrt((MTOW/S)*(2/ISA(3048)[2])*(1/CL_max_clean)))
 for V in range(V_min10000,300,1):     
     P_alt = ISA(3048)[1]
@@ -173,15 +218,32 @@ for V in range(V_min10000,300,1):
     a = sqrt(1.4*287*Temp)
     V = sqrt(rho_0/dens)*V      
     M_c = V/a
+    
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
+    
+    
+    
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
    
     T_a = thrust*ratio#*ratio_net_to_static
+    #T_a = dens*A_eng*V_eng*(Vj-V)
     #print V    
     CL = MTOW/(0.5*dens*V**2*S)
     #print CL
@@ -198,8 +260,8 @@ for V in range(V_min10000,300,1):
     #palist.append(pa)
     #prlist.append(pr)
     Vc = ((pa - pr)/MTOW)*196.85
-    if Vc <= 0:
-        break
+#    if Vc <= 0:
+#        break
     Vc_uns = ((1+((M_c**2*gamma/2)*(((R/g)*-0.0065)+1)))**-1)*Vc
     Vc_10000_uns.append(Vc_uns)
     Vc_10000.append(Vc)
@@ -216,15 +278,32 @@ for V in range(V_min15000,300,1):
     a = sqrt(1.4*287*Temp)
     V = sqrt(rho_0/dens)*V      
     M_c = V/a
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
+    
+    
+    
+    
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
      
     T_a = thrust*ratio#*ratio_net_to_static
+    #T_a = dens*A_eng*V_eng*(Vj-V)
     #print V    
     CL = MTOW/(0.5*dens*V**2*S)
     #print CL
@@ -240,8 +319,8 @@ for V in range(V_min15000,300,1):
     #palist.append(pa)
     #prlist.append(pr)
     Vc = ((pa - pr)/MTOW)*196.85
-    if Vc <= 0:
-        break
+#    if Vc <= 0:
+#        break
     palist_15000.append(pa)
     prlist_15000.append(pr)
     Vc_uns = ((1+((M_c**2*gamma/2)*(((R/g)*-0.0065)+1)))**-1)*Vc
@@ -259,17 +338,36 @@ for V in range(V_min20000,300,1):
     a = sqrt(1.4*287*Temp)
     V = sqrt(rho_0/dens)*V      
     M_c = V/a
+    
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
+    
+    
+    
+    
+    
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
    
     
     T_a = thrust*ratio#*ratio_net_to_static
     #print V    
+    #T_a = dens*A_eng*V_eng*(Vj-V)    
     CL = MTOW/(0.5*dens*V**2*S)
     #print CL
     CD = CD0 + (CL**2/(pi*A*oswald))
@@ -284,8 +382,8 @@ for V in range(V_min20000,300,1):
     #palist.append(pa)
     #prlist.append(pr)
     Vc = ((pa - pr)/MTOW)*196.85
-    if Vc <= 0:
-        break
+#    if Vc <= 0:
+#        break
     palist_20000.append(pa)
     prlist_20000.append(pr)
     Vc_uns = ((1+((M_c**2*gamma/2)*(((R/g)*-0.0065)+1)))**-1)*Vc
@@ -303,17 +401,34 @@ for V in range(V_min25000,300,1):
     a = sqrt(1.4*287*Temp)
     V = sqrt(rho_0/dens)*V      
     M_c = V/a
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
+   
+   
+   
+   
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
     
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
-   
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+#   
     T_a = thrust*ratio#*ratio_net_to_static
     #print V    
+    #T_a = dens*A_eng*V_eng*(Vj-V)    
     CL = MTOW/(0.5*dens*V**2*S)
     #print CL
     CD = CD0 + (CL**2/(pi*A*oswald))
@@ -328,8 +443,8 @@ for V in range(V_min25000,300,1):
     #palist.append(pa)
     #prlist.append(pr)
     Vc = ((pa - pr)/MTOW)*196.85
-    if Vc <= 0:
-        break
+#    if Vc <= 0:
+#        break
     palist_25000.append(pa)
     prlist_25000.append(pr)
     Vc_uns = ((1+((M_c**2*gamma/2)*(((R/g)*-0.0065)+1)))**-1)*Vc
@@ -337,6 +452,7 @@ for V in range(V_min25000,300,1):
     Vc_25000.append(Vc)
     speeds_25000.append(V)
 
+#____nog aanpassen
 V_min30000 = int(sqrt((MTOW/S)*(2/ISA(9144)[2])*(1/CL_max_clean)))
 for V in range(V_min30000,300,1):     
     P_alt = ISA(9144 )[1]
@@ -350,11 +466,24 @@ for V in range(V_min30000,300,1):
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
-   
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+#   
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
+    
     
     T_a = thrust*ratio#*ratio_net_to_static
     #print V    
@@ -372,8 +501,8 @@ for V in range(V_min30000,300,1):
     #palist.append(pa)
     #prlist.append(pr)
     Vc = ((pa - pr)/MTOW)*196.85
-    if Vc <= 0:
-        break
+#    if Vc <= 0:
+#        break
     palist_30000.append(pa)
     prlist_30000.append(pr)
     Vc_uns = ((1+((M_c**2*gamma/2)*(((R/g)*-0.0065)+1)))**-1)*Vc
@@ -394,13 +523,24 @@ for V in range(V_min35000,300,1):
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
    
-     
-    T_a = thrust*ratio*ratio_speed#*ratio_net_to_static
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
+    T_a = thrust*ratio#*ratio_net_to_static
     #print V    
     CL = MTOW/(0.5*dens*V**2*S)
     #print CL
@@ -415,9 +555,9 @@ for V in range(V_min35000,300,1):
     #palist.append(pa)
     #prlist.append(pr)
     Vc = ((pa - pr)/MTOW)*196.85
-    print Vc
-    if Vc <= 0:
-        break
+    #print Vc
+#    if Vc <= 0:
+#        break
     palist_35000.append(pa)
     prlist_35000.append(pr)
     
@@ -439,11 +579,22 @@ for V in range(V_min39000,300,1):
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
-    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
-    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
-    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
-    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
-   
+#    A = (-0.4327*(P_alt/P_0)**2) + (1.3855*(P_alt/P_0))  + 0.0472   
+#    Z = (0.9106*(P_alt/P_0)**3) - (1.7736*(P_alt/P_0)**2) + (1.8697*(P_alt/P_0))
+#    X = (0.1377*(P_alt/P_0)**3) - (0.4374*(P_alt/P_0)**2) + (1.3003*(P_alt/P_0))
+#    ratio = A - (((0.377*(1+lamda))/(sqrt((1+(0.82*lamda))*1.48)))*Z*M_c) + ((0.23+(0.19*sqrt(lamda)))*X*M_c**2)
+    if M_c < 0.4: 
+        K1 = 1.
+        K2 = 0.
+        K3 =-0.595
+        K4 = -0.03
+    else:
+        K1 = 0.89
+        K2 = -0.014
+        K3 = -0.30
+        K4 = 0.005
+    sigma = dens/rho_0    
+    ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
     T_a = thrust*ratio#*ratio_net_to_static
     #print V    
     CL = MTOW/(0.5*dens*V**2*S)
@@ -460,28 +611,34 @@ for V in range(V_min39000,300,1):
     #palist.append(pa)
     #prlist.append(pr)
     Vc = ((pa - pr)/MTOW)*196.85
-    if Vc <= 0:
-        break
+#    if Vc <= 0:
+#        break
     palist_39000.append(pa)
     prlist_39000.append(pr)
     Vc_uns = ((1+((M_c**2*gamma/2)*(((R/g)*-0.0065)+1)))**-1)*Vc
     Vc_39000_uns.append(Vc_uns)
     Vc_39000.append(Vc)
     speeds_39000.append(V)
-'''
+
 
 #power available/required
 plt.subplot(2,2,1)
-# plt.plot(speeds_sealevel,palist_0,label="Pa Sea level")
-# plt.plot(speeds_5000,palist_5000, label="Pa 5000 ft")
-#plt.plot(speeds_10000,palist_10000, label="Pa 10000 ft") 
-#plt.plot(speeds_15000,palist_15000, label="Pa 15000 ft")
-#plt.plot(speeds_35000,prlist_35000, label="Pr 39000 ft") 
-plt.plot(speeds_sealevel,prlist_0,label="Pr Sea level")
+
+plt.plot(speeds_sealevel,palist_0,label="Pa Sea level")
+plt.plot(speeds_5000,palist_5000, label="Pa 5000 ft")
+plt.plot(speeds_10000,palist_10000, label="Pa 10000 ft") 
+plt.plot(speeds_15000,palist_15000, label="Pa 15000 ft")
+plt.plot(speeds_20000,palist_20000, label="Pa 15000 ft")
+plt.plot(speeds_25000,palist_25000, label="Pa 15000 ft")
+plt.plot(speeds_sealevel,prlist_0, label="Pr Sea level") #plt.plot(speeds_sealevel,prlist_0,label="Pr Sea level")
 plt.plot(speeds_5000,prlist_5000, label="Pr 5000 ft")
-#plt.plot(speeds_10000,prlist_10000, label="Pr 10000 ft")
-#plt.plot(speeds_15000,prlist_15000, label="Pr 15000 ft")
-#plt.plot(speeds_35000,prlist_35000, label="Pr 39000 ft")
+plt.plot(speeds_10000,prlist_10000, label="Pr 10000 ft")
+plt.plot(speeds_15000,prlist_15000, label="Pr 15000 ft")
+plt.plot(speeds_20000,prlist_20000, label="Pr 20000 ft")
+plt.plot(speeds_25000,prlist_25000, label="Pr 25000 ft")
+#plt.plot(speeds_30000,prlist_30000, label="Pr 30000 ft")
+#plt.plot(speeds_35000,prlist_35000, label="Pr 35000 ft")
+
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Power available/required')
 plt.legend(loc=4)
@@ -490,12 +647,13 @@ plt.grid(True)
 
 #Steady performance
 plt.subplot(2,2,2)
+plt.axis((0,400,0,6000))
 plt.plot(speeds_sealevel,Vc_sealevel,label="Sea level")
 plt.plot(speeds_5000,Vc_5000,label="5000 ft")
-#plt.plot(speeds_10000,Vc_10000, label="10000 ft")
-#plt.plot(speeds_15000,Vc_15000, label="15000 ft")
-#plt.plot(speeds_20000,Vc_20000, label="20000 ft")
-#plt.plot(speeds_25000,Vc_25000, label="25000 ft")
+plt.plot(speeds_10000,Vc_10000, label="10000 ft")
+plt.plot(speeds_15000,Vc_15000, label="15000 ft")
+plt.plot(speeds_20000,Vc_20000, label="20000 ft")
+plt.plot(speeds_25000,Vc_25000, label="25000 ft")
 #plt.plot(speeds_30000,Vc_30000, label="30000 ft")
 #plt.plot(speeds_35000,Vc_35000, label="35000 ft")
 #plt.plot(speeds_39000,Vc_39000, label="39000 ft")
@@ -507,12 +665,13 @@ plt.grid(True)
 
 #Steady performance
 plt.subplot(2,2,3)
+plt.axis((0,400,0,6000))
 plt.plot(speeds_sealevel,Vc_sealevel_uns,label="Sea level")
 plt.plot(speeds_5000,Vc_5000_uns,label="5000 ft")
-#plt.plot(speeds_10000,Vc_10000_uns, label="10000 ft")
-#plt.plot(speeds_15000,Vc_15000_uns, label="15000 ft")
-#plt.plot(speeds_20000,Vc_20000_uns, label="20000 ft")
-#plt.plot(speeds_25000,Vc_25000_uns, label="25000 ft")
+plt.plot(speeds_10000,Vc_10000_uns, label="10000 ft")
+plt.plot(speeds_15000,Vc_15000_uns, label="15000 ft")
+plt.plot(speeds_20000,Vc_20000_uns, label="20000 ft")
+plt.plot(speeds_25000,Vc_25000_uns, label="25000 ft")
 #plt.plot(speeds_30000,Vc_30000_uns, label="30000 ft")
 #plt.plot(speeds_35000,Vc_35000_uns, label="35000 ft")
 #plt.plot(speeds_39000,Vc_39000_uns, label="39000 ft")
@@ -568,7 +727,7 @@ plt.show()
 
 #-----VERIFICATION
 '''
-
+"""
 A = 12.
 g = 9.80665
 thrust = 213000.
