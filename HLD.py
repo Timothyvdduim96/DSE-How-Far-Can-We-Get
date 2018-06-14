@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import *
 from scipy.optimize import fsolve
+from parameters import *
 
 S = value('S')
 A = value('A')
@@ -100,30 +101,30 @@ CL_to_margin = CL_max_to
 alpha_stall_flapped_to = (CL_to_margin / CL_alpha_flapped_slatted_to) + alpha_0L_low_clean + dalpha_0L_to +  4 
 
 
-plt.subplot(221)
-plt.plot(alpha,C_L_curve_clean,label='clean')
-plt.plot(alpha_stall_low_clean,CL_max_low_clean, marker = 'o', label = 'stall clean')
-plt.plot(alpha,C_L_curve_land,label='land')
-plt.plot(alpha_stall_flapped_land,CL_land_margin, marker = 'o', label = 'stall flapped')
-plt.plot([-10,25],[CL_land,CL_land])
-plt.grid(True)
-plt.legend(loc='upper left')
-plt.ylabel("C_L")
-plt.xlabel("alpha [deg]")
-plt.title("C_L - alpha curve")
-
-plt.subplot(222)
-plt.plot(alpha,C_L_curve_clean,label='clean')
-plt.plot(alpha_stall_low_clean,CL_max_low_clean, marker = 'o')
-plt.plot(alpha,C_L_curve_to, label='take-off')
-plt.plot(alpha_stall_flapped_to,CL_to_margin, marker = 'o')
-plt.plot([-10,25],[CL_to,CL_to])
-plt.grid(True)
-plt.legend(loc='upper left')
-plt.ylabel("C_L")
-plt.xlabel("alpha [deg]")
-plt.title("C_L - alpha curve")
-plt.show()
+##plt.subplot(221)
+##plt.plot(alpha,C_L_curve_clean,label='clean')
+##plt.plot(alpha_stall_low_clean,CL_max_low_clean, marker = 'o', label = 'stall clean')
+##plt.plot(alpha,C_L_curve_land,label='land')
+##plt.plot(alpha_stall_flapped_land,CL_land_margin, marker = 'o', label = 'stall flapped')
+##plt.plot([-10,25],[CL_land,CL_land])
+##plt.grid(True)
+##plt.legend(loc='upper left')
+##plt.ylabel("C_L")
+##plt.xlabel("alpha [deg]")
+##plt.title("C_L - alpha curve")
+##
+##plt.subplot(222)
+##plt.plot(alpha,C_L_curve_clean,label='clean')
+##plt.plot(alpha_stall_low_clean,CL_max_low_clean, marker = 'o')
+##plt.plot(alpha,C_L_curve_to, label='take-off')
+##plt.plot(alpha_stall_flapped_to,CL_to_margin, marker = 'o')
+##plt.plot([-10,25],[CL_to,CL_to])
+##plt.grid(True)
+##plt.legend(loc='upper left')
+##plt.ylabel("C_L")
+##plt.xlabel("alpha [deg]")
+##plt.title("C_L - alpha curve")
+##plt.show()
 
 S_flapped_land = S*(S_ext_S_land)
 S_flapped_to = S*(S_ext_S_to)
