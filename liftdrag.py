@@ -1,32 +1,35 @@
 from math import *
 from parameters import *
-from TWWS import WS,MTOW,S,C_D_0
 import numpy as np
 import matplotlib.pyplot as plt
 
 #parameters
-Afactor = 1.2    #factor increasing aspect ratio for winglets
-WS = 0.98*WS    #correct wing loading for fuel burn during cruise
-sweep_LE = 0.68  #GET FROM WINGPLANFORM
+Afactor = value("Afactor")    #factor increasing aspect ratio for winglets
+#WS = 0.98*value("WS")    #correct wing loading for fuel burn during cruise
+sweep_LE = value("lambdac")  #GET FROM WINGPLANFORM
 
 #--------------------------
 #This is for the performance diagrams
 
-q3 = q(cruise_speed(h_cr),914.1)
-q6 = q(cruise_speed(h_cr),1828.8)
-q9 = q(cruise_speed(h_cr),2743.2)
-q12 = q(cruise_speed(h_cr),3657.6)
-q15 = q(cruise_speed(h_cr),4572)
-q18 = q(cruise_speed(h_cr),5486.4)
+q3 = q(cruise_speed(value("h_cr")),914.1)
+q6 = q(cruise_speed(value("h_cr")),1828.8)
+q9 = q(cruise_speed(value("h_cr")),2743.2)
+q12 = q(cruise_speed(value("h_cr")),3657.6)
+q15 = q(cruise_speed(value("h_cr")),4572)
+q18 = q(cruise_speed(value("h_cr")),5486.4)
 
 
 #-------------------------
 #formulas
 
-q = q(cruise_speed(h_cr),h_cr)
-C_L_cr = MTOW*g/(q*S)
-e = 0.85#4.61*(1-0.045*A**0.68)*(cos(sweep_LE))**0.15-3.1
-K = 1/(pi*A*Afactor*e)
+q = q(cruise_speed(value("h_cr")),value("h_cr"))
+C_L_cr = value("MTOW")*g/(q*value("S"))
+e = value("e")#4.61*(1-0.045*A**0.68)*(cos(sweep_LE))**0.15-3.1
+K = 1/(pi*value("A")*Afactor*e)
+C_f_e = value("C_f_e")#value("C_f_e")
+SwetSref = value("SwetSref")
+C_D_0 = C_f_e*SwetSref#eval(designdata[19][ch])
+WS = 0.98*6000.
 C_D_cr = C_D_0 + K*C_L_cr**2
 LoverD = (q*C_D_0/WS+WS*K/q)**-1
 
@@ -43,4 +46,4 @@ for i in range(len(CLlst)):
 ##plt.show()
 #print C_L_cr
 
-string_liftdrag = ["C_L_cr","e","K","C_D_cr","LoverD"]
+string_liftdrag = ["C_L_cr","K","C_D_cr","LoverD","C_D_0"]

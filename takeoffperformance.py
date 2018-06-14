@@ -9,7 +9,7 @@ Created on Tue Jun 05 11:50:15 2018
 import numpy as np
 from math import *
 import matplotlib.pyplot as plt
-from parameters import g
+from parameters import *
 #from TWWS import C_L_maxto,C_Lcr,C_Lland,C_D_0,thrust
 #from liftdrag import C_L_cr
 
@@ -19,34 +19,34 @@ print "-------------Take-off performance-----------------"
 
 
 #------------------constants-------------
-rho_0 = 1.225
-MTOW = 68731.*g #Maximum take-off weight in kg
+rho_0 = value("rho_0") 
+MTOW = value("MTOW")*9.80665 #Maximum take-off weight in kg
 #MTOW = 60000.
 #A = 15.91**2/30
-S = 128. #wing surface area in m^2
+S = value("S") #wing surface area in m^2
 #S = 30.
 #rho_0= 1.225 #sea level density kg/m^3
 #C_L_max = 2.3 #Maximum CL
 #T = 170000. #Thrust in kN
-A = 14.
-e = 0.85
+A = value("A")
+oswald = 0.85
 gamma_climb = radians(3) #degrees
 hscr = 15.24 #screen height in m
-C_L_maxto = 1.3 #(2.01)/(1.1**2) #CL max takeoff
-C_Lcr = 1.09 #CL max cruise
-C_Lland = 2.4  #CL max landing
-C_L_cr = 0.58
+C_L_maxto = value("C_L_max_to") #(2.01)/(1.1**2) #CL max takeoff
+C_Lcr = 0.3 #value("C_L_max_clean") #CL max cruise
+C_Lland = value("C_L_max_land")  #CL max landing
+C_L_cr = value("C_L_cr")
 C_D_0 = 0.05 #CDO
-thrust = 220
+thrust = value("thrust")
 #------------------------Intermediate calculations------------------
 V_min = sqrt((MTOW/S)*(2/rho_0)*(1/C_L_maxto)) #Minimum speed in m/s, use max CL during take-off
 #V_min = ((MTOW/S)*(2/rho_0)*(1/1.3))**0.5
 V_LOF = 1.1*V_min #Lift of speed in m/s
 V = V_LOF/sqrt(2) #average speed
-CD = C_D_0 + (C_L_maxto**2/(pi*A*e)) #use max clean?, Which value for CL, because drag polar only accurate up to a certain CL
+CD = C_D_0 + (C_Lcr**2/(pi*A*oswald)) #use max clean?, Which value for CL, because drag polar only accurate up to a certain CL
 #CD = 0.08 + (0.6**2/(pi*A*e))
 D = CD * 0.5 * rho_0 * V**2 * S
-L = C_L_maxto * 0.5 * rho_0 * V**2 * S
+L = C_Lcr * 0.5 * rho_0 * V**2 * S
 #L = 0.6 * 0.5 * rho_0 * V**2 * S
 
 Dg = 0.02*(MTOW-L) #GROUND drag with a friction coefficient of 0.02
@@ -95,7 +95,7 @@ gamma_approach = radians(3)
 L_land = (C_Lland+0.2)*(0.5)*rho_0*(V_ap/sqrt(2))**2*S #Lift coefficient in ground run attitude, which cl to use?
 
 CD0_land = 0.07
-CD_land = CD0_land + ((C_Lland)**2/(pi*A*e))
+CD_land = CD0_land + ((C_Lland)**2/(pi*A*oswald))
 D_land = CD_land*(0.5)*rho_0*(V_ap/sqrt(2))**2*S #
 R = V_ap**2/(g*0.1)
 #R = (1.3**2 *(((MTOW/S)*(2/rho_0)*(1/C_Lland))/(0.10*g)))

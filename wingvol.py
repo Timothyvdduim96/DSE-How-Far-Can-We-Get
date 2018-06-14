@@ -1,18 +1,9 @@
 from math import *
 import numpy as np
 import matplotlib.pyplot as plt
-import sympy
+#import sympy
 from scipy.integrate import quad
-from TWWS import S
-<<<<<<< HEAD
-from emissions import volume_needed
-
-from WingLayout import b,c_r,c_t,taper
-
-=======
-from emissions import fuelvolume_needed
-from wing_layout import b,c_r,c_t,taper
->>>>>>> 9b64f8ba5ecc72356e24a53230dd48dc0c926b0c
+from parameters import *
 
 #------------------------------------------------upper coordinates-----------------------------------------------------------
 
@@ -87,87 +78,68 @@ for i in range(len(xr)):
     imp.append(fdiff(xr[i]))
 #--------------------------------------------------integrate--------------------------------------------------------------------
 
-xstart = "0.25"#raw_input("location of spar 1: ")
-xend = "0.55"#raw_input("location of spar 2: ")
+xstart = value("x_spar1")#"0.25"#raw_input("location of spar 1: ")
+xend = value("x_spar2")#"0.55"#raw_input("location of spar 2: ")
 
 def fint(xstart,xend):
 
-    return quad(fdiff,eval(xstart),eval(xend),args=())[0]
+    return quad(fdiff,xstart,xend,args=())[0]
 
 #input 
-#b = span(S,A)                       #span
-#taper = 0.4 #IMPORT FROM WINGPLANFORM
-#c_r = 2*b/(A*(1+taper))             #root chord
-#c_t = c_r*taper                     #tip chord
-<<<<<<< HEAD
-b_frac = 1                          #wing span used for fuel (from the inside)
-
-d_fus = 2.                          #IMPORT FROM PATRIK
-b_eff = (b - d_fus)*b_frac - 2
-
-d_ext_fus = 2.                          #IMPORT FROM PATRIK
-b_eff = (b - d_ext_fus)*b_frac - 2
-
-=======
+b = value("b")#span(S,A)                       #span
+taper = value("taper")#0.4 #IMPORT FROM WINGPLANFORM
+c_r = value("c_r")#2*b/(A*(1+taper))             #root chord
+c_t = value("c_t")#c_r*taper                     #tip chord
 b_frac = 0.95                          #wing span used for fuel (from the inside)
-d_fus = 2.                          #IMPORT FROM PATRIK
-b_eff = (b - d_fus)*b_frac - 2
-d_ext_fus = 2.                          #IMPORT FROM PATRIK
-b_eff = (b - d_ext_fus)*b_frac - 2
->>>>>>> 9b64f8ba5ecc72356e24a53230dd48dc0c926b0c
+d_ext_fus = value("d_ext_fus")#2.                          #IMPORT FROM PATRIK
+b_eff = (b) - 2
 cfac = 0.9                          #correction factor for loss of space in fuel tank
 
-A_crosssection = fint(xstart,xend)
-b_cur = np.arange(0,(b-d_ext_fus)/2+0.001,0.001)
+A_cross_section = fint(xstart,xend)
+b_cur = np.arange(0.1,(b)/2+0.001,0.1)
 vol = []
 ilst = []
 
 for i in range(len(b_cur)):
-    if b_cur[i] <= d_ext_fus/2:
-        vol.append(0)
-    elif b_cur[i] >= b_eff/2:
+    # if b_cur[i] <= d_ext_fus/2:
+    #     vol.append(0)
+    if b_cur[i] >= b_eff/2:
         vol.append(max(vol))
     else:
         c_r_f = c_r
-        c_t_f = c_r - b_cur[i]/((b-d_ext_fus)/2)*(c_r - c_t)
+        c_t_f = c_r - b_cur[i] / (b / 2) * (c_r - c_t)
         c_avg = sqrt((c_r_f**3 - c_t_f**3)/(3*(c_r_f - c_t_f)))
-        volume = cfac*2*b_cur[i]*A_crosssection*c_avg**2
+        volume = cfac*2*b_cur[i]*A_cross_section*c_avg**2
         vol.append(volume)
-<<<<<<< HEAD
-
-        if volume >= volume_needed:
+        if volume >= value("fuelvolume_needed"):
             ilst.append(i)
-
-=======
-        if volume >= fuelvolume_needed:
-            ilst.append(i)
->>>>>>> 9b64f8ba5ecc72356e24a53230dd48dc0c926b0c
-        ilst.append(i)
-        if volume >= fuelvolume_needed:
             break
 
-<<<<<<< HEAD
-print c_r_f
-print c_t_f
+fuel_in_wings = round(vol[len(vol)-1],4)
+empty_tip = round((1-b_frac)*((b-d_ext_fus)/2),2)
+print(ilst)
+print(len(vol))
+#print c_r_f
+#print c_t_f
 
-if len(ilst) > 0:
-    print volume_needed,"m^3 of fuel can be fit within", round(b_cur[ilst[0]]/(b/2)*100,2), "% of the half span. The fuel tank is positioned in between", xstart, "and", xend, "x/c."
-    print "The last",round((b-d_ext_fus)/2-b_cur[ilst[0]],2),"m span does not have to be used to place fuel (on both sides)."
-else:
-    print "You can fit",round(vol[len(vol)-1],4),"m^3 of fuel in the wings. Hence", volume_needed - round(vol[len(vol)-1],4), "m^3 needs to be fit in the fuselage."
-    print "The last",round((1-b_frac)*((b-d_ext_fus)/2),2),"m span has not been used to place fuel (on both sides)."
-
-font = {'family' : 'normal',
-        'weight' : 'normal',
-        'size'   : 14}
-#plt.axhline(volneeded, linestyle="dashed", color="Red",label="17 m^3")
-plt.plot(b_cur[:len(vol)],vol)
-##plt.scatter(xcoordupper,ycoordupper)
-##plt.scatter(xcoordlower,ycoordlower,label="airfoil coordinates")
-##plt.plot(x,yupper,color="red",label="4th order polynomial")
-##plt.plot(x,ylower,color="red")
-##plt.axis((0,1,-0.5,0.5))
-plt.rc('font', **font)
+##if len(ilst) > 0:
+##    print volneeded,"m^3 of fuel can be fit within", round(b_cur[ilst[0]]/(b/2)*100,2), "% of the half span. The fuel tank is positioned in between", xstart, "and", xend, "x/c."
+##    print "The last",round((b-d_fus)/2-b_cur[ilst[0]],2),"m span does not have to be used to place fuel (on both sides)."
+##else:
+##    print "You can fit",round(vol[len(vol)-1],4),"m^3 of fuel in the wings. Hence", volneeded - round(vol[len(vol)-1],4), "m^3 needs to be fit in the fuselage."
+##    print "The last",round((1-b_frac)*((b-d_fus)/2),2),"m span has not been used to place fuel (on both sides)."
+##
+##font = {'family' : 'normal',
+##        'weight' : 'normal',
+##        'size'   : 14}
+plt.axhline(value('fuelvolume_needed'), linestyle="dashed", color="Red",label="17 m^3")
+plt.plot(b_cur[0:ilst[0]+1],vol)
+#plt.scatter(xcoordupper,ycoordupper)
+#plt.scatter(xcoordlower,ycoordlower,label="airfoil coordinates")
+#plt.plot(x,yupper,color="red",label="4th order polynomial")
+#plt.plot(x,ylower,color="red")
+#plt.axis((0,1,-0.5,0.5))
+#plt.rc('font', **font)
 plt.xlabel("x [m]")
 plt.ylabel("fuel volume [m^3]")
 ax = plt.subplot(111)
@@ -177,36 +149,6 @@ ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 #plt.plot(xcoordlower,ycoordlower)
 plt.grid()
 plt.show()
-=======
-fuel_in_wings = round(vol[len(vol)-1],4)
-empty_tip = (1-b_frac)*((b-d_ext_fus)/2)
-##if len(ilst) > 0:
-##    print volume_needed,"m^3 of fuel can be fit within", round(b_cur[ilst[0]]/(b/2)*100,2), "% of the half span. The fuel tank is positioned in between", xstart, "and", xend, "x/c."
-##    print "The last",round((b-d_ext_fus)/2-b_cur[ilst[0]],2),"m span does not have to be used to place fuel (on both sides)."
-##else:
-##    print "You can fit",round(vol[len(vol)-1],4),"m^3 of fuel in the wings. Hence", volume_needed - round(vol[len(vol)-1],4), "m^3 needs to be fit in the fuselage."
-##    print "The last",round((1-b_frac)*((b-d_ext_fus)/2),2),"m span has not been used to place fuel (on both sides)."
 
-##font = {'family' : 'normal',
-##        'weight' : 'normal',
-##        'size'   : 14}
-###plt.axhline(volneeded, linestyle="dashed", color="Red",label="17 m^3")
-##plt.plot(b_cur[:len(vol)],vol)
-####plt.scatter(xcoordupper,ycoordupper)
-####plt.scatter(xcoordlower,ycoordlower,label="airfoil coordinates")
-####plt.plot(x,yupper,color="red",label="4th order polynomial")
-####plt.plot(x,ylower,color="red")
-####plt.axis((0,1,-0.5,0.5))
-##plt.rc('font', **font)
-##plt.xlabel("x [m]")
-##plt.ylabel("fuel volume [m^3]")
-##ax = plt.subplot(111)
-##box = ax.get_position()
-##ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-##ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-###plt.plot(xcoordlower,ycoordlower)
-##plt.grid()
-##plt.show()
-
-string_wingvol = ["c_r_f","c_t_f","c_avg","fuel_in_wings","empty_tip","A_crosssection"]
->>>>>>> 9b64f8ba5ecc72356e24a53230dd48dc0c926b0c
+string_wingvol = ["c_r_f","c_t_f","c_avg","fuel_in_wings","empty_tip","A_cross_section"]
+print(fuel_in_wings)

@@ -1,20 +1,21 @@
 from math import *
 import numpy as np
 
-parameter = open("parameters.txt","w")
-
-from TWWS import *
-from class_II_final_version import *
-from Class_I import *
-from Enginesizing import *
-from Fuselage_Sizing import *
-from wing_layout import *
-from wingvol import *
-from emissions import *
-from liftdrag import *
-from empennage import *
-from landing_gear import *
-
+#from TWWS import * #CHECK
+from class_II_final_version import * #CHECK
+from Class_I import * #CHECK
+from Enginesizing import * #CHECK
+from Fuselage_Sizing import * #CHECK
+from wingvol import * #CHECK
+from wing_layout import * #CHECK
+from emissions import * #CHECK
+from liftdrag import * #CHECK
+from empennage import * #CHECK
+from landing_gear import * #CHECK
+from airfoil2 import * #CHECK
+from cg import *
+from Drag import *
+from systemsprepaircraft import *
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -48,12 +49,14 @@ V_land = sqrt(s_l/0.5847)           #landing velocity based on landing distance
 cV = 0.024                          #climb gradient requirement from CS25
 A = 14.                             #Aspect ratio
 c = 17.                             #climb rate as from ref. aircraft
-C_f_e = 0.003                       #friction coefficient
+C_f_e = 0.0026                      #friction coefficient
 V_s = 100.                          #stall speed based on reference aircraft
 V_rot = 1.1                         #rotation speed
 n_max = 2.5                         #max load factor (CS25)
 f = 0.9745                          #fuel fraction during cruise
+SwetSref = 5.5
 
+parameter = open("parameters.txt","w")
 parameter.write("M_tf "+str(M_tf)+"\n")
 parameter.write("FL "+str(FL)+"\n")
 parameter.write("h_cr "+str(h_cr)+"\n")
@@ -78,9 +81,14 @@ parameter.write("P_c "+str(P_c)+"\n")
 parameter.write("x_spar1 "+str(0.25)+"\n")
 parameter.write("x_spar2 "+str(0.55)+"\n")
 parameter.write("Afactor "+str(1.2)+"\n")
+parameter.write("e "+str(0.85)+"\n")
+parameter.write("MTOW "+str(67834.)+"\n")
+parameter.write("S "+str(110.)+"\n")
+parameter.write("thrust "+str(213.)+"\n")
+parameter.write("SwetSref "+str(SwetSref)+"\n")
 
-for i in range(len(string_TWWS)):
-    parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
+#for i in range(len(string_TWWS)):
+#    parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
 
 for i in range(len(string_class_II_final_version)):
     parameter.write(string_class_II_final_version[i] + " " + str(eval(string_class_II_final_version[i])) + "\n")
@@ -111,6 +119,18 @@ for i in range(len(string_empennage)):
 
 for i in range(len(string_landing_gear)):
     parameter.write(string_landing_gear[i] + " " + str(eval(string_landing_gear[i])) + "\n")
+
+for i in range(len(string_airfoil2)):
+    parameter.write(string_airfoil2[i] + " " + str(eval(string_airfoil2[i])) + "\n")
+
+for i in range(len(string_cg)):
+    parameter.write(string_cg[i] + " " + str(eval(string_cg[i])) + "\n")
+
+for i in range(len(string_drag)):
+    parameter.write(string_drag[i] + " " + str(eval(string_drag[i])) + "\n")
+
+for i in range(len(string_loadingdiagram)):
+    parameter.write(string_loadingdiagram[i] + " " + str(eval(string_loadingdiagram[i])) + "\n")
 
 parameter.close()
 
