@@ -28,7 +28,7 @@ CL_max_to = 2.1
 CL_to = 0.6 #takeoff cl during ground roll
 CD0_to = 0.04
 CD0_climb = 0.06
-CL_max_land = 2.2
+CL_max_land = 2.5
 CD0_land = 0.06
 MLW = MTOW - (0.67*9500*9.80665)
 n_land = 1.2
@@ -43,7 +43,7 @@ A_eng = 3.1196
 V_eng = 132.39
 Vj = 400
 
-for alt in range(0,3000,500):
+for alt in range(0,1500,100):
     dens = ISA(alt)[2]
     Temp = ISA(alt)[0]
     P_alt = ISA(alt)[1]
@@ -58,7 +58,7 @@ for alt in range(0,3000,500):
     CD_to = CD0_to + (CL_to)**2/(pi*A*oswald)
     ratio_net_to_static = (1-(2*M_takeoff*((1+lamda)/(3+2*lamda)))) #from CADP p. 412 chapter 10, Jenkinson suggests using 0.864
     #ratio_net_to_static = 0.864
-    #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.5)*M_takeoff) + ((0.23+(0.19*sqrt(lamda)))*M_takeoff**2)   
+    ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.5)*M_takeoff) + ((0.23+(0.19*sqrt(lamda)))*M_takeoff**2)   #paper voskuijl
     ratio = (P_alt/P_0) *sqrt(T_0/Temp)      #effect of altitude based on thrust  
     K_T = (ratio_net_to_static*thrust*ratio/MTOW)-mu_roll
     K_A = dens/((2*MTOW)/S)*(-CD_to+(mu_roll*CL_to))
@@ -124,7 +124,7 @@ for alt in range(0,3000,500):
     s_A = (h_scr-h_F)/tan(gamma_land) #approach distance
     s_F = r_land * gamma_land #flare distance
     s_FR = 2*V_TD  #free roll distance
-    
+    print "Approach speed is:", V_min_land*1.3
     K_T_land = -mu_brake
     K_A_land = dens/((2*MLW)/S)*(-CD0_land)
     s_B = -(1/(2*g*K_A_land))*log((K_T_land+(K_A_land*V_TD**2))/K_T_land)
