@@ -44,8 +44,8 @@ dc_cf_to = 0.5 #single slotted (0.6 for double slotted)
 cf_c = 0.35 #flap chord/wing chord for slotted flaps
 cs_c = 0.15 #slat chord/wing chord (sforza)
 
-c_ext_c_land = 1 + cf_c * dc_cf_land
-c_ext_c_to = 1 + cf_c * dc_cf_to
+c_ext_c_land = 1 + cf_c * dc_cf_land #extended chord divided by chord during landing
+c_ext_c_to = 1 + cf_c * dc_cf_to #extended chord divided by chord during take-off
 c_ext_c_slat = 1.092 #from sforza
 
 dC_l_max_flap = 1.3 * c_ext_c_land  #for single slotted fowler flap (1.6 for double slotted)
@@ -145,6 +145,5 @@ bs_o = fsolve(func2, bs_o_init )[0]  #outboard slat position
 
 
 
-
-string_HLD = ['Swf_LE','Swf_TE','S_flaps_land','S_flaps_to','S_slats','bs_i','bs_o','bf_i','bf_o']
+string_HLD = ['Swf_LE','Swf_TE','S_flaps_land','S_flaps_to','S_slats','bs_i','bs_o','bf_i','bf_o','d_f_land','d_f_to','c_ext_c_land','c_ext_c_to']
 
