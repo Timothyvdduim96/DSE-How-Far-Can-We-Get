@@ -11,6 +11,7 @@ from scipy.optimize import fsolve
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
+from parameters import *
 
 c_r = value('c_r')
 c_t = value('c_t')
@@ -49,7 +50,8 @@ S_a = 0.5*(c_a2+c_a1)*(b2-b1) #aileron area
 P = -(C_l_da/C_l_p)*da*(2*V/b)
 dt = dphi/P
 
-string_ailerons = ['S_a','ba_i','ba_o',]
+
+string_ailerons = ['S_a','ba_i','ba_o']
 
 
 
