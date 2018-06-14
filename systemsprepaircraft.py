@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jun 13 10:14:03 2018
+
+@author: Bart Jacobson
+"""
+
 import matplotlib.pyplot as plt
 from parameters import *
 from cg import x_cg_lst,x_lemac_lst
