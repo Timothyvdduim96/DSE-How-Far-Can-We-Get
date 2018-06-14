@@ -55,6 +55,13 @@ a_f     = 6.
 P_f     = P(K_f,a_f,G_f)
 D_f     = 3*(sin(delta_f)*cos(thetha)+cos(delta_f)*sin(thetha)*cos(phi))**2
 
+#MAIN LANDING GEAR
+
+d    = 1.27 
+n    = 4.
+G_mg = n*(d/bw)**2
+L_mg = d
+# K_mg = 
 
 for f in range(0,10**4,5):
     S_w = (f*L_w*(1-M_land*cos(thetha)))/(M_land*c)
