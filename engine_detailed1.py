@@ -2,7 +2,6 @@ from math import sqrt
 
 #-------CONSTANTS--------------
 
-<<<<<<< HEAD
 Cr_alt    = 11.                   #Cruise altitude [km] #11.8872
 M0        = 0.79                  #Cruise speed [M]
 M_dot_air = 96.                   #Air mass flow rate [kg/s]
@@ -10,16 +9,13 @@ M_dot_air = 96.                   #Air mass flow rate [kg/s]
 Cr_alt    = 0.79                   #Cruise altitude [km] #11.8872
 M0        = 0.3                  #Cruise speed [M]
 M_dot_air = 250.                   #Air mass flow rate [kg/s]
->>>>>>> 8356a77972c6365182e16c9a59c5f703cf55bdf7
 eta_inlet = 0.97                  #Intake insentropic efficiency
 pr_fan    = 2.15                  #Fan pressure ratio
 
 eta_fan   = 0.87                  #Fan isentropic efficiency
-<<<<<<< HEAD
 labda     = 14.                   #Bypass ratio
 =======
 labda     = 14.                    #Bypass ratio
->>>>>>> 8356a77972c6365182e16c9a59c5f703cf55bdf7
 eta_LPC   = 0.9                   #LPC isentropic efficiency
 eta_HPC   = 0.87                  #HPC isentropic efficiency
 eta_LPT   = 0.9                   #LPT isentropic efficiency
@@ -27,7 +23,6 @@ eta_HPT   = 0.89                  #HPT isentropic efficiency
 eta_mech  = 0.99                  #Mechanical efficieny of high and low speed shaft
 eta_gear  = 0.995                 #Mechanical efficieny of gearbox
 eta_cc    = 0.99                  #Combuster efficiency
-<<<<<<< HEAD
 
 pr_LPC    = 3.5                   #LPC pressure ratio
 pr_HPC    = 11                   #HPC pressure ratio
@@ -45,7 +40,6 @@ pr_comb   = 0.96                  #Combuster pressure ratio
 T04       = 1700.                 #Combuster exit temperature 
 T_amb     = 288.15                  #Ambient temperature [K]
 P_amb     = 101325.                #Ambient pressure [Pa]
->>>>>>> 8356a77972c6365182e16c9a59c5f703cf55bdf7
 R         = 287.                  #Gas constant [J/Kg*K]
 LHV       = 43. * 10**6           #Fuel calorific value [J/kg]
 cp_air    = 1000.                 #Specific heat air [J/kg*K]
