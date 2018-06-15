@@ -109,7 +109,6 @@ for i in range(len(b_cur)):
         c_r_f = c_r
         c_t_f = c_r - b_cur[i] / (b / 2) * (c_r - c_t)
         c_avg = sqrt((c_r_f**3 - c_t_f**3)/(3*(c_r_f - c_t_f)))
-        print(c_avg)
         volume = cfac*2*b_cur[i]*A_cross_section*c_avg**2
         vol.append(volume)
         if volume >= value("fuelvolume_needed"):
