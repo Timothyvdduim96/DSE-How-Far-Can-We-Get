@@ -23,6 +23,7 @@ oswald = 0.85
 gamma_climb = radians(3.)
 gamma_land = radians(3.)
 h_scr = 15.24 #screen height in m change to 15.24
+h_scr_to = 11 #screen height for take-off CS 21.107
 lamda = 14. #bypass ratio
 CL_max_to = 2.1
 CL_to = 0.6 #takeoff cl during ground roll
@@ -83,10 +84,10 @@ for alt in range(0,1500,100):
     h_T = r*climb_gradient *(climb_gradient/2) #altitude at end of transition
     screenmet = ""
     
-    x_screen = ((r+h_scr)**2 - r**2)**0.5
+    x_screen = ((r+h_scr_to)**2 - r**2)**0.5
     x_total_takeoff = 1.15*(x_groundrun + x_screen)
     
-    if h_T <= h_scr:
+    if h_T <= h_scr_to:
         screenmet = "below the screenheight"   
     else:
         screenmet = "above the screenheight"

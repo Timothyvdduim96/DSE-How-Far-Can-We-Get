@@ -596,6 +596,11 @@ for V in range(V_min39000,300,1):   #11887.2
     sigma = dens/rho_0    
     ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7 
     T_a = thrust*ratio#*ratio_net_to_static
+    
+    if V == 233:
+        print T_a
+    
+    
     #print V    
     CL = MTOW/(0.5*dens*V**2*S)
     #print CL
