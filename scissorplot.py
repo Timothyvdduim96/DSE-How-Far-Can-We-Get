@@ -4,6 +4,24 @@ from parameters import *
 from systemsprepaircraft import frontcg,aftcg,x_lemac_lst
 #---------------------------------PARAMETERS---------------------------------------
 
+shift = np.arange(0,0.025,0.005)
+xlemaclst1 = []
+xlemaclst2 = []
+xlemaclst3 = []
+xlemaclst4 = []
+
+for i in range(len(shift)):
+    for j in range(len(frontcg)):
+        if i == 0:
+            z = x_lemac_lst[j]+shift[i]
+            xlemaclst1.append(z)
+        if i == 1:
+            xlemaclst2.append(x_lemac_lst[j]+shift[i])
+        if i == 2:
+            xlemaclst3.append(x_lemac_lst[j]+shift[i])
+        if i == 3:
+            xlemaclst4.append(x_lemac_lst[j]+shift[i])
+
 SM = 0.05
 M = value("M_cr")
 A_h = value("Ah")
@@ -63,7 +81,7 @@ C_m_ac_fus = -1.8*(1 - 2.5*b_f/l_f)*pi*b_f*h_f*l_f/(4*S*c_bar)*C_L_0/C_L_alpha_A
 C_m_ac_nac = -0.05
 C_m_ac = C_m_ac_w + C_m_ac_flaps + C_m_ac_fus + C_m_ac_nac
 
-x_bar_cg = np.arange(0,1+0.001,0.001)
+x_bar_cg = np.arange(-0.2,1+0.001,0.001)
 Sh_S_stab = []
 Sh_S_stab_2 = []
 Sh_S_cont = []
@@ -91,33 +109,41 @@ for i in x_bar_cg:
 
     Sh_S_cont.append(n*i + p)
 
-fig, ax1 = plt.subplots()
-ax1.plot(frontcg,x_lemac_lst, color="black")
-ax1.plot(aftcg,x_lemac_lst, color="black")
-ax1.set_xlabel('x_cg/MAC')
-# Make the y-axis label, ticks and tick labels match the line color.
-ax1.set_ylabel('X_lemac/l_fus', color='b')
-ax1.tick_params('y', colors='b')
 
-ax2 = ax1.twinx()
-ax2.plot(x_bar_cg,Sh_S_cont,label="Controllability")
-ax2.plot(x_bar_cg,Sh_S_stab,label="Stability incl. S.M.")
-ax2.axis((0,max(x_bar_cg),0,max(max(Sh_S_stab),max(Sh_S_cont))))
-ax2.set_ylabel('S_h/S', color='r')
-ax2.tick_params('y', colors='r')
+##fig, ax1 = plt.subplots()
+##ax1.plot(frontcg,xlemaclst1, color="black")
+##ax1.plot(aftcg,xlemaclst1, color="black")
+###ax1.plot(frontcg,xlemaclst2, color="green")
+###ax1.plot(aftcg,xlemaclst2, color="green")
+###ax1.plot(frontcg,xlemaclst3, color="brown")
+###ax1.plot(aftcg,xlemaclst3, color="brown")
+###ax1.plot(frontcg,xlemaclst4, color="cyan")
+###ax1.plot(aftcg,xlemaclst4, color="cyan")
+##ax1.axis((-1,1.5,xlemaclst3[0],xlemaclst3[len(xlemaclst1)-1]))
+##ax1.set_xlabel('x_cg/MAC')
+### Make the y-axis label, ticks and tick labels match the line color.
+##ax1.set_ylabel('X_lemac/l_fus', color='b')
+##ax1.tick_params('y', colors='b')
+##
+##ax2 = ax1.twinx()
+##ax2.plot(x_bar_cg,Sh_S_cont,label="Controllability")
+##ax2.plot(x_bar_cg,Sh_S_stab,label="Stability incl. S.M.")
+##ax2.axis((-1,1.5,0,max(max(Sh_S_stab),max(Sh_S_cont))))
+##ax2.set_ylabel('S_h/S', color='r')
+##ax2.tick_params('y', colors='r')
+##
+##fig.tight_layout()
+##plt.show()
 
-fig.tight_layout()
-plt.show()
-
-##plt.plot(x_bar_cg,Sh_S_cont,label="Controllability")
-##plt.plot(x_bar_cg,Sh_S_stab_2,label="Neutral stability")
-##plt.plot(x_bar_cg,Sh_S_stab,label="Stability incl. S.M.")
-##plt.axis((0,max(x_bar_cg),0,max(max(Sh_S_stab),max(Sh_S_cont))))
+plt.plot(x_bar_cg,Sh_S_cont,label="Controllability")
+#plt.plot(x_bar_cg,Sh_S_stab_2,label="Neutral stability")
+plt.plot(x_bar_cg,Sh_S_stab,label="Stability incl. S.M.")
+plt.axis((0,max(x_bar_cg),0,max(max(Sh_S_stab),max(Sh_S_cont))))
 ##ax = plt.subplot(111)
 ##box = ax.get_position()
 ##ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 ##ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-##plt.xlabel("x_bar_cg")
-##plt.ylabel("Sh/S")
-##plt.grid()
-##plt.show()
+plt.xlabel("x_bar_cg")
+plt.ylabel("Sh/S")
+plt.grid()
+plt.show()

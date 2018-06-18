@@ -5,7 +5,7 @@ from math import sqrt
 
 Cr_alt    = 11.                   #Cruise altitude [km] #11.8872
 M0        = 0.79                  #Cruise speed [M]
-M_dot_air = 96.                   #Air mass flow rate [kg/s]
+M_dot_air = 505.94940850085345                   #Air mass flow rate [kg/s]
 
 eta_inlet = 0.97                  #Intake insentropic efficiency
 pr_fan    = 2.15                  #Fan pressure ratio
@@ -24,12 +24,12 @@ eta_cc    = 0.99                  #Combuster efficiency
 
 
 pr_LPC    = 3.5                   #LPC pressure ratio
-pr_HPC    = 11                   #HPC pressure ratio
+pr_HPC    = 9.5                   #HPC pressure ratio
 eta_nozz  = 0.98                  #nozzle efficiency
 pr_comb   = 0.96                  #Combuster pressure ratio
 T04       = 1833.                 #Combuster exit temperature 
-T_amb     = 216                #Ambient temperature [K]
-P_amb     = 12111.               #Ambient pressure [Pa]
+T_amb     =  216.65               #Ambient temperature [K]
+P_amb     = 22631.               #Ambient pressure [Pa]
 R         = 287.                  #Gas constant [J/Kg*K]
 LHV       = 43. * 10**6           #Fuel calorific value [J/kg]
 cp_air    = 1000.                 #Specific heat air [J/kg*K]

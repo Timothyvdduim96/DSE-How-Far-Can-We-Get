@@ -23,7 +23,7 @@ Vh =  1         #horizontal tail volume
 Vv = 0.100      #vertical tail volume
 
 
-lh = value("l_h") #rough estimate        #horizontal tail arm [m]
+lh = 20.96 #value("l_h") #rough estimate        #horizontal tail arm [m]
 lv = 18.     #rough estimate
 Sh = Vh*S*MAC/(lh)   #horizontal tail surface area
 Sv = Vv*S*b/(lv)     #vertical tail surface area

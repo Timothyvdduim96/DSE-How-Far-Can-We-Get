@@ -6,14 +6,14 @@ from parameters import *
 
 #Parameters
 
-T      = value("thrust")*1000                 #take-off thrust [N]
+T      = value("thrust")*1000/2                 #take-off thrust [N]
 T_ref  = 120400.                 #take-off thrust reference [N]
 D_ref  = 2.543                   #engine diameter reference [m]
 W_ref  = 3153.                   #engine weight reference [kg]
 l_ref  = 3.328                   #engine length [m]
 a_eng  = 1.                      #is 1 as preliminary assumption, can vary between 0.8 and 1.3
 N_eng  = 2.                      #number of engines
-lamda  = 14.                     #bypass ratio
+lamda  = 14                   #bypass ratio
 n_nozz = 0.97                    #nozzle efficiency
 n_tf   = 0.75                    #efficiency of turbine and fan
 gamma  = value("gamma")                 
