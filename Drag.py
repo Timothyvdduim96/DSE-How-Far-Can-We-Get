@@ -128,7 +128,7 @@ C_D_fus2 = (3.83 * u**2.5 * pi * (4/2)**2) /S_ref
 
 # # #landing gear
 
-dCD_landinggear =
+dCD_landinggear = 0.0995 / S_ref
 
 # Flaps higher than 10 degrees take-off
 F_flap = 0.0074
