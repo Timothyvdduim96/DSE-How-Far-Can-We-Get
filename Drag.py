@@ -153,6 +153,13 @@ e = 1 / (1.05 + 0.007* pi * A_eff)              # Obert method
 #e = e + 0.0046 * delta_f #for flap deflection
 CL = 0.55
 CD = CD0_tot + CL**2 / (pi * A_eff * e)
+<<<<<<< HEAD
+print(e)
+print(CD0)
+print(CD0_tot)
+print(1/ (pi*A_eff*e))
+string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet']
+=======
 
 CD0_TO = CD0_tot + dCD_flap_TO + dCD_landinggear
 CD_0_TO_nogear = CD0_tot + dCD_flap_TO
@@ -162,3 +169,4 @@ print(CD_0_TO_nogear)
 print(CD_0_land)
 
 string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet', 'dCD_flap_TO', 'dCD_flap_land']
+>>>>>>> 048d74ff7b11f286fa107dec7f5efe92315811c9
