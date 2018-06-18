@@ -11,20 +11,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 #----- constants
 g = 9.80665
-MTOW = 67834.*g#68731. *g #68731
+MTOW = 68731. *g #68731
 mu_roll = 0.02
-mu_brake = 0.5
+mu_brake = 0.4
 #alt = raw_input("Input the altitude of the airport in meters:")
 #alt = eval(alt)
 S = 110.  
 A = 14.
 thrust = 213000.
-oswald = 0.85
+oswald = 0.7276
 gamma_climb = radians(3.)
 gamma_land = radians(3.)
 h_scr = 15.24 #screen height in m change to 15.24
+h_scr_to = 11 #screen height for take-off CS 21.107
 lamda = 14. #bypass ratio
-CL_max_to = 2.1
+CL_max_to = 1.9
 CL_to = 0.6 #takeoff cl during ground roll
 CD0_to = 0.04
 CD0_climb = 0.06
@@ -50,13 +51,13 @@ for alt in range(0,1500,100):
     V_min_to = sqrt((MTOW/S)*(2/dens)*(1/CL_max_to))
     V_LOF = V_min_to*1.1
     a = sqrt(1.4*287*Temp)
-    M_takeoff = V_LOF/a
+    M_takeoff = (V_LOF*0.707)/a
     V_TRANS =1.15 *V_min_to
     V2 = V_min_to*1.2
     
     #CD_to = 0.035 + 0.05*(CL_to**2)
     CD_to = CD0_to + (CL_to)**2/(pi*A*oswald)
-    ratio_net_to_static = (1-(2*M_takeoff*((1+lamda)/(3+2*lamda)))) #from CADP p. 412 chapter 10, Jenkinson suggests using 0.864
+    ratio_net_to_static = (1-(2*(M_takeoff*((1+lamda)/(3+2*lamda))))) #from CADP p. 412 chapter 10, Jenkinson suggests using 0.864
     #ratio_net_to_static = 0.864
     ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.5)*M_takeoff) + ((0.23+(0.19*sqrt(lamda)))*M_takeoff**2)   #paper voskuijl
     ratio = (P_alt/P_0) *sqrt(T_0/Temp)      #effect of altitude based on thrust  
@@ -82,11 +83,11 @@ for alt in range(0,1500,100):
     
     h_T = r*climb_gradient *(climb_gradient/2) #altitude at end of transition
     screenmet = ""
-    
-    x_screen = ((r+h_scr)**2 - r**2)**0.5
+    x_climb = (h_scr_to - h_T) / tan(gamma_climb)
+    x_screen = ((r+h_scr_to)**2 - r**2)**0.5
     x_total_takeoff = 1.15*(x_groundrun + x_screen)
     
-    if h_T <= h_scr:
+    if h_T <= h_scr_to:
         screenmet = "below the screenheight"   
     else:
         screenmet = "above the screenheight"
@@ -99,7 +100,7 @@ for alt in range(0,1500,100):
         print "The altitude reached during transitions is", h_T, "m", "which is",screenmet
         print "The takeoff distance is", x_total_takeoff, "m"
         
-        Af = 2.50 #fan diameter
+        Af = 2.0 #fan diameter
         CD_failedengine = 0.3*Af/S
         CD_trim = 0.05*CD_climb
         CD_secondsegmentclimb = CD_climb + CD_failedengine +CD_trim
@@ -146,7 +147,7 @@ plt.xlabel('Airport altitude [m]')
 plt.ylabel('Take-off distance [m]')
 plt.legend(loc=4)
 plt.title('Take-off distance as a function of airport altitude')
-plt.text(500, 2400, r'Sea level take-off distance:1903 m') #make sure to change this value
+#plt.text(500, 2400, r'Sea level take-off distance:1903 m') #make sure to change this value
 plt.show()
 #-----Second-segment climb
 
@@ -170,7 +171,7 @@ plt.show()
 #
 #thrust2 = thrust*0.5
 
-#-------------VERIFICATION GROUNDRUN------------------
+##-------------VERIFICATION GROUNDRUN------------------
 #
 ##----- constants
 #g = 9.80665
@@ -227,7 +228,7 @@ plt.show()
 #print "The distance reached to reacht the screen height is:", x_screen, "m"
 #x_total_takeoff = x_groundrun + x_screen
 #
-#print "The takeoff distance is", x_total_takeoff, "m"
+#print "The takeoff distance is", x_total_takeoff*1.15, "m"
 #
 #        
 #Af = 2.50 #fan diameter
@@ -259,24 +260,24 @@ plt.show()
 #
 #s_total_land = s_A+s_F+s_FR+s_B
 #print "The total landing distance is,", s_total_land, "m and", s_total_land*1.66, "m including the factor for operational variances"
-#------------Balanced field length
-#V_failure = []
-#dis_covered = []
-
-#for failurespeed in range(1,100,1):
-#    M_takeoff_failure = (failurespeed/a)*0.707
-#    ratio_net_to_static_f = (1-(2*M_takeoff_failure*((1+lamda)/(3+2*lamda))))
-#    K_T_failure_1 = (ratio_net_to_static_f*thrust/MTOW)-mu_roll
-#    K_A_failure_1 = dens/((2*MTOW)/S)*(-CD_to+(mu_roll*CL_to))
-#    x_groundrun_failure_1 = (1/(2*g*K_A_failure))*log((K_T_failure+(K_A_failure*failurespeed**2))/K_T_failure) #distance covered to failure speed
-#    
-#    K_T_failure_2 = (ratio_net_to_static_f*(thrust/2)/MTOW)-mu_roll
-#    K_A_failure_2 = dens/((2*MTOW)/S)*(-CD_to+(mu_roll*CL_to))
-#    x_groundrun_failure_2 = (1/(2*g*K_A_failure_2))*log((K_T_failure_2+(K_A_failure_2*(V_LOF-((failurespeed)**2))/K_T_failure_2)))   
-#    print x_groundrun_failure_2
-#    x_covered_accelerate_go = x_groundrun_failure_1 + x_groundrun_failure_2     
-#    V_failure.append(failurespeed)
-#    dis_covered.append(x_covered_accelerate_go)
+##------------Balanced field length
+##V_failure = []
+##dis_covered = []
 #
-#plt.plot(V_failure,dis_covered)
-#plt.show()
+##for failurespeed in range(1,100,1):
+##    M_takeoff_failure = (failurespeed/a)*0.707
+##    ratio_net_to_static_f = (1-(2*M_takeoff_failure*((1+lamda)/(3+2*lamda))))
+##    K_T_failure_1 = (ratio_net_to_static_f*thrust/MTOW)-mu_roll
+##    K_A_failure_1 = dens/((2*MTOW)/S)*(-CD_to+(mu_roll*CL_to))
+##    x_groundrun_failure_1 = (1/(2*g*K_A_failure))*log((K_T_failure+(K_A_failure*failurespeed**2))/K_T_failure) #distance covered to failure speed
+##    
+##    K_T_failure_2 = (ratio_net_to_static_f*(thrust/2)/MTOW)-mu_roll
+##    K_A_failure_2 = dens/((2*MTOW)/S)*(-CD_to+(mu_roll*CL_to))
+##    x_groundrun_failure_2 = (1/(2*g*K_A_failure_2))*log((K_T_failure_2+(K_A_failure_2*(V_LOF-((failurespeed)**2))/K_T_failure_2)))   
+##    print x_groundrun_failure_2
+##    x_covered_accelerate_go = x_groundrun_failure_1 + x_groundrun_failure_2     
+##    V_failure.append(failurespeed)
+##    dis_covered.append(x_covered_accelerate_go)
+##
+##plt.plot(V_failure,dis_covered)
+##plt.show()
