@@ -44,10 +44,11 @@ zt = 5
 ye = 5
 phi = 5. * (pi/180.)
 
-ln = 16 #distance from nose gear to CG
-lm = 3.5  #distance from main gear to CG
+ln = 15.65 #distance from nose gear to CG
+lm = 1.28  #distance from main gear to CG
 psi = 63. * (pi/180)
-z = 3    #vertical CG position
+z = 3
+#vertical CG position
 #zt =
 #ye =  
 #phi = 5. * (pi/180.)
