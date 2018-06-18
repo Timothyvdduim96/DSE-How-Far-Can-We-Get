@@ -6,6 +6,21 @@ import scipy as sp
 import math
 from parameters import *
 
+##--------------------------------------
+##converstion factors
+##--------------------------------------
+mft        = 3.2808399        # conversion factor meters to feet
+kglbs      = 2.20462262       # conversion factor kilograms to pounds
+sqmsqft    = 10.7639104       # conversion factor square meters to square feet
+mskts      = 1.94384449       # conversion factor meters per seconds to knots
+degrad     = 0.0174532925     # conversion factor degrees to radians
+kmnm       = 0.539956803      # conversion factor kilometers to nautical miles
+Nlbs       = 0.224808943      # conversion factor newtons to pounds
+papsf      = 0.02089          # conversion factor pascal to pound-force per square foot
+kgmlbsgall = 0.00834540445    # conversion factor for kilogram per cubic meter to pounds per gallon
+papsi      = 0.000145037738   # conversion factor for pascal to pounds-force per square inch
+
+
 ##
 ##----- Inputs -----
 ##
@@ -13,49 +28,49 @@ from parameters import *
 W_totros = []   # empty list for all weight groups from Roskam method
 W_tottor = []   # empty list for all weight groups from Torenbeek method
 # Wing weight
-S         = 115.*sqmsqft     # wing area [sqft]
-A         = 14.0               # aspect ratio 
-M_max     = 0.82               # max mach number at sea level 
-MTOW      = 69176.55*kglbs     # take-off weight [lbs]
-n_ult     = 3.75               # ultimate load factor
-t_c       = 0.12               # thickness to chord 
-lambdac_2 = 0.63               # wing half-chord sweep angle [rad]
-taper     = 0.27               # taper ratio
-k_wg      = 0.0017             # constant
-W_zf      = 59646.88*kglbs     # zero fuel weight [lbs]
-t_r       = 0.5724*mft         # wing root thickness [ft]
-b         = 40.125*mft          # wingspan [ft]
+S           = 110.*sqmsqft     # wing area [sqft]
+A           = 14.0               # aspect ratio 
+M_max       = 0.82               # max mach number at sea level 
+MTOW        = 69176.55*kglbs     # take-off weight [lbs]
+n_ult       = 3.75               # ultimate load factor
+t_c         = 0.18               # thickness to chord 
+lambdac_2   = 0.63               # wing half-chord sweep angle [rad]
+taper       = 0.27               # taper ratio
+k_wg        = 0.0017             # constant
+W_zf        = 59646.88*kglbs     # zero fuel weight [lbs]
+t_r         = 0.8586*mft         # wing root thickness [ft]
+b           = 39.24*mft          # wingspan [ft]
 # Empennage weight
-Sh       = 17.4*sqmsqft     # horizontal tail area [ft]
-b_h      = 8.75*mft         # horizontal tail span [ft]
-t_r_h    = 0.3975*mft       # horizontal tail max root thickness [ft]
-MAC      = 3.36*mft         # mean aerodynamic chord [ft]
-lh       = 25.73*mft        # distance wing quarter chord to horizontal tail quarter chord [ft]
-z_h      = 0.0              # distance horizontal tail to vertical tail root [ft]
-b_v      = 6.8*mft          # vertical tail span [ft]
-Sv       = 25.9*sqmsqft     # vertical tail area [sqft]
-lv       = 20.947           # distance wing quarter chord to vertical tail quarter chord [ft]
-Sr       = 0.26*Sv          # rudder area [sqft]
-A_v      = 1.8              # vertical tail aspect ratio
-lambda_v = 0.45             # vertical tail taper ratio
-sweep_v  = 40*degrad        # vertical tail quarter chord sweep angle [rad]
-k_h      = 1.1              # constant horizontal tail
-sweep_h  = 33.0*degrad      # horizontal tail sweep
-k_v      = 1.0              # constant vertical tail
+Sh               = 17.4*sqmsqft     # horizontal tail area [ft]
+b_h              = 8.75*mft         # horizontal tail span [ft]
+t_r_h            = 0.3975*mft       # horizontal tail max root thickness [ft]
+MAC              = 3.36*mft         # mean aerodynamic chord [ft]
+lh               = 25.73*mft        # distance wing quarter chord to horizontal tail quarter chord [ft]
+z_h              = 0.0              # distance horizontal tail to vertical tail root [ft]
+b_v              = 6.8*mft          # vertical tail span [ft]
+Sv               = 25.9*sqmsqft     # vertical tail area [sqft]
+lv               = 20.947           # distance wing quarter chord to vertical tail quarter chord [ft]
+Sr               = 0.26*Sv         # rudder area [sqft]
+A_v              = 1.8              # vertical tail aspect ratio
+lambda_v         = 0.45             # vertical tail taper ratio
+sweep_v          = 40*degrad        # vertical tail quarter chord sweep angle [rad]
+k_h              = 1.1              # constant horizontal tail
+sweep_h          = 33.0*degrad      # horizontal tail sweep
+k_v              = 1.0              # constant vertical tail
 # Fuselage weight
 K_inl          = 1.0                 # correction factor for inlets not located on fuselage
 qbar_D         = 77473.24003*papsf   # design dive dynamic pressure [psf]
-pi             = np.pi               # pi
-d_ext_fus      = 4.0*mft             # fuselage diameter
-l_fus          = 44.85*mft           # fuselage length
-ratio_nosecone = 1.5                 # fineness ratio nosecone
-ratio_tailcone = 3.5                 # fineness ratio tailcone
-k_fus          = 0.0242676           # correction factor for pressurized fuselage and main gear attached to fuselage
-V_D            = 355.65*mskts        # dive speed [kts]
-N_inl          = 2.0                 # number of inlets
-A_inl          = 3.858*sqmsqft       # capture area per inlet in [sqft]
-l_n            = 1.6*mft             # nacelle length from inlet lip to compressor face [ft]
-P_2            = 147077.1891*papsi   # max static pressure at engine compressor face [psi] (typically from 15 to 50)
+pi             = np.pi               #pi
+d_ext_fus      = 4.0*mft             #fuselage diameter
+l_fus          = 44.85*mft           #fuselage length
+ratio_nosecone = 1.5                 #fineness ratio nosecone
+ratio_tailcone = 3.5                 #fineness ratio tailcone
+k_fus          = 0.0242676           #correction factor for pressurized fuselage and main gear attached to fuselage
+V_D            = 355.65*mskts        #dive speed [kts]
+N_inl = 2.0                # number of inlets
+A_inl = 3.858*sqmsqft      # capture area per inlet in [sqft]
+l_n   = 1.6*mft            # nacelle length from inlet lip to compressor face [ft]
+P_2   = 147077.1891*papsi  # max static pressure at engine compressor face [psi] (typically from 15 to 50)
 # Landing gear weight
 EGTS = 300*kglbs        # electric green taxiing system
 W_g  = 39064.07*kglbs   # OEW
@@ -68,29 +83,29 @@ N_t    = 8.0                # number of separate fuel tanks
 W_fuel = 9529.68*kglbs      # mission fuel weight (including reserves) [lbs]
 K_fsp  = 810.0*kgmlbsgall   # density of fuel [lbs/gal]
     # propulsion system
-T    = (220000.0)*Nlbs  # take-off static thrust [lbs]
-F_to = T/2              # take-off static thrust per engine [lbs]
+T = (213000.0)*Nlbs     #take-off static thrust per engine [lbs]
+F_to = T/2
 # fixed equipment weight
-n_pil        = 2.0             # number of pilots
-battery      = 25.5*kglbs      # second battery unit 
-volume_cabin = 254.12*mft**3   # passenger cabin volume [ft^3]
-N_cr         = 7.0             # number of crew
-N_pax        = 240.0           # number of passengers    
-K_bc         = 0.0646          # factor for preload provisions (check with melkert)
-l_cargo      = 19.55*mft       # length of cargo hold
-w_cargo      = 1.43*mft        # width of cargo hold floor   
-N_fdc        = n_pil           # pilot seats
-N_cc         = 5.0             # cabin crew seats
-K_lav        = 0.31            # factor for short range aircraft
-K_buf        = 1.02            # factor for short range aircraft
-P_c          = 75262.4*papsi   # cabin pressure set at pressure of 8000ft
-W_empty      = 38369.82*kglbs  # aircraft empty weight
+n_pil = 2.0           # number of pilots
+battery = 25.5*kglbs  # second battery unit 
+volume_cabin = 254.12*mft**3    # passenger cabin volume [ft^3]
+N_cr    = 7.0              # number of crew
+N_pax   = 240.0            # number of passengers    
+K_bc    = 0.0646        # factor for preload provisions (check with melkert)
+l_cargo = 19.55*mft  # length of cargo hold
+w_cargo = 1.43*mft   # width of cargo hold floor   
+N_fdc   = n_pil          # pilot seats
+N_cc    = 5.0            # cabin crew seats
+K_lav   = 0.31           # factor for short range aircraft
+K_buf   = 1.02           # factor for short range aircraft
+P_c     = 75262.4*papsi  # cabin pressure set at pressure of 8000ft
+W_empty = 38369.82*kglbs   # aircraft empty weight
 #maximum take-off weight
 payload = 20375.28   #payload weight [kg]
 fuel    = 9529.68    #fuel weight [kg]
 # Avionics group
 W_empty = 38369.815      #empty weight
-R       = 6254*kmnm      #maximum range/ferry range
+R = 6254*kmnm            #maximum range/ferry range
 
 ##--------------------------------------------------
 ##----- Class II weight estimation - Torenbeek -----
@@ -139,45 +154,59 @@ W_aci = 5*np.sqrt(W_g)
 ##
 ##----- output -----
 ##
+print 'Torenbeek'
 # Wing group
 W_tottor.append(W_wg)
+print 'Wing', W_wg/kglbs
 # Fuselage group
 W_tottor.append(W_fus)
+print 'Fuselage', W_fus/kglbs
 # Landing gear group
 W_tottor.append(W_LG)
+print 'Landing gear', W_LG/kglbs
 # Tail group
 W_tottor.append(W_t)
+print 'Tail', W_t/kglbs
 # Propulsion group
 W_tottor.append(W_pg)
+print 'Propulsion', W_pg/kglbs
 # Nacelle group
 W_tottor.append(W_ng)
+print 'Nacelle', W_ng/kglbs
 # Flight control group
 W_tottor.append(W_fc)
+print 'Flight control', W_fc/kglbs
 # Instruments group
 W_tottor.append(W_ig)
+print 'Instruments', W_ig/kglbs
 # Hydraulic and pneumatic group
 W_tottor.append(W_hp)
+print 'Hydraulics and pneumatics', W_hp/kglbs
 # Electrical group
 W_tottor.append(W_el)
+print 'Electrics', W_el/kglbs
 # Avionics group
 W_tottor.append(W_av)
+print 'Avionics', W_av/kglbs
 # Equipment and furnishing group
 W_tottor.append(W_ef)
+print 'Equipment and furnishing', W_ef/kglbs
 # Air conditioning and anti-icing group
 W_tottor.append(W_aci)
- 
+print 'Air conditioning and anti-icing', W_aci/kglbs
+
 
 ##--------------------------------------
 ##total weights
 ##--------------------------------------
 totalweighttor = sum(W_tottor)
-print
+print 'OEW', totalweighttor/kglbs
 #print 'the operational empty weight =', totalweightlbs, '[lbs]'
 totalweighttor = totalweighttor/kglbs
 payload = 20375.28 #payload weight [kg]
 fuel = 9529.67798556 #fuel weight [kg]
 W_takeofftor = totalweighttor+payload+fuel
-
+print
 
 
 ##-------------------------------------------
@@ -223,23 +252,32 @@ W_fe = W_fc+W_hp+W_aie+W_els+W_api+W_ox+W_bc+W_fur+W_aux+W_pt                   
 ##
 ##----- Output -----
 ##
+print 'Roskam'
 # Wing weight
 W_totros.append(W_w)
+print 'Wing', W_w/kglbs
 # Fuselage weight
 W_totros.append(W_fus)
+print 'Fuselage', W_fus/kglbs
 # Landing gear weight
 W_totros.append(W_lg)
+print 'Landing gear', W_lg/kglbs
 # Empennage weight
 W_totros.append(W_emp)
+print 'Empennage', W_emp/kglbs
 # Power plant weight
 W_totros.append(W_pp)
+print 'Power plant', W_pp/kglbs
 # Nacelle weight
 W_totros.append(W_n)
+print 'Nacelle', W_n/kglbs
 # fixed equipment weight
 W_totros.append(W_fe)
+print 'fixed equipment', W_fe/kglbs
 # total operational empty weight
 totalweightros = sum(W_totros)
 totalweightros = totalweightros/kglbs
+print 'OEW', totalweightros
 #maximum take-off weight 
 W_takeoffros = totalweightros+payload+fuel
 
@@ -278,4 +316,5 @@ print
 print 'The operational empty weight =', OEW, '[kg]'
 print 'The take-off weight =', MTOW, '[kg]'
 
-string_class_II_final_version = ["W_wing","W_fuselage","W_landinggear","W_empennage","W_propulsion","W_nacelle","W_equipment","OEW"]
+string_class_II_final_version = ["W_wing","W_fuselage","W_landinggear","W_empennage","W_propulsion","W_nacelle","W_equipment","OEW","MTOW"]
+

@@ -13,7 +13,11 @@ from liftdrag import * #CHECK
 from empennage import * #CHECK
 from landing_gear import * #CHECK
 from airfoil2 import * #CHECK
-from cg import *
+#from cg import *
+from Drag import *
+from mergedstabcont import *
+from HLD import *
+from ailerons import *
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -75,15 +79,18 @@ parameter.write("V_s "+str(V_s)+"\n")
 parameter.write("V_rot "+str(V_rot)+"\n")
 parameter.write("n_max "+str(n_max)+"\n")
 parameter.write("f "+str(f)+"\n")
-#parameter.write("P_c "+str(P_c)+"\n")
-parameter.write("x_spar1 "+str(0.25)+"\n")
-parameter.write("x_spar2 "+str(0.55)+"\n")
+parameter.write("P_c "+str(P_c)+"\n")
+parameter.write("x_spar1 "+str(0.20)+"\n")
+parameter.write("x_spar2 "+str(0.65)+"\n")
 parameter.write("Afactor "+str(1.2)+"\n")
 parameter.write("e "+str(0.85)+"\n")
 parameter.write("MTOW "+str(67834.)+"\n")
 parameter.write("S "+str(110.)+"\n")
 parameter.write("thrust "+str(213.)+"\n")
 parameter.write("SwetSref "+str(SwetSref)+"\n")
+#parameter.write("alpha_0L_low_clean "+str(np.radians(-3.82))+"\n")
+#parameter.write("CL_alpha_low_clean"+str((2*pi*A)/(2+np.sqrt(4+(A*beta_low/eta_airfoil)**2*(1+tan(lambdac_2)*tan(lambdac_2)/(beta_low**2)))))+"\n")
+#parameter.write("alpha_stall_low_clean"+str((CL_max_low_clean / CL_alpha_low_clean) + alpha_0L_low_clean + (4 * pi /180))+"\n")
 
 #for i in range(len(string_TWWS)):
 #    parameter.write(string_TWWS[i] + " " + str(eval(string_TWWS[i])) + "\n")
@@ -101,7 +108,6 @@ for i in range(len(string_Fuselage_Sizing)):
     parameter.write(string_Fuselage_Sizing[i] + " " + str(eval(string_Fuselage_Sizing[i])) + "\n")
 
 for i in range(len(string_wing_layout)):
-    print eval(string_wing_layout[i])
     parameter.write(string_wing_layout[i] + " " + str(eval(string_wing_layout[i])) + "\n")
 
 for i in range(len(string_wingvol)):
@@ -122,8 +128,23 @@ for i in range(len(string_landing_gear)):
 for i in range(len(string_airfoil2)):
     parameter.write(string_airfoil2[i] + " " + str(eval(string_airfoil2[i])) + "\n")
 
-for i in range(len(string_cg)):
-    parameter.write(string_cg[i] + " " + str(eval(string_cg[i])) + "\n")
+#for i in range(len(string_cg)):
+#    parameter.write(string_cg[i] + " " + str(eval(string_cg[i])) + "\n")
+
+for i in range(len(string_drag)):
+    parameter.write(string_drag[i] + " " + str(eval(string_drag[i])) + "\n")
+
+#for i in range(len(string_systemsprepaircraft)):
+#    parameter.write(string_systemsprepaircraft[i] + " " + str(eval(string_systemsprepaircraft[i])) + "\n")
+
+for i in range(len(string_HLD)):
+    parameter.write(string_HLD[i] + " " + str(eval(string_HLD[i])) + "\n")
+
+for i in range(len(string_ailerons)):
+    parameter.write(string_ailerons[i] + " " + str(eval(string_ailerons[i])) + "\n")
+
+for i in range(len(string_mergedstabcont)):
+    parameter.write(string_mergedstabcont[i] + " " + str(eval(string_mergedstabcont[i])) + "\n")
 
 parameter.close()
 

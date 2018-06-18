@@ -23,7 +23,7 @@ Vh =  1         #horizontal tail volume
 Vv = 0.100      #vertical tail volume
 
 
-lh = 20. #rough estimate        #horizontal tail arm [m]
+lh = 20.96 #value("l_h") #rough estimate        #horizontal tail arm [m]
 lv = 18.     #rough estimate
 Sh = Vh*S*MAC/(lh)   #horizontal tail surface area
 Sv = Vv*S*b/(lv)     #vertical tail surface area
@@ -51,6 +51,5 @@ YMAC_h = (b_h/6.)*(1+2*lambda_h)/(1+lambda_h)
 YMAC_v = (b_v/6.)*(1+2*lambda_v)/(1+lambda_v)
 
 
-string_empennage = ['Sh','Sv','lh','lv','sweep_h','sweep_v','Ah','Av','lambda_h','lambda_v','b_h','b_v','cr_h',
+string_empennage = ['Sh','Sv','lv','sweep_h','sweep_v','Ah','Av','lambda_h','lambda_v','b_h','b_v','cr_h',
                     'ct_h','cr_v','ct_v','MAC_h','MAC_v','YMAC_h','YMAC_v']
-

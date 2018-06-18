@@ -148,7 +148,7 @@ aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4]
 #elif aromatics > 25.:
     #print "Aromatic compound too high (above 25)."
 #else:
-c_j = cj_3_UHBP#cj[eval(design)-1]
+c_j = 1.716 #cj_3_UHBP#cj[eval(design)-1]
 E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
 E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
 emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
@@ -376,19 +376,22 @@ string_emissions = ["fuel_used","fuel_mix","fuelvolume_needed","fuelcost","emiss
 
 #-----------------------------------------------------PLOTTINGS----------------------------------------------    
 
-##fig, ax1 = plt.subplots()
-##ax1.bar(xlst,costlst,align='center',color='b',width=0.2)
-### Make the y-axis label, ticks and tick labels match the line color.
-##ax1.set_ylabel('exp', color='b')
-##ax1.tick_params('y', colors='b')
-##
-##ax2 = ax1.twinx()
-##ax2.bar(xlst,emissionslst,align='center',color='r',width=0.2)
-##ax2.set_ylabel('sin', color='r')
-##ax2.tick_params('y', colors='r')
-##
-##fig.tight_layout()
-##plt.show()
+xlst = [0,1,2,3]
+costlst = [0.1,0.3,0.4,0.8]
+emissionslst = [5,6.7,7,8.6]
+fig, ax1 = plt.subplots()
+ax1.plot(xlst,costlst,color='b')
+# Make the y-axis label, ticks and tick labels match the line color.
+ax1.set_ylabel('exp', color='b')
+ax1.tick_params('y', colors='b')
+
+ax2 = ax1.twinx()
+ax2.plot(xlst,emissionslst,color='r')
+ax2.set_ylabel('sin', color='r')
+ax2.tick_params('y', colors='r')
+
+fig.tight_layout()
+plt.show()
 
 ##colors = ['r','g','b','c']
 ##markers = ['>','d','D','^','<']
