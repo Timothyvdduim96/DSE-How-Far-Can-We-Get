@@ -18,7 +18,7 @@ C_Lcr = 0.87 #CL max cruise
 C_Lland = 2.47  #CL max landing
 C_L_cr = 0.6167
 C_D_0 = 0.07 #CDO
-thrust = 220000
+thrust = 220000./2
 
 W_a = 1431.5 #mass flow in lbs/sec
 DF = 82 #fan diameter in inch

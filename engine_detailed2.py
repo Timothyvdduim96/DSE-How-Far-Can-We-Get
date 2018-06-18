@@ -37,7 +37,11 @@ mdot_own = (mdot_ref*dfan_own)/dfan_refCFM
 V = mdot_own/(rho*Afan_own)
 Vj = T/(rho*Afan_own*V)+V0
 
+
+
 print T/T_ref
 print dcore_own
 print dfan_own
 print dnacelle_own
+print ltotal
+

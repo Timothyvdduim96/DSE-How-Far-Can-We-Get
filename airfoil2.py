@@ -50,14 +50,15 @@ rho0 = value("rho_0")
 #Clean cruise conditions with cruise Reynold's number
 beta_cruise = np.sqrt(1-(M_cr*M_cr))
 
-#Re_cr = (V_cr * cos(lambdac_0) * rho_cr * MAC) / mu                 #Reynolds number
+Re_cr = (V_cr * cos(lambdac_0) * rho_cr * MAC) / mu                 #Reynolds number
 CL_des_cruise_clean_plane = (1/q_cr)*(0.5*(WS_start+WS_end)) #design lift coefficient of the entire aircraft
 CL_des_cruise_clean_wing = 1.1*(1/q_cr)*(0.5*(WS_start+WS_end))    #design lift coeffcient of the wing
 Cl_des_cruise_clean = CL_des_cruise_clean_wing/(cos(lambdac_0)*cos(lambdac_0))  #design lift coefficient of airfoil
 Cl_des_M0 = Cl_des_cruise_clean*np.sqrt(1-M_cr*M_cr)
 
 #Airfoil parameters
-eta_airfoil = 0.95  #airfoil eff factor
+eta_airfoil = (((0.924-0.92)/(4.02-3.98))*180/pi)/(2*pi)#airfoil eff factor
+
 Cl_max_cruise_clean = 2.363
 Cd_min_cruise_clean = 0.006
 Cm_des_cruise_clean = -0.116
@@ -113,9 +114,8 @@ dCL_HLD_land = CL_land - CL_max_low_clean
 
 #Landing conditions
 <<<<<<< HEAD
-print (rho_cr)
 =======
-print V_low
->>>>>>> 8fe607ce676610f74dc4a429282904e333d770a9
+print(alpha_stall_low_clean *180/pi)
+>>>>>>> 75c6f53bf7426a991d31f6d7ca5e257e9b7ab1ab
 
 string_airfoil2 = ["V_cr", "eta_airfoil", "Cl_max_cruise_clean", "alpha_0L_low_clean", "CL_alpha_low_clean", "alpha_stall_low_clean", "Cd_min_cruise_clean", "Cm_des_cruise_clean", "alpha_0L_cruise_clean", "alpha_des_cruise_clean", "alpha_stall_cruise_clean", "alpha_trim_cruise_clean", "CL_max_cruise_clean_plane", "CL_max_cruise_clean_wing", "CL_max_low_clean", "CL_alpha_cruise_clean", "Cd_min_low_clean", "M_crit_cruise_clean", "lambdac_LE", "lambdac_2", "lambdac_4", "dCL_HLD_land", "dCL_HLD_TO", 'CL_0']
