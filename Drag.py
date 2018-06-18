@@ -157,4 +157,4 @@ print(e)
 print(CD0)
 print(CD0_tot)
 print(1/ (pi*A_eff*e))
-string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet', 'dCD_flap_TO', 'dCD_flap_land']
+string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet']
