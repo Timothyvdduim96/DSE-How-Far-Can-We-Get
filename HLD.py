@@ -24,14 +24,14 @@ r_fus = value('d_ext_fus')/2.
 a1 = c_r   
 a2 = (c_r-c_t)/(0.5*b)
 
-CL_max_low_clean = value('CL_max_low_clean')
+CL_max_low_clean = value('CL_max_low_clean')/1.1
 
 CL_to = 2.1
 CL_land = 2.5
 
 
-dC_L_max_to = CL_to - CL_max_low_clean + 0.2
-dC_L_max_land =  CL_land - CL_max_low_clean + 0.3
+dC_L_max_to = CL_to - CL_max_low_clean + 0.1
+dC_L_max_land =  CL_land - CL_max_low_clean + 0.1
 
 
 
@@ -59,12 +59,12 @@ dC_l_max_slat = 0.3 * c_ext_c_slat
 
 
 Swf_land_TE = (0.85*dC_L_max_land*S)/(0.9*dC_l_max_flap*cos(lambda_hingeline_flap))
-Swf_to_TE = (0.9*dC_L_max_to*S)/(0.9*0.7*dC_l_max_flap*cos(lambda_hingeline_flap))
+Swf_to_TE = (0.85*dC_L_max_to*S)/(0.9*0.7*dC_l_max_flap*cos(lambda_hingeline_flap))
 Swf_TE = max([Swf_land_TE,Swf_to_TE])
 
 
 Swf_land_LE = (0.15*dC_L_max_land*S)/(0.9*dC_l_max_slat*cos(lambda_hingeline_slat))
-Swf_to_LE = (0.1*dC_L_max_land*S)/(0.9*0.7*dC_l_max_slat*cos(lambda_hingeline_slat))
+Swf_to_LE = (0.15*dC_L_max_to*S)/(0.9*0.7*dC_l_max_slat*cos(lambda_hingeline_slat))
 Swf_LE = max([Swf_land_LE,Swf_to_LE])
 
 dalpha_0l_airfoil_land = -15 #deg
@@ -105,30 +105,30 @@ CL_to_margin = CL_max_to
 alpha_stall_flapped_to = (CL_to_margin / CL_alpha_flapped_slatted_to) + alpha_0L_low_clean_HLD + dalpha_0L_to +  4 
 
 
-##plt.subplot(221)
-##plt.plot(alpha,C_L_curve_clean,label='clean')
-##plt.plot(alpha_stall_low_clean,CL_max_low_clean, marker = 'o', label = 'stall clean')
-##plt.plot(alpha,C_L_curve_land,label='land')
-##plt.plot(alpha_stall_flapped_land,CL_land_margin, marker = 'o', label = 'stall flapped')
-##plt.plot([-10,25],[CL_land,CL_land])
-##plt.grid(True)
-##plt.legend(loc='upper left')
-##plt.ylabel("C_L")
-##plt.xlabel("alpha [deg]")
-##plt.title("C_L - alpha curve")
-##
-##plt.subplot(222)
-##plt.plot(alpha,C_L_curve_clean,label='clean')
-##plt.plot(alpha_stall_low_clean,CL_max_low_clean, marker = 'o')
-##plt.plot(alpha,C_L_curve_to, label='take-off')
-##plt.plot(alpha_stall_flapped_to,CL_to_margin, marker = 'o')
-##plt.plot([-10,25],[CL_to,CL_to])
-##plt.grid(True)
-##plt.legend(loc='upper left')
-##plt.ylabel("C_L")
-##plt.xlabel("alpha [deg]")
-##plt.title("C_L - alpha curve")
-##plt.show()
+plt.subplot(221)
+plt.plot(alpha,C_L_curve_clean,label='clean')
+plt.plot(alpha_stall_low_clean_HLD,CL_max_low_clean, marker = 'o', label = 'stall clean')
+plt.plot(alpha,C_L_curve_land,label='land')
+plt.plot(alpha_stall_flapped_land,CL_land_margin, marker = 'o', label = 'stall flapped')
+plt.plot([-10,25],[CL_land,CL_land])
+plt.grid(True)
+plt.legend(loc='upper left')
+plt.ylabel("C_L")
+plt.xlabel("alpha [deg]")
+plt.title("C_L - alpha curve")
+
+plt.subplot(222)
+plt.plot(alpha,C_L_curve_clean,label='clean')
+plt.plot(alpha_stall_low_clean_HLD,CL_max_low_clean, marker = 'o')
+plt.plot(alpha,C_L_curve_to, label='take-off')
+plt.plot(alpha_stall_flapped_to,CL_to_margin, marker = 'o')
+plt.plot([-10,25],[CL_to,CL_to])
+plt.grid(True)
+plt.legend(loc='upper left')
+plt.ylabel("C_L")
+plt.xlabel("alpha [deg]")
+plt.title("C_L - alpha curve")
+plt.show()
 
 S_flapped_land = S*(S_ext_S_land)
 S_flapped_to = S*(S_ext_S_to)
@@ -160,11 +160,4 @@ print (bs_o_perc)
 
 
 
-
-<<<<<<< HEAD
 string_HLD = ['Swf_LE','Swf_TE','S_flaps_land','S_flaps_to','S_slats','bs_i','bs_o','bf_i','bf_o','d_f_land','d_f_to','c_ext_c_land','c_ext_c_to','cf_c','cs_c']
-=======
->>>>>>> 8fe607ce676610f74dc4a429282904e333d770a9
-
-
-string_HLD = ['Swf_LE','Swf_TE','S_flaps_land','S_flaps_to','S_slats','bs_i','bs_o','bf_i','bf_o','d_f_land','d_f_to','c_ext_c_land','c_ext_c_to']
