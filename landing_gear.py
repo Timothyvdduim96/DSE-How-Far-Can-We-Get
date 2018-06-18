@@ -14,16 +14,16 @@ from parameters import *
 
 
 g = value("g")
-MTOW = g*value("MTOW")
-Wland = g*(value("MTOW")-9500)
-
-f = Wland/value("MTOW")
+MTOW = g*value("MTOW") #Newton
+Wland = 611601.5 # in Newton
+print(MTOW)
+f = Wland/MTOW
 
 Nmw0 = f*MTOW/210000. #number of main gear wheels
 
 Nmw = 4 * round(float(Nmw0)/4) #round to nearest multiple of 4
 
-Nnw = 2 #number of nose gear wheels
+Nnw = 2. #number of nose gear wheels
 
 if Nmw <= 12:
     Nst = 2
@@ -32,10 +32,11 @@ else:
     
 LCN = 50
 p = 430*np.log(LCN)-680
-
-Pmw = 0.92*MTOW/Nmw
-Pnw = 0.08*MTOW/Nnw
-
+print(Nmw)
+print(Nnw)
+Pmw = (0.92*MTOW)/Nmw #in N
+Pnw = (0.08*MTOW)/Nnw #in N
+print(4*Pmw + 2*Pnw)
 lnlg = 16 #distance from nose gear to CG
 lm = 3.5  #distance from main gear to CG
 psi = 63. * (pi/180)
@@ -50,6 +51,7 @@ ymlg1 = (lnlg+lm)/(np.sqrt((lnlg*lnlg+tan(psi)*tan(psi))/(z*z)-1)) #lateral tip 
 #ymlg3 = b/2.-ye/np.tan(phi)
 #ymls = max([ymlg1,ymlg2,ymlg3])
 
-print(ymlg1)
+print(Pmw)
+print(Pnw)
 
 string_landing_gear = ['Nmw','Nnw','Nst','p','Pmw','Pnw','z','lnlg','lm','ymlg1','psi']
