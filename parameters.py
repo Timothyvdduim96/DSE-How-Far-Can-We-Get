@@ -1,6 +1,6 @@
 from math import *
 import numpy as np
-
+import matplotlib.pyplot as plt
 #------------------------------------------------CONVERSION--------------------------------------------------
 
 lbf_to_N = 4.4482216
@@ -17,6 +17,32 @@ mm_to_m=1./1000.
 m_to_mm=1000.
 cm_to_m=1/100.
 inch_to_m=inch_to_cm*cm_to_m
+rad_to_deg=180/pi
+deg_to_rad=pi/180
+
+m_to_cm=1/100.
+
+M_tf = 0.935                        #technology factor for supercritical airfoils
+FL = 390                            #flight level
+h_cr = FL*FL_to_m                   #cruise altitude
+R = 287.05
+g = 9.80665                         #gravitational acc.
+gamma = 1.4
+M_cr = 0.79                         #cruise mach number (req)
+M_max = 0.82                        #maximum cruise mach number
+rho_0 = 1.225                       #sea-level density
+T_0 = 288.15                        #sea-level temperature 
+s_l = 2000.                         #landing distance
+V_land = sqrt(s_l/0.5847)           #landing velocity based on landing distance
+cV = 0.024                          #climb gradient requirement from CS25
+A = 14.                             #Aspect ratio
+c = 17.                             #climb rate as from ref. aircraft
+C_f_e = 0.003                       #friction coefficient
+V_s = 100.                          #stall speed based on reference aircraft
+V_rot = 1.1                         #rotation speed
+n_max = 2.5                         #max load factor (CS25)
+f = 0.9745                          #fuel fraction during cruise
+
 mft        = 3.2808399        # conversion factor meters to feet
 kglbs      = 2.20462262       # conversion factor kilograms to pounds
 sqmsqft    = 10.7639104       # conversion factor square meters to square feet
@@ -27,6 +53,7 @@ Nlbs       = 0.224808943      # conversion factor newtons to pounds
 papsf      = 0.02089          # conversion factor pascal to pound-force per square foot
 kgmlbsgall = 0.00834540445    # conversion factor for kilogram per cubic meter to pounds per gallon
 papsi      = 0.000145037738   # conversion factor for pascal to pounds-force per square inch
+
 
 #------------------------------------------------FUNCTIONS-----------------------------------------------------
 

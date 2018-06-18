@@ -148,7 +148,7 @@ aromatics = (fuels[fuelnames.index(fuel1)][4] + fuels[fuelnames.index(fuel2)][4]
 #elif aromatics > 25.:
     #print "Aromatic compound too high (above 25)."
 #else:
-c_j = cj_3_UHBP#cj[eval(design)-1]
+c_j = 1.716 #cj_3_UHBP#cj[eval(design)-1]
 E1 = fuels[fuelnames.index(fuel1)][1] #specific energy fuel 1
 E2 = fuels[fuelnames.index(fuel2)][1] #specific energy fuel 2
 emissions_per_E_1 = fuels[fuelnames.index(fuel1)][0]
