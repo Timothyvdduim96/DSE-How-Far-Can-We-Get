@@ -127,19 +127,19 @@ C_D_fus1 = ((0.139 + 0.419*(value("M_cr")-0.161)**2)* 0.2 * 0.2) /S_ref
 C_D_fus2 = (3.83 * u**2.5 * pi * (4/2)**2) /S_ref
 
 # # #landing gear
-# S_A =           #frontal area entire landing gear
-# S_s =           #d *w  d is the length of the landing gear and w is width
-# C_D_S = 0.04955 * exp(5.165 * S_A/ S_s)
-# dCD_landinggear = C_D_S * S_s/ S_ref
 
-# Flaps higher than 10 degrees
-# F_flap = 0.0074
-# c_fc = 0.35  #flap chord length      #wing chord
-# S_flap = value('swf_TE')     #flap surface area
-# delta_flap_land =  value('t_f_land')      #should be in degrees
-# dCD_flap_land = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_land -10 )
-# delta_flap_TO =  value('t_f_to')      #should be in degrees
-# dCD_flap_TO = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_TO -10 )
+dCD_landinggear =
+
+# Flaps higher than 10 degrees take-off
+F_flap = 0.0074
+c_fc = 0.35  #flap chord length      #wing chord
+S_flap = value('swf_TE')     #flap surface area
+delta_flap_land =  40      #should be in degrees
+dCD_flap_land = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_land -10 )
+delta_flap_TO =  15      #should be in degrees
+dCD_flap_TO = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_TO -10 )
+
+
 #Excresence drag
 dCD_excresence = 0.03
 
@@ -153,8 +153,12 @@ e = 1 / (1.05 + 0.007* pi * A_eff)              # Obert method
 #e = e + 0.0046 * delta_f #for flap deflection
 CL = 0.55
 CD = CD0_tot + CL**2 / (pi * A_eff * e)
-print(e)
-print(CD0)
-print(CD0_tot)
-print(1/ (pi*A_eff*e))
+
+CD0_TO = CD0_tot + dCD_flap_TO + dCD_landinggear
+CD_0_TO_nogear = CD0_tot + dCD_flap_TO
+CD_0_land = CD0_tot + dCD_flap_land + dCD_landinggear
+print(CD0_TO)
+print(CD_0_TO_nogear)
+print(CD_0_land)
+
 string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet', 'dCD_flap_TO', 'dCD_flap_land']
