@@ -108,7 +108,7 @@ for V in range(V_min0,300,1):
     sigma = dens/rho_0    
     ratio = (K1 + (K2*lamda) +(K3+(K4*lamda))*M_c)*sigma**0.7  
     T_a = thrust*ratio 
-    V = sqrt(rho_0/dens)*V  
+    #V = sqrt(rho_0/dens)*V  
     
     # ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     # ratio = (P_alt/P_0) *sqrt(T_0/Temp)  
@@ -171,7 +171,7 @@ for V in range(V_min5000,300,1):
     
     
     
-    V = sqrt(rho_0/dens)*V 
+    #V = sqrt(rho_0/dens)*V 
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
     #ratio_speed = 1- ((0.377*(1+lamda))/sqrt((1+(0.82*lamda))*1.48)*M_c) + ((0.23+(0.19*sqrt(lamda)))*M_c**2)       
@@ -216,7 +216,7 @@ for V in range(V_min10000,300,1):
     Temp = ISA(3048)[0]
     dens = ISA(3048)[2]
     a = sqrt(1.4*287*Temp)
-    V = sqrt(rho_0/dens)*V      
+    #V = sqrt(rho_0/dens)*V      
     M_c = V/a
     
     if M_c < 0.4: 
@@ -276,7 +276,7 @@ for V in range(V_min15000,300,1):
     Temp = ISA(4572)[0]
     dens = ISA(4572)[2]
     a = sqrt(1.4*287*Temp)
-    V = sqrt(rho_0/dens)*V      
+    #V = sqrt(rho_0/dens)*V      
     M_c = V/a
     if M_c < 0.4: 
         K1 = 1.
@@ -336,7 +336,7 @@ for V in range(V_min20000,300,1):
     Temp = ISA(6096 )[0]
     dens = ISA(6096 )[2]
     a = sqrt(1.4*287*Temp)
-    V = sqrt(rho_0/dens)*V      
+    #V = sqrt(rho_0/dens)*V      
     M_c = V/a
     
     if M_c < 0.4: 
@@ -399,7 +399,7 @@ for V in range(V_min25000,300,1):
     Temp = ISA(7620)[0]
     dens = ISA(7620)[2]
     a = sqrt(1.4*287*Temp)
-    V = sqrt(rho_0/dens)*V      
+    #V = sqrt(rho_0/dens)*V      
     M_c = V/a
     if M_c < 0.4: 
         K1 = 1.
@@ -461,7 +461,7 @@ for V in range(V_min30000,300,1):
     Temp = ISA(9144)[0]
     dens = ISA(9144)[2]
     a = sqrt(1.4*287*Temp)
-    V = sqrt(rho_0/dens)*V      
+    #V = sqrt(rho_0/dens)*V      
     M_c = V/a
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
@@ -518,7 +518,7 @@ for V in range(V_min35000,300,1):
     Temp = ISA(10668)[0]
     dens = ISA(10668)[2]
     a = sqrt(1.4*287*Temp)
-    V = sqrt(rho_0/dens)*V      
+    #V = sqrt(rho_0/dens)*V      
     M_c = V/a
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
@@ -567,14 +567,14 @@ for V in range(V_min35000,300,1):
     speeds_35000.append(V)
 
 V_min39000 = int(sqrt((MTOW/S)*(2/ISA(11887.2)[2])*(1/CL_max_clean)))
-for V in range(V_min39000,300,1):     
-    P_alt = ISA(11887.2)[1]
+for V in range(V_min39000,300,1):   #11887.2   
+    P_alt = ISA(12771.12)[1]
     P_0 = ISA(0)[1]
     T_0 = ISA(0)[0]
-    Temp = ISA(11887.2)[0]
-    dens = ISA(11887.2)[2]
+    Temp = ISA(12771.12)[0]
+    dens = ISA(12771.12)[2]
     a = sqrt(1.4*287*Temp)
-    V = sqrt(rho_0/dens)*V      
+    #V = sqrt(rho_0/dens)*V      
     M_c = V/a
     #ratio_net_to_static = (1-(2*M_c*((1+lamda)/(3+2*lamda))))
     #ratio = (P_alt/P_0) *sqrt(T_0/Temp)    
@@ -619,7 +619,7 @@ for V in range(V_min39000,300,1):
     Vc_39000_uns.append(Vc_uns)
     Vc_39000.append(Vc)
     speeds_39000.append(V)
-
+print max(Vc_39000_uns)
 
 #power available/required
 plt.subplot(2,2,1)
@@ -628,8 +628,8 @@ plt.plot(speeds_sealevel,palist_0,label="Pa Sea level")
 plt.plot(speeds_5000,palist_5000, label="Pa 5000 ft")
 plt.plot(speeds_10000,palist_10000, label="Pa 10000 ft") 
 plt.plot(speeds_15000,palist_15000, label="Pa 15000 ft")
-plt.plot(speeds_20000,palist_20000, label="Pa 15000 ft")
-plt.plot(speeds_25000,palist_25000, label="Pa 15000 ft")
+plt.plot(speeds_20000,palist_20000, label="Pa 20000 ft")
+plt.plot(speeds_25000,palist_25000, label="Pa 25000 ft")
 plt.plot(speeds_sealevel,prlist_0, label="Pr Sea level") #plt.plot(speeds_sealevel,prlist_0,label="Pr Sea level")
 plt.plot(speeds_5000,prlist_5000, label="Pr 5000 ft")
 plt.plot(speeds_10000,prlist_10000, label="Pr 10000 ft")
@@ -654,9 +654,9 @@ plt.plot(speeds_10000,Vc_10000, label="10000 ft")
 plt.plot(speeds_15000,Vc_15000, label="15000 ft")
 plt.plot(speeds_20000,Vc_20000, label="20000 ft")
 plt.plot(speeds_25000,Vc_25000, label="25000 ft")
-#plt.plot(speeds_30000,Vc_30000, label="30000 ft")
-#plt.plot(speeds_35000,Vc_35000, label="35000 ft")
-#plt.plot(speeds_39000,Vc_39000, label="39000 ft")
+plt.plot(speeds_30000,Vc_30000, label="30000 ft")
+plt.plot(speeds_35000,Vc_35000, label="35000 ft")
+plt.plot(speeds_39000,Vc_39000, label="39000 ft")
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Rate of climb [ft/min]')
 plt.legend(loc=4)
@@ -672,9 +672,9 @@ plt.plot(speeds_10000,Vc_10000_uns, label="10000 ft")
 plt.plot(speeds_15000,Vc_15000_uns, label="15000 ft")
 plt.plot(speeds_20000,Vc_20000_uns, label="20000 ft")
 plt.plot(speeds_25000,Vc_25000_uns, label="25000 ft")
-#plt.plot(speeds_30000,Vc_30000_uns, label="30000 ft")
-#plt.plot(speeds_35000,Vc_35000_uns, label="35000 ft")
-#plt.plot(speeds_39000,Vc_39000_uns, label="39000 ft")
+plt.plot(speeds_30000,Vc_30000_uns, label="30000 ft")
+plt.plot(speeds_35000,Vc_35000_uns, label="35000 ft")
+plt.plot(speeds_39000,Vc_39000_uns, label="39000 ft")
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Rate of climb [ft/min]')
 plt.legend(loc=4)
