@@ -32,6 +32,22 @@ else:
     
 LCN = 50
 p = 430*np.log(LCN)-680
+<<<<<<< HEAD
+
+Pmw = 0.92*MTOW/Nmw
+Pnw = 0.08*MTOW/Nnw
+
+ln = 5
+lm = 5
+#psi = 55. * (pi/180)
+z = 5
+zt = 5
+ye = 5
+phi = 5. * (pi/180.)
+
+ln = 15.65 #distance from nose gear to CG
+lm = 1.28  #distance from main gear to CG
+=======
 print(Nmw)
 print(Nnw)
 Pmw = (0.92*MTOW)/Nmw #in N
@@ -39,8 +55,10 @@ Pnw = (0.08*MTOW)/Nnw #in N
 print(4*Pmw + 2*Pnw)
 lnlg = 16 #distance from nose gear to CG
 lm = 3.5  #distance from main gear to CG
+>>>>>>> 45ae409ecbe693e4b3afafb6bf1308cd749a8ad5
 psi = 63. * (pi/180)
-z = 3    #vertical CG position
+z = 3
+#vertical CG position
 #zt =
 #ye =  
 #phi = 5. * (pi/180.)
