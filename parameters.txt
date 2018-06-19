@@ -405,17 +405,13 @@ Sh_S 0.13
 S_h 14.3
 wingpos 0.435
 x_lemac_pos 19.196028
-<<<<<<< HEAD
 front_bar_cg_final 0.156616246498
 front_cg_final 19.6791640072
 aft_bar_cg_final 0.563327831914
 aft_cg_final 20.9338040324
 cgrange_final 1.25464002522
-=======
 front_bar_cg_final 0.132852279934
 front_cg_final 19.6058559809
 aft_bar_cg_final 0.545485399376
 aft_cg_final 20.878762989
 cgrange_final 1.27290700818
->>>>>>> d0592f2e229690617b9f103c0ead03a943c8a03f
->>>>>>> 048d74ff7b11f286fa107dec7f5efe92315811c9
