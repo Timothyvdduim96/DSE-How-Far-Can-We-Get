@@ -56,6 +56,7 @@ print (dt)
 
 print (ba_i_perc)
 print (ba_o_perc)
+print (P)
 
 
 string_ailerons = ['S_a','ba_i','ba_o']

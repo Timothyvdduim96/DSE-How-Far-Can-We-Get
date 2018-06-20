@@ -26,7 +26,7 @@ a2 = (c_r-c_t)/(0.5*b)
 
 CL_max_low_clean = value('CL_max_low_clean')/1.1
 
-CL_to = 2.1
+CL_to = 1.9
 CL_land = 2.5
 
 
@@ -42,6 +42,9 @@ lambda_hingeline_slat = lambdac_LE
 d_f_land = 40 #deg flap deflection at landing
 d_f_to = 15 #deg flap deflection at take-off
 
+d_s_land = 25
+d_s_to = 14
+
 
 dc_cf_land = 0.6 #single slotted (0.8 for double slotted)
 dc_cf_to = 0.5 #single slotted (0.6 for double slotted)
@@ -51,20 +54,27 @@ cs_c = 0.15 #slat chord/wing chord (sforza)
 
 c_ext_c_land = 1 + cf_c * dc_cf_land
 c_ext_c_to = 1 + cf_c * dc_cf_to
-c_ext_c_slat = 1.092 #from sforza
-
-dC_l_max_flap = 1.3 * c_ext_c_land  #for single slotted fowler flap (1.6 for double slotted)
-dC_l_max_slat = 0.3 * c_ext_c_slat 
+c_ext_c_slat_land = 1.092 #from sforza
+c_ext_c_slat_to = 1.092 #from sforza
 
 
 
-Swf_land_TE = (0.85*dC_L_max_land*S)/(0.9*dC_l_max_flap*cos(lambda_hingeline_flap))
-Swf_to_TE = (0.85*dC_L_max_to*S)/(0.9*0.7*dC_l_max_flap*cos(lambda_hingeline_flap))
+dC_l_max_flap_land = 1.3 * c_ext_c_land  #for single slotted fowler flap (1.6 for double slotted)
+dC_l_max_flap_to = 1.3 * c_ext_c_land * 0.7
+
+dC_l_max_slat_land = 0.3 * c_ext_c_slat_land 
+dC_l_max_slat_to = 0.3 * c_ext_c_slat_to *0.7 
+
+
+
+
+Swf_land_TE = (0.81*dC_L_max_land*S)/(0.9*dC_l_max_flap_land*cos(lambda_hingeline_flap))
+Swf_to_TE = (0.81*dC_L_max_to*S)/(0.9*dC_l_max_flap_to*cos(lambda_hingeline_flap))
 Swf_TE = max([Swf_land_TE,Swf_to_TE])
 
 
-Swf_land_LE = (0.15*dC_L_max_land*S)/(0.9*dC_l_max_slat*cos(lambda_hingeline_slat))
-Swf_to_LE = (0.15*dC_L_max_to*S)/(0.9*0.7*dC_l_max_slat*cos(lambda_hingeline_slat))
+Swf_land_LE = (0.19*dC_L_max_land*S)/(0.9*dC_l_max_slat_land*cos(lambda_hingeline_slat))
+Swf_to_LE = (0.19*dC_L_max_to*S)/(0.9*dC_l_max_slat_to*cos(lambda_hingeline_slat))
 Swf_LE = max([Swf_land_LE,Swf_to_LE])
 
 dalpha_0l_airfoil_land = -15 #deg
@@ -76,15 +86,16 @@ dalpha_0L_to = dalpha_0l_airfoil_to*(Swf_TE/S)*cos(lambda_hingeline_flap) #deg
 CL_alpha_low_clean_HLD = value('CL_alpha_low_clean')* pi/180. #per deg
 S_ext_S_land = 1 + (Swf_TE/S)*(c_ext_c_land-1)
 S_ext_S_to   = 1 + (Swf_TE/S)*(c_ext_c_to-1)
-S_ext_S_slat  = 1 + (Swf_LE/S)*(c_ext_c_slat-1)
+S_ext_S_slat_land  = 1 + (Swf_LE/S)*(c_ext_c_slat_land-1)
+S_ext_S_slat_to  = 1 + (Swf_LE/S)*(c_ext_c_slat_to-1)
 
 CL_alpha_flapped_land = S_ext_S_land * CL_alpha_low_clean_HLD #per deg
-CL_alpha_flapped_slatted_land = S_ext_S_slat * CL_alpha_flapped_land
+CL_alpha_flapped_slatted_land = S_ext_S_slat_land * CL_alpha_flapped_land
 CL_alpha_flapped_to = S_ext_S_to * CL_alpha_low_clean_HLD #per deg
-CL_alpha_flapped_slatted_to = S_ext_S_slat * CL_alpha_flapped_to
+CL_alpha_flapped_slatted_to = S_ext_S_slat_to * CL_alpha_flapped_to
 
 alpha_0L_low_clean_HLD = value('alpha_0L_low_clean')* 180./pi
-alpha = np.arange(-10.,25.,0.1)
+alpha = np.arange(-5.,10.,0.1)
 
 C_L_curve_clean = CL_alpha_low_clean_HLD*(alpha - alpha_0L_low_clean_HLD)
 C_L_curve_land = CL_alpha_flapped_slatted_land*(alpha - alpha_0L_low_clean_HLD - dalpha_0L_land)
@@ -106,33 +117,33 @@ alpha_stall_flapped_to = (CL_to_margin / CL_alpha_flapped_slatted_to) + alpha_0L
 
 
 plt.subplot(221)
-plt.plot(alpha,C_L_curve_clean,label='clean')
+plt.plot(alpha,C_L_curve_clean,label='clean',linestyle = '--',)
 plt.plot(alpha_stall_low_clean_HLD,CL_max_low_clean, marker = 'o', label = 'stall clean')
-plt.plot(alpha,C_L_curve_land,label='land')
-plt.plot(alpha_stall_flapped_land,CL_land_margin, marker = 'o', label = 'stall flapped')
-plt.plot([-10,25],[CL_land,CL_land])
+plt.plot(alpha,C_L_curve_land,label='flapped')
+plt.plot(alpha_stall_flapped_land,CL_land_margin, marker = 'v', label = 'stall flapped')
+#plt.plot([-10,25],[CL_land,CL_land])
 plt.grid(True)
 plt.legend(loc='upper left')
 plt.ylabel("C_L")
 plt.xlabel("alpha [deg]")
-plt.title("C_L - alpha curve")
+plt.title("C_L - alpha curve: :Landing")
 
 plt.subplot(222)
-plt.plot(alpha,C_L_curve_clean,label='clean')
-plt.plot(alpha_stall_low_clean_HLD,CL_max_low_clean, marker = 'o')
-plt.plot(alpha,C_L_curve_to, label='take-off')
-plt.plot(alpha_stall_flapped_to,CL_to_margin, marker = 'o')
-plt.plot([-10,25],[CL_to,CL_to])
+plt.plot(alpha,C_L_curve_clean,label='clean',linestyle = '--',)
+plt.plot(alpha_stall_low_clean_HLD,CL_max_low_clean, marker = 'o', label = 'stall clean')
+plt.plot(alpha,C_L_curve_to, label='flapped')
+plt.plot(alpha_stall_flapped_to,CL_to_margin, marker = 'v',label = 'stall flapped')
+#plt.plot([-10,25],[CL_to,CL_to])
 plt.grid(True)
 plt.legend(loc='upper left')
 plt.ylabel("C_L")
 plt.xlabel("alpha [deg]")
-plt.title("C_L - alpha curve")
+plt.title("C_L - alpha curve: Take-off")
 plt.show()
 
 S_flapped_land = S*(S_ext_S_land)
 S_flapped_to = S*(S_ext_S_to)
-S_slatted = S*(S_ext_S_slat)
+S_slatted = S*(S_ext_S_slat_land)
 
 S_flaps_land = S_flapped_land - S
 S_flaps_to = S_flapped_to - S
@@ -153,11 +164,11 @@ bf_o_perc = bf_o/(b/2.)
 bs_i_perc = bs_i/(b/2.)
 bs_o_perc = bs_o/(b/2.)
 
-print (bf_i_perc)
-print (bf_o_perc)
-print (bs_i_perc)
-print (bs_o_perc)
+print (Swf_TE)
+print (Swf_LE)
 
+print (alpha_stall_flapped_land)
+print (alpha_stall_flapped_to)
 
 
 string_HLD = ['Swf_LE','Swf_TE','S_flaps_land','S_flaps_to','S_slats','bs_i','bs_o','bf_i','bf_o','d_f_land','d_f_to','c_ext_c_land','c_ext_c_to','cf_c','cs_c']
