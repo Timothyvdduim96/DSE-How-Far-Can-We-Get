@@ -8,7 +8,7 @@ from parameters import *
 #method 1
 S_ref = value("S")
 S_w_fuselage = value("c_r") * 4
-S_ht_exp = value("Sh")
+S_ht_exp = 22.
 S_vt_exp = value("Sv")
 L_1 = value("ratio_nosecone") * 4
 L_3 = value("ratio_tailcone") * 4
@@ -24,9 +24,6 @@ S_f_wet = (pi*4 / 4) * ((1/(3*L_1**2))*((4*L_1**2 + 4**2 / 4) - 4**3 / 8)- 4 + 4
 S_wet = S_wing_wet + S_ht_wet + S_vt_wet + S_f_wet
 
 CD0 = S_wet/ S_ref * C_fe
-print(S_ref)
-print(S_wet)
-print(S_wet / S_ref)
 #method 2
 
 #fuselage
@@ -94,10 +91,23 @@ tc_vt = 0.12
 FF_vt = (1+ 0.6/ xc_vt * tc_vt + 100 * tc_vt**4) * (1.34 * value("M_cr")**0.18 * lambdac_m_vt**0.28)
 
 #strut
-xc_strut = 0.327
-tc_strut = 0.388
+xc_strut = 0.50
+tc_strut = 0.21
+MAC_strut = 0.45
+b_strut = 7.2
 
 FF_strut = (1+ 0.6/ xc_strut * tc_strut + 100 * tc_strut**4) * (1.34 * value("M_cr")**0.18)
+
+k_strut = 0.634*10**-5
+Re_cr_strut = min(rho_cr * value("V_cr")* MAC_strut / mu , 44.62* (MAC_strut / k_strut)**1.053 * value("M_cr") **1.16)
+
+
+C_f_strut_lam = 1.328 / sqrt(Re_cr_strut)
+C_f_strut_tur = 0.455 / ((log10(Re_cr_strut))**2.58 * (1+0.144*value("M_cr")**2)**0.65)
+C_f_strut = 0.15 * C_f_strut_lam + 0.85 * C_f_strut_tur
+
+dC_D_strut = C_f_strut * FF_strut * 1.1 * b_strut * MAC_strut *2
+print(2* dC_D_strut /S_ref)
 
 #pylon
 xc_p = 0.5
@@ -117,8 +127,8 @@ IF_nacelle = 1.3
 
 #base CD0
 
-CD0_base = 1./S_ref *( (C_f_fus*FF_fus*IF_fuselage*S_f_wet) + (C_f_wing*FF_wing*IF_wing*S_wing_wet)+ (C_f_ht*FF_ht*IF_tail*S_ht_wet)+ (C_f_vt*FF_vt*S_vt_wet))
-
+CD0_base = 1./S_ref *( (C_f_fus*FF_fus*IF_fuselage*S_f_wet) + (C_f_wing*FF_wing*IF_wing*S_wing_wet)+ (C_f_ht*FF_ht*IF_tail*S_ht_wet)+ (C_f_vt*FF_vt*S_vt_wet) + dC_D_strut *2)
+print((C_f_fus*FF_fus*IF_fuselage*S_f_wet)/S_ref)
 #Miscellaneous drag
 
 #fuselage base drag
@@ -127,25 +137,33 @@ C_D_fus1 = ((0.139 + 0.419*(value("M_cr")-0.161)**2)* 0.2 * 0.2) /S_ref
 C_D_fus2 = (3.83 * u**2.5 * pi * (4/2)**2) /S_ref
 
 # # #landing gear
-# S_A =           #frontal area entire landing gear
-# S_s =           #d *w  d is the length of the landing gear and w is width
-# C_D_S = 0.04955 * exp(5.165 * S_A/ S_s)
-# dCD_landinggear = C_D_S * S_s/ S_ref
 
-# Flaps higher than 10 degrees
-# F_flap = 0.0074
-# c_fc = 0.35  #flap chord length      #wing chord
-# S_flap = value('swf_TE')     #flap surface area
-# delta_flap_land =  value('t_f_land')      #should be in degrees
-# dCD_flap_land = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_land -10 )
-# delta_flap_TO =  value('t_f_to')      #should be in degrees
-# dCD_flap_TO = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_TO -10 )
+dCD_landinggear = 0.48342 / S_ref
+
+# Flaps higher than 10 degrees take-off
+F_flap = 0.0074
+c_fc = 0.35  #flap chord length      #wing chord
+S_flap = 69.6     #flap surface area
+delta_flap_land =  40.      #should be in degrees
+dCD_flap_land = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_land -10 )
+delta_flap_TO =  15.      #should be in degrees
+dCD_flap_TO = F_flap *(c_fc) * (S_flap / S_ref) * (delta_flap_TO -10 )
+
+# #slats
+F_slat = 0.0074
+c_fc_slat = 0.15  #flap chord length      #wing chord
+S_slat = 83.8     #flap surface area
+delta_slat_land =  25.      #should be in degrees
+dCD_slat_land = F_slat *(c_fc_slat) * (S_slat / S_ref) * (delta_slat_land -10 )
+delta_slat_TO = 14.     #should be in degrees
+dCD_slat_TO = F_slat *(c_fc_slat) * (S_slat / S_ref) * (delta_slat_TO -10 )
+
 #Excresence drag
 dCD_excresence = 0.03
 
 #total CD0
 CD0_tot = (CD0_base + C_D_fus1 +C_D_fus2 ) * (1+dCD_excresence)
-
+print(CD0_tot)
 
 #drag due to lift
 A_eff = value("A") + 0.75
@@ -153,8 +171,14 @@ e = 1 / (1.05 + 0.007* pi * A_eff)              # Obert method
 #e = e + 0.0046 * delta_f #for flap deflection
 CL = 0.55
 CD = CD0_tot + CL**2 / (pi * A_eff * e)
-print(e)
-print(CD0)
-print(CD0_tot)
-print(1/ (pi*A_eff*e))
+
+string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet']
+
+
+CD0_TO = CD0_tot + dCD_flap_TO + dCD_slat_TO + dCD_landinggear
+CD_0_TO_nogear = CD0_tot + dCD_flap_TO + dCD_slat_TO
+CD_0_land = CD0_tot + dCD_flap_land + dCD_landinggear + dCD_slat_land
+
+
+
 string_drag = ['A_eff', 'e', 'CD0_tot', 'dCD_excresence', 'S_wet', 'dCD_flap_TO', 'dCD_flap_land']
