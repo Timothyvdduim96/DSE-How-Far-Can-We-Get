@@ -13,9 +13,9 @@ from liftdrag import * #CHECK
 from empennage import * #CHECK
 from landing_gear import * #CHECK
 from airfoil2 import * #CHECK
-from cg import *
+#from cg import *
 from Drag import *
-from systemsprepaircraft import *
+from mergedstabcont import *
 from HLD import *
 from ailerons import *
 #------------------------------------------------CONVERSION--------------------------------------------------
@@ -128,20 +128,23 @@ for i in range(len(string_landing_gear)):
 for i in range(len(string_airfoil2)):
     parameter.write(string_airfoil2[i] + " " + str(eval(string_airfoil2[i])) + "\n")
 
-for i in range(len(string_cg)):
-    parameter.write(string_cg[i] + " " + str(eval(string_cg[i])) + "\n")
+#for i in range(len(string_cg)):
+#    parameter.write(string_cg[i] + " " + str(eval(string_cg[i])) + "\n")
 
 for i in range(len(string_drag)):
     parameter.write(string_drag[i] + " " + str(eval(string_drag[i])) + "\n")
 
-for i in range(len(string_loadingdiagram)):
-    parameter.write(string_loadingdiagram[i] + " " + str(eval(string_loadingdiagram[i])) + "\n")
+#for i in range(len(string_systemsprepaircraft)):
+#    parameter.write(string_systemsprepaircraft[i] + " " + str(eval(string_systemsprepaircraft[i])) + "\n")
 
 for i in range(len(string_HLD)):
     parameter.write(string_HLD[i] + " " + str(eval(string_HLD[i])) + "\n")
 
 for i in range(len(string_ailerons)):
     parameter.write(string_ailerons[i] + " " + str(eval(string_ailerons[i])) + "\n")
+
+for i in range(len(string_mergedstabcont)):
+    parameter.write(string_mergedstabcont[i] + " " + str(eval(string_mergedstabcont[i])) + "\n")
 
 parameter.close()
 

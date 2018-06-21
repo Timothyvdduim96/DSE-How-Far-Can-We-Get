@@ -29,11 +29,7 @@ x_cg=x_cg_TO
 
 #---------Lift Calculation------------#
 
-def Lift_wings(M_w,T,z_EW,n,W,x_cg,x_ac_w,l_h,alpha,theta):
-    L_t=(M_w+T*z_EW+n*W*cos(theta)*g*(x_cg-x_ac_w))/(l_h*cos(alpha))
-    L_w=(n*W*cos(theta))/(cos(alpha))-L_t
-    
-    return L_w,L_t
+
 
 
 #Output -----Lift Calculation of Wing and Tail

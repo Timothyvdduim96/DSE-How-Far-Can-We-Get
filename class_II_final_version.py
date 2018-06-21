@@ -154,45 +154,59 @@ W_aci = 5*np.sqrt(W_g)
 ##
 ##----- output -----
 ##
+print 'Torenbeek'
 # Wing group
 W_tottor.append(W_wg)
+print 'Wing', W_wg/kglbs
 # Fuselage group
 W_tottor.append(W_fus)
+print 'Fuselage', W_fus/kglbs
 # Landing gear group
 W_tottor.append(W_LG)
+print 'Landing gear', W_LG/kglbs
 # Tail group
 W_tottor.append(W_t)
+print 'Tail', W_t/kglbs
 # Propulsion group
 W_tottor.append(W_pg)
+print 'Propulsion', W_pg/kglbs
 # Nacelle group
 W_tottor.append(W_ng)
+print 'Nacelle', W_ng/kglbs
 # Flight control group
 W_tottor.append(W_fc)
+print 'Flight control', W_fc/kglbs
 # Instruments group
 W_tottor.append(W_ig)
+print 'Instruments', W_ig/kglbs
 # Hydraulic and pneumatic group
 W_tottor.append(W_hp)
+print 'Hydraulics and pneumatics', W_hp/kglbs
 # Electrical group
 W_tottor.append(W_el)
+print 'Electrics', W_el/kglbs
 # Avionics group
 W_tottor.append(W_av)
+print 'Avionics', W_av/kglbs
 # Equipment and furnishing group
 W_tottor.append(W_ef)
+print 'Equipment and furnishing', W_ef/kglbs
 # Air conditioning and anti-icing group
 W_tottor.append(W_aci)
- 
+print 'Air conditioning and anti-icing', W_aci/kglbs
+
 
 ##--------------------------------------
 ##total weights
 ##--------------------------------------
 totalweighttor = sum(W_tottor)
-print
+print 'OEW', totalweighttor/kglbs
 #print 'the operational empty weight =', totalweightlbs, '[lbs]'
 totalweighttor = totalweighttor/kglbs
 payload = 20375.28 #payload weight [kg]
 fuel = 9529.67798556 #fuel weight [kg]
 W_takeofftor = totalweighttor+payload+fuel
-
+print
 
 
 ##-------------------------------------------
@@ -238,23 +252,32 @@ W_fe = W_fc+W_hp+W_aie+W_els+W_api+W_ox+W_bc+W_fur+W_aux+W_pt                   
 ##
 ##----- Output -----
 ##
+print 'Roskam'
 # Wing weight
 W_totros.append(W_w)
+print 'Wing', W_w/kglbs
 # Fuselage weight
 W_totros.append(W_fus)
+print 'Fuselage', W_fus/kglbs
 # Landing gear weight
 W_totros.append(W_lg)
+print 'Landing gear', W_lg/kglbs
 # Empennage weight
 W_totros.append(W_emp)
+print 'Empennage', W_emp/kglbs
 # Power plant weight
 W_totros.append(W_pp)
+print 'Power plant', W_pp/kglbs
 # Nacelle weight
 W_totros.append(W_n)
+print 'Nacelle', W_n/kglbs
 # fixed equipment weight
 W_totros.append(W_fe)
+print 'fixed equipment', W_fe/kglbs
 # total operational empty weight
 totalweightros = sum(W_totros)
 totalweightros = totalweightros/kglbs
+print 'OEW', totalweightros
 #maximum take-off weight 
 W_takeoffros = totalweightros+payload+fuel
 
