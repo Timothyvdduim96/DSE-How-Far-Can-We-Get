@@ -21,7 +21,7 @@ MTOW = 67834.2*g#68731. *g
 
 S = 110.
 oswald = 0.7276
-CL_max_clean = 0.8
+CL_max_clean = 1.61
 lamda = 14.
 K = 1/(3.141*A*oswald)
 rho_0 = 1.225
@@ -566,13 +566,13 @@ for V in range(V_min35000,300,1):
     Vc_35000.append(Vc)
     speeds_35000.append(V)
 
-V_min39000 = int(sqrt((MTOW/S)*(2/ISA(11887.2)[2])*(1/CL_max_clean)))
+V_min39000 = int(sqrt((MTOW/S)*(2/ISA(11887.2 )[2])*(1/CL_max_clean)))
 for V in range(V_min39000,300,1):   #11887.2   
-    P_alt = ISA(12771.12)[1]
+    P_alt = ISA(11887.2 )[1]
     P_0 = ISA(0)[1]
     T_0 = ISA(0)[0]
-    Temp = ISA(12771.12)[0]
-    dens = ISA(12771.12)[2]
+    Temp = ISA(11887.2 )[0]
+    dens = ISA(11887.2 )[2]
     a = sqrt(1.4*287*Temp)
     #V = sqrt(rho_0/dens)*V      
     M_c = V/a

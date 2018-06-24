@@ -26,11 +26,11 @@ h_scr = 15.24 #screen height in m change to 15.24
 h_scr_to = 11 #screen height for take-off CS 21.107
 lamda = 14. #bypass ratio
 CL_max_to = 1.9
-CL_to = 0.6 #takeoff cl during ground roll
-CD0_to = 0.04
-CD0_climb = 0.06
+CL_to = 0.9 #takeoff cl during ground roll
+CD0_to = 0.0312 #including gear
+CD0_climb = 0.0268 #to conditions without gear
 CL_max_land = 2.5
-CD0_land = 0.06
+CD0_land = 0.0815 
 MLW = MTOW - (0.67*9500*9.80665)
 n_land = 1.2
 P_0 = ISA(0)[1]
@@ -50,6 +50,7 @@ for alt in range(0,1500,100):
     P_alt = ISA(alt)[1]
     V_min_to = sqrt((MTOW/S)*(2/dens)*(1/CL_max_to))
     V_LOF = V_min_to*1.1
+    #print "V-lof IS",V_LOF
     a = sqrt(1.4*287*Temp)
     M_takeoff = (V_LOF*0.707)/a
     V_TRANS =1.15 *V_min_to
@@ -63,7 +64,7 @@ for alt in range(0,1500,100):
     ratio = (P_alt/P_0) *sqrt(T_0/Temp)      #effect of altitude based on thrust  
     K_T = (ratio_net_to_static*thrust*ratio/MTOW)-mu_roll
     K_A = dens/((2*MTOW)/S)*(-CD_to+(mu_roll*CL_to))
-    
+    #print ratio_net_to_static * thrust
     x_groundrun = (1/(2*g*K_A))*log((K_T+(K_A*V_LOF**2))/K_T)
     
     
@@ -99,6 +100,10 @@ for alt in range(0,1500,100):
         print "The distance reached during transition is:", x_transition, "m"
         print "The altitude reached during transitions is", h_T, "m", "which is",screenmet
         print "The takeoff distance is", x_total_takeoff, "m"
+        print "The lift off speed is", V_LOF*1.94384449
+        print "The thrust at take-off", ratio_net_to_static*thrust
+        print "The stall speed during take-off is:",V_min_to*1.94384449
+        print "V2 is:",V2*1.94384449
         
         Af = 2.0 #fan diameter
         CD_failedengine = 0.3*Af/S
@@ -118,6 +123,7 @@ for alt in range(0,1500,100):
     
     #----landing performance
     V_min_land = sqrt((MLW/S)*(2/dens)*(1/CL_max_land))
+    #print "The touchdown speed is:", V_min_land*1.15
     V_F = (1.15+1.3)*V_min_land/2
     V_TD = 1.15*V_min_land
     r_land = V_F**2/(9.80665*(n_land-1.))
@@ -125,7 +131,7 @@ for alt in range(0,1500,100):
     s_A = (h_scr-h_F)/tan(gamma_land) #approach distance
     s_F = r_land * gamma_land #flare distance
     s_FR = 2*V_TD  #free roll distance
-    print "Approach speed is:", V_min_land*1.3
+    #print "Approach speed is:", V_min_land*1.3
     K_T_land = -mu_brake
     K_A_land = dens/((2*MLW)/S)*(-CD0_land)
     s_B = -(1/(2*g*K_A_land))*log((K_T_land+(K_A_land*V_TD**2))/K_T_land)
@@ -139,7 +145,11 @@ for alt in range(0,1500,100):
         print "The braking distance is:",s_B, "m"
         print "The total landing distance is:",s_total_land, "m"
         print "The landing distance including the factor to account for operational variances [1.66] is",s_total_land*1.66, "m"
-    
+        print "The approach speed is", V_min_land*1.3*1.94384449
+        print "The stall speed is", V_min_land *1.94384449
+        print "The average flare speed is:",V_F*1.94384449
+        print "The touchdown speed is:", V_TD*1.94384449
+        
 plt.plot(altitude,takeoff_distances,label="Take-off performance")
 plt.plot(altitude,landing_distances,label="Landing performance")
 plt.grid(True)
