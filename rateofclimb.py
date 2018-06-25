@@ -14,9 +14,6 @@ A = 14.75
 g = 9.80665
 
 thrust = 213000.
-MTOW = 67834.*g#67834.2*g#68731. *g
-
-thrust = 213000.
 MTOW = 67834.2*g#68731. *g
 
 S = 110.
@@ -144,6 +141,7 @@ for V in range(V_min0,300,1):
     Vc_sealevel_uns.append(Vc_uns)
     Vc_sealevel.append(Vc)
     speeds_sealevel.append(V)
+print max(Vc_sealevel)
 
     
 V_min5000 = int(sqrt((MTOW/S)*(2/ISA(1524)[2])*(1/CL_max_clean)))
@@ -566,13 +564,14 @@ for V in range(V_min35000,300,1):
     Vc_35000.append(Vc)
     speeds_35000.append(V)
 
-V_min39000 = int(sqrt((MTOW/S)*(2/ISA(11887.2 )[2])*(1/CL_max_clean)))
+altchange = 41900 * 0.3048
+V_min39000 = int(sqrt((MTOW/S)*(2/ISA(altchange)[2])*(1/CL_max_clean)))
 for V in range(V_min39000,300,1):   #11887.2   
-    P_alt = ISA(11887.2 )[1]
+    P_alt = ISA(altchange)[1]
     P_0 = ISA(0)[1]
     T_0 = ISA(0)[0]
-    Temp = ISA(11887.2 )[0]
-    dens = ISA(11887.2 )[2]
+    Temp = ISA(altchange)[0]
+    dens = ISA(altchange)[2]
     a = sqrt(1.4*287*Temp)
     #V = sqrt(rho_0/dens)*V      
     M_c = V/a
@@ -627,62 +626,64 @@ for V in range(V_min39000,300,1):   #11887.2
 print max(Vc_39000_uns)
 
 #power available/required
-plt.subplot(2,2,1)
+#plt.subplot(2,2,1)
 
-plt.plot(speeds_sealevel,palist_0,label="Pa Sea level")
-plt.plot(speeds_5000,palist_5000, label="Pa 5000 ft")
-plt.plot(speeds_10000,palist_10000, label="Pa 10000 ft") 
-plt.plot(speeds_15000,palist_15000, label="Pa 15000 ft")
-plt.plot(speeds_20000,palist_20000, label="Pa 20000 ft")
-plt.plot(speeds_25000,palist_25000, label="Pa 25000 ft")
-plt.plot(speeds_sealevel,prlist_0, label="Pr Sea level") #plt.plot(speeds_sealevel,prlist_0,label="Pr Sea level")
-plt.plot(speeds_5000,prlist_5000, label="Pr 5000 ft")
-plt.plot(speeds_10000,prlist_10000, label="Pr 10000 ft")
-plt.plot(speeds_15000,prlist_15000, label="Pr 15000 ft")
-plt.plot(speeds_20000,prlist_20000, label="Pr 20000 ft")
-plt.plot(speeds_25000,prlist_25000, label="Pr 25000 ft")
+#plt.plot(speeds_sealevel,palist_0,label="Pa Sea level")
+#plt.plot(speeds_5000,palist_5000, label="Pa 5000 ft")
+#plt.plot(speeds_10000,palist_10000, label="Pa 10000 ft") 
+#plt.plot(speeds_15000,palist_15000, label="Pa 15000 ft")
+#plt.plot(speeds_20000,palist_20000, label="Pa 20000 ft")
+#plt.plot(speeds_25000,palist_25000, label="Pa 25000 ft")
+#plt.plot(speeds_30000,palist_30000, label="Pa 30000 ft")
+#plt.plot(speeds_35000,palist_35000, label="Pa 35000 ft")
+#plt.plot(speeds_sealevel,prlist_0, label="Pr Sea level") #plt.plot(speeds_sealevel,prlist_0,label="Pr Sea level")
+#plt.plot(speeds_5000,prlist_5000, label="Pr 5000 ft")
+#plt.plot(speeds_10000,prlist_10000, label="Pr 10000 ft")
+#plt.plot(speeds_15000,prlist_15000, label="Pr 15000 ft")
+#plt.plot(speeds_20000,prlist_20000, label="Pr 20000 ft")
+#plt.plot(speeds_25000,prlist_25000, label="Pr 25000 ft")
 #plt.plot(speeds_30000,prlist_30000, label="Pr 30000 ft")
 #plt.plot(speeds_35000,prlist_35000, label="Pr 35000 ft")
 
-plt.xlabel('Velocity [m/s]')
-plt.ylabel('Power available/required')
-plt.legend(loc=4)
-plt.title('Power available/required vs speed')
-plt.grid(True)
+#plt.xlabel('Velocity [m/s]')
+#plt.ylabel('Power available/required [W]')
+#plt.legend(loc=4)
+#plt.title('Power available/required vs speed')
+#plt.grid(True)
 
 #Steady performance
-plt.subplot(2,2,2)
-plt.axis((0,400,0,6000))
-plt.plot(speeds_sealevel,Vc_sealevel,label="Sea level")
-plt.plot(speeds_5000,Vc_5000,label="5000 ft")
-plt.plot(speeds_10000,Vc_10000, label="10000 ft")
-plt.plot(speeds_15000,Vc_15000, label="15000 ft")
-plt.plot(speeds_20000,Vc_20000, label="20000 ft")
-plt.plot(speeds_25000,Vc_25000, label="25000 ft")
-plt.plot(speeds_30000,Vc_30000, label="30000 ft")
-plt.plot(speeds_35000,Vc_35000, label="35000 ft")
-plt.plot(speeds_39000,Vc_39000, label="39000 ft")
-plt.xlabel('Velocity [m/s]')
-plt.ylabel('Rate of climb [ft/min]')
-plt.legend(loc=4)
-plt.title('Steady Rate of climb')
-plt.grid(True)
+#plt.subplot(2,2,2)
+#plt.axis((0,400,0,6000))
+#plt.plot(speeds_sealevel,Vc_sealevel,label="Sea level")
+#plt.plot(speeds_5000,Vc_5000,label="5000 ft")
+#plt.plot(speeds_10000,Vc_10000, label="10000 ft")
+#plt.plot(speeds_15000,Vc_15000, label="15000 ft")
+#plt.plot(speeds_20000,Vc_20000, label="20000 ft")
+#plt.plot(speeds_25000,Vc_25000, label="25000 ft")
+#plt.plot(speeds_30000,Vc_30000, label="30000 ft")
+#plt.plot(speeds_35000,Vc_35000, label="35000 ft")
+#plt.plot(speeds_39000,Vc_39000, label="39000 ft")
+#plt.xlabel('Velocity [m/s]')
+#plt.ylabel('Rate of climb [ft/min]')
+#plt.legend(loc=4)
+#plt.title('Steady Rate of climb')
+#plt.grid(True)
 
 #Steady performance
-plt.subplot(2,2,3)
+#plt.subplot(2,2,3)
 plt.axis((0,400,0,6000))
 plt.plot(speeds_sealevel,Vc_sealevel_uns,label="Sea level")
-plt.plot(speeds_5000,Vc_5000_uns,label="5000 ft")
-plt.plot(speeds_10000,Vc_10000_uns, label="10000 ft")
-plt.plot(speeds_15000,Vc_15000_uns, label="15000 ft")
-plt.plot(speeds_20000,Vc_20000_uns, label="20000 ft")
-plt.plot(speeds_25000,Vc_25000_uns, label="25000 ft")
-plt.plot(speeds_30000,Vc_30000_uns, label="30000 ft")
-plt.plot(speeds_35000,Vc_35000_uns, label="35000 ft")
-plt.plot(speeds_39000,Vc_39000_uns, label="39000 ft")
+#plt.plot(speeds_5000,Vc_5000_uns,label="5000 ft")
+#plt.plot(speeds_10000,Vc_10000_uns, label="10000 ft")
+#plt.plot(speeds_15000,Vc_15000_uns, label="15000 ft")
+#plt.plot(speeds_20000,Vc_20000_uns, label="20000 ft")
+#plt.plot(speeds_25000,Vc_25000_uns, label="25000 ft")
+#plt.plot(speeds_30000,Vc_30000_uns, label="30000 ft")
+#plt.plot(speeds_35000,Vc_35000_uns, label="35000 ft")
+plt.plot(speeds_39000,Vc_39000_uns, label="41900 ft")
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Rate of climb [ft/min]')
-plt.legend(loc=4)
+plt.legend(loc=2)
 plt.title('Unsteady Rate of climb')
 plt.grid(True)
 
