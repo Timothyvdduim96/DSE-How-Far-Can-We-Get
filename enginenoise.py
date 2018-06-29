@@ -6,36 +6,41 @@ Created on Thu Jun 14 15:35:54 2018
 """
 
 #-------Engine noise
+from math import *
+from parameters import ISA
 
 #atmospheric properties
-dens0 = 1.225 #ambient density
-dens_amb = 
+alt = 11000.
+dens_0 = 1.225 #ambient density
+dens_amb = ISA(alt)[1]
 Temp0 = ISA(alt)[0]
 Temp = ISA(alt)[0]
 a_amb0 = sqrt(1.4*287*Temp0)
 a_amb = sqrt(1.4*287*Temp)
 
-theta = #polar angle
+theta = radians(90) #polar angle
+
 #engine characteristics:
-v_9 = #exhaust jet velocity
-v_19 = 
-v_m = #mean inflow velocity
-v_9_eff = v_9*(1-((v_m/v9)*cos(theta)))**(2/3) #effective jet speed
-rho_9 = #density at point 9
-A9 = #nozzle area
-D9 = #nozzle diameter
-T_t2 = 
-T_t9 = 
-T_t19
-T_tamb =
+v_9 = 31. #exhaust jet velocity
+v_19 = 301.
+v_m = 233.08 #mean inflow velocity
+v_9_eff = v_9*(1-((v_m/v_9)*cos(theta)))**(2/3) #effective jet speed
+rho_9 = 0.048#density at point 9
+A9 =  0.785 #nozzle area
+D9 = 1. #nozzle diameter
+A19 = 2.35
+T_t2 = 242
+T_t9 = 778.
+T_t19 = 226.
+T_tamb = 216.65
 T9ratio = T_t9/T_tamb
 eta_is = 0.9 #isentropic efficiency
-PressRatio_t2_13 = 
-K = 
+PressRatio_t2_13 = 1.4
+K = 1.4
 massflow_ref =  0.453 #kg/s
-massflow = 
-f_b = blade passing frequency
-
+massflow = 550 #kg/s
+#f_b = #blade passing frequency
+d = 200. #observer distance
 #calculations:
 omega = ((3.0 *(v_9_eff/a_amb)**3.5)/(0.6+(v_9_eff/a_amb)**3.5)) - 1 #density exponentby Stone
 Ma_con = 0.62*((v_9-(v_m*cos(theta)))/a_amb)
@@ -46,10 +51,12 @@ L_norm = 141. + 10*log(((dens_amb/dens_0)**2)*((a_amb/a_amb0)**4)) \
 - (10*log(1-(Ma_con*cos(theta)))) \
 + (3*log(((2*A9)/(pi*(D9)**2)) + 0.5))
 
+#how to do this
+f = 200
 str9_param_1 = (1+(0.62*((v_9-v_m)/a_amb)*cos(theta)))**2 + (0.01538*((v_9-v_m)/a_amb)**2)
 str9_param_2 = (1+(0.62*((v_9)/a_amb)*cos(theta)))**2 + (0.01538*((v_9)/a_amb)**2)
-str9_param = (str9_param_1/str9_param)**0.5
-Str_9 = f * (sqrt((4*A9)/pi)/V_9_eff) * ((D9/sqrt((4*A9)/pi))**0.4) * ((T9ratio)**(0.4*(1+cos(theta)))) \
+str9_param = (str9_param_1/str9_param_2)**0.5
+Str_9 = f * (sqrt((4*A9)/pi)/v_9_eff) * ((D9/sqrt((4*A9)/pi))**0.4) * ((T9ratio)**(0.4*(1+cos(theta)))) \
 * (1-(Ma_con*cos(theta))) * str9_param
 
 if A19/A9 < 29.7:
@@ -62,7 +69,9 @@ f_freq = 0.1709*(log(1+(A19/A9)))**3 \
 - (0.6335*(log(1+(A19/A9)))**2) + (1.1037*log(1+(A19/A9)))
 Str_ejet = Str_9 * (1-f_freq*(0.5+(((T_t19*v_19*A19)/(T_t9*v_9*A9))/(1+((T_t19*v_19*A19)/(T_t9*v_9*A9)))))**2)
 DL_dirspec = 
+#jet noise final equation
 L_jet = L_norm + DL_dirspec + DL_ejet
+
 
 #-----Fan noise
 DT_tref = 0.5555 K
@@ -95,3 +104,8 @@ L_dtn_ex = L_norm_fan + DL_vel_ex_dtn + DL_dir_ex_dtn + DL_spec_ex_dtn + c_ex
 
 L_fan_in = L_norm_fan + L_bbn_in + L_dtn_in + L_ctn_in + c_in
 L_fan_ex = L_norm_fan + L_bbn_ex + L_dtn_ex + c_in
+L_fan_total = 10*log(10**(L_fan_in/10)+10**(L_fan_ex/10))
+
+L_engine = 10*log(10**(L_fan_total/10)+10**(L_jet/10))
+
+
